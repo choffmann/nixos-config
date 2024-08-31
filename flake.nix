@@ -22,16 +22,16 @@
       vm = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-	  ./nixos/configuration.nix
-	  home-manager.nixosModules.home-manager
-	  {
-	    home-manager = {
-		useGlobalPkgs = true;
-		useUserPackages = true;
-		users.choffmann = import ./home-manager/home.nix;
-	    };
-	  }
-	];
+          ./hosts/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.choffmann = import ./home/home.nix;
+            };
+          }
+        ];
       };
     };
   };
