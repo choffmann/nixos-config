@@ -15,24 +15,30 @@
     nixpkgs,
     home-manager,
     ...
-  } @ inputs: let
-    inherit (self) outputs;
-  in {
-    nixosConfigurations = {
-      vm = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        modules = [
-          ./hosts/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.choffmann = import ./home/home.nix;
-            };
-          }
-        ];
+  } @ inputs:
+    let
+      inherit (self) outputs;
+      username = "choffmann";
+    in {
+      nixosConfigurations = {
+        vm = nixpkgs.lib.nixosSystem {
+          specialArgs = {inherit inputs outputs;};
+          modules = [
+            ./hosts/vm/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users."${username}" = import ./hosts/vm/home.nix;
+
+                extraSpecialArgs = {
+                  inherit username;
+                };
+              };
+            }
+          ];
+        };
       };
     };
-  };
 }

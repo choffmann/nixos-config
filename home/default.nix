@@ -5,6 +5,7 @@
   lib,
   config,
   pkgs,
+  username,
   ...
 }: {
   # You can import other home-manager modules here
@@ -16,8 +17,8 @@
   ];
 
   home = {
-    username = "choffmann";
-    homeDirectory = lib.mkForce "/home/choffmann";
+    inherit username;
+    homeDirectory = lib.mkForce "/home/${username}";
   };
 
   # Add stuff for your user as you see fit:
@@ -26,11 +27,6 @@
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
-  programs.git = {
-    enable = true;
-    userName = "Cedrik Hoffmann";
-    userEmail = "cedrik.hoffmann@jgdperl.com";
-  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
