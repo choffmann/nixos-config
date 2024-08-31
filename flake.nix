@@ -22,7 +22,7 @@
     in {
       nixosConfigurations = {
         vm = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs outputs;};
+          specialArgs = {inherit inputs username outputs;};
           modules = [
             ./hosts/vm/configuration.nix
             home-manager.nixosModules.home-manager

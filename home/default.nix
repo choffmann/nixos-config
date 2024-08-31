@@ -14,16 +14,13 @@
     # inputs.nix-colors.homeManagerModule
 
     ./neovim
+    ./i3
   ];
 
   home = {
     inherit username;
     homeDirectory = lib.mkForce "/home/${username}";
   };
-
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
