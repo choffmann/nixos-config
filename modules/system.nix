@@ -1,6 +1,10 @@
-{pkgs, lib, username, ssh-keys, ...}:
+{pkgs, lib, username, ...}:
 {
  # ============================= User related =============================
+
+  imports =  [
+    ./spotify.nix
+  ];
 
   # Needs to be enabled to set as default shell
   # Specify configuration comes from home-manager
