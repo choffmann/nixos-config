@@ -10,6 +10,7 @@
       ../../modules/style.nix
       ../../modules/system.nix
       ../../modules/i3.nix
+      # ../../modules/k8s-config.nix
 
       ./hardware-configuration.nix
     ];

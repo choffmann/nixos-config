@@ -11,13 +11,15 @@
 
     # Stylix
     stylix.url = "github:danth/stylix";
+
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
-    stylix,
     ...
   } @ inputs:
     let
@@ -26,11 +28,10 @@
     in {
       nixosConfigurations = {
         vm = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit stylix inputs username outputs;};
+          specialArgs = {inherit inputs username outputs;};
           modules = [
             ./hosts/vm/configuration.nix
 
-            stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             {
               home-manager = {
@@ -49,8 +50,10 @@
         macbook = nixpkgs.lib.nixosSystem {
           specialArgs = {inherit inputs username outputs;};
           modules = [
-            stylix.nixosModules.stylix
             ./hosts/macbook/configuration.nix
+
+            inputs.stylix.nixosModules.stylix
+            # inputs.sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
             {
               home-manager = {
@@ -61,6 +64,10 @@
                 extraSpecialArgs = {
                   inherit username;
                 };
+
+                sharedModules = [
+                  inputs.sops-nix.homeManagerModules.sops
+                ];
               };
             }
           ];

@@ -21,6 +21,8 @@
     ./tmux.nix
     ./alacritty.nix
     ./chromium.nix
+    ./rofi.nix
+    ./k8s.nix
   ];
 
   home = {
@@ -55,6 +57,7 @@
   };
 
   services.gnome-keyring.enable = true;
+  systemd.user.services.mbsync.Unit.After = [ "sops-nix.service" ];
 
   home.sessionVariables.SSH_AUTH_SOCK = "/run/user/1000/keyring/ssh";
 
