@@ -20,6 +20,7 @@
     ./zsh.nix
     ./tmux.nix
     ./alacritty.nix
+    ./chromium.nix
   ];
 
   home = {

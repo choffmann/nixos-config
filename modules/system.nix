@@ -147,6 +147,20 @@
   };
   security.polkit.enable = true;
 
+  programs.chromium = {
+    extraOpts = {
+      "BrowserSignin" = 0;
+      "SyncDisabled" = true;
+      "PasswordManagerEnabled" = false;
+      "SpellcheckEnabled" = true;
+      "EnterpriseLogoUrl" = "https://www.facebook.com/photo/?fbid=311717844404882&set=a.311717831071550&__tn__=%3C";
+      "SpellcheckLanguage" = [
+        "de"
+        "en-US"
+      ];
+    };
+  };
+
   services = {
     dbus.packages = [pkgs.gcr];
 
