@@ -1,4 +1,4 @@
-{pkgs, lib, username, ...}:
+{pkgs, lib, username, ssh-keys, ...}:
 {
  # ============================= User related =============================
 
@@ -12,6 +12,14 @@
     description = username;
     extraGroups = ["networkmanager" "wheel"];
     shell = pkgs.zsh;
+
+    openssh.authorizedKeys.keys = let
+      authorizedKeys = pkgs.fetchurl {
+        url = "https://github.com/choffmann.keys";
+        sha256 = "a20843af96a6254e11b8d506a38ee7d8a651280b2397b7abbf5b7f85760da3fe";
+      };
+    in pkgs.lib.splitString "\n" (builtins.readFile
+    authorizedKeys);
   };
   # given the users in this list the right to specify additional substituters via:
   #    1. `nixConfig.substituers` in `flake.nix`
