@@ -16,27 +16,12 @@
     ./neovim
     ./i3
     ./console-tools.nix
+    ./zsh.nix
   ];
 
   home = {
     inherit username;
     homeDirectory = lib.mkForce "/home/${username}";
-  };
-
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    enableAutosuggestions = true;
-    enableSyntaxHighlighting = true;
-    enableFzfKeyBindings = true;
-    shellAliases = {
-      gg = "lazygit";
-      switch = "sudo nixos-rebuild switch";
-      update = "cd ~/.config/nixos-config/ && sudo nix flake update";
-    };
-    oh-my-zsh = {
-      enable = true;
-    };
   };
 
   programs.git = {
