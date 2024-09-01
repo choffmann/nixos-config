@@ -15,12 +15,60 @@
 
     ./neovim
     ./i3
+    ./console-tools.nix
   ];
 
   home = {
     inherit username;
     homeDirectory = lib.mkForce "/home/${username}";
   };
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    enableAutosuggestions = true;
+    enableSyntaxHighlighting = true;
+    enableFzfKeyBindings = true;
+    shellAliases = {
+      gg = "lazygit";
+      switch = "sudo nixos-rebuild switch";
+      update = "cd ~/.config/nixos-config/ && sudo nix flake update";
+    };
+    oh-my-zsh = {
+      enable = true;
+    };
+  };
+
+  programs.git = {
+    enable = true;
+
+    difftastic = {
+      enable = true;
+    };
+
+    package = pkgs.gitFull;
+
+    extraConfig = {
+      merge.tool = "nvim";
+      mergetool = {
+        keepBackup = false;
+        prompt = false;
+      };
+      mergetool.nvim = {
+        cmd = "${lib.getExe pkgs.neovim} -d -c \"wincmd l\" -c \"norm ]c\" \"$LOCAL\" \"$MERGED\" \"$REMOTE\"";
+      };
+      init.defaultBranch = "develop";
+      pull.ff = "true";
+      pull.rebase = "true";
+      merge.conflictstyle = "zdiff3";
+      credential.helper = "libsecret";
+    };
+  };
+
+  services.gnome-keyring.enable = true;
+
+  home.sessionVariables.SSH_AUTH_SOCK = "/run/user/1000/keyring/ssh";
+  
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
