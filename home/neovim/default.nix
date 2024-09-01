@@ -5,7 +5,6 @@ in
 {
   home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${nixProjectPath}/home/neovim/config";
   home.packages = with pkgs; [
-    neovim
     go
     ripgrep
     gnumake
@@ -22,6 +21,7 @@ in
   ];
 
   programs.neovim = {
+    enable = true;
     viAlias = true;
     vimAlias = true;
     defaultEditor = true;
