@@ -17,6 +17,7 @@
     ./i3
     ./console-tools.nix
     ./zsh.nix
+    ./tmux.nix
   ];
 
   home = {
