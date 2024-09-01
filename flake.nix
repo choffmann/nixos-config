@@ -28,9 +28,9 @@
         vm = nixpkgs.lib.nixosSystem {
           specialArgs = {inherit stylix inputs username outputs;};
           modules = [
-            stylix.nixosModules.stylix
             ./hosts/vm/configuration.nix
 
+            stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             {
               home-manager = {
@@ -49,8 +49,8 @@
         macbook = nixpkgs.lib.nixosSystem {
           specialArgs = {inherit inputs username outputs;};
           modules = [
-            ./hosts/macbook/configuration.nix
             stylix.nixosModules.stylix
+            ./hosts/macbook/configuration.nix
             home-manager.nixosModules.home-manager
             {
               home-manager = {

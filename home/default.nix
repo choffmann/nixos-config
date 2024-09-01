@@ -19,6 +19,7 @@
     ./wallpaper
     ./zsh.nix
     ./tmux.nix
+    ./alacritty.nix
   ];
 
   home = {
@@ -55,7 +56,7 @@
   services.gnome-keyring.enable = true;
 
   home.sessionVariables.SSH_AUTH_SOCK = "/run/user/1000/keyring/ssh";
-  
+
 
   # Enable home-manager and git
   programs.home-manager.enable = true;

@@ -5,6 +5,9 @@
   # Needs to be enabled to set as default shell
   # Specify configuration comes from home-manager
   programs.zsh.enable = true;
+  environment.variables.EDITOR = "nvim";
+
+  home-manager.backupFileExtension = "backup";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
