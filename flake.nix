@@ -17,6 +17,7 @@
     self,
     nixpkgs,
     home-manager,
+    stylix,
     ...
   } @ inputs:
     let
@@ -25,11 +26,11 @@
     in {
       nixosConfigurations = {
         vm = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs username outputs;};
+          specialArgs = {inherit stylix inputs username outputs;};
           modules = [
+            stylix.nixosModules.stylix
             ./hosts/vm/configuration.nix
 
-            inputs.stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             {
               home-manager = {
@@ -49,6 +50,7 @@
           specialArgs = {inherit inputs username outputs;};
           modules = [
             ./hosts/macbook/configuration.nix
+            stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             {
               home-manager = {

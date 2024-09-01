@@ -16,6 +16,7 @@
     ./neovim
     ./i3
     ./console-tools.nix
+    ./wallpaper
     ./zsh.nix
     ./tmux.nix
   ];
