@@ -44,6 +44,25 @@
             }
           ];
         };
+
+        macbook = nixpkgs.lib.nixosSystem {
+          specialArgs = {inherit inputs username outputs;};
+          modules = [
+            ./hosts/macbook/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users."${username}" = import ./hosts/macbook/home.nix;
+
+                extraSpecialArgs = {
+                  inherit username;
+                };
+              };
+            }
+          ];
+        };
       };
     };
 }
