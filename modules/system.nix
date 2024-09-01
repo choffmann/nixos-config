@@ -3,6 +3,7 @@
  # ============================= User related =============================
 
   imports =  [
+    ./discord.nix
     ./spotify.nix
   ];
 
