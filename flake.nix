@@ -1,75 +1,148 @@
 {
-  description = "Your new nix config";
+  description = "EmergentMind's Nix-Config";
 
   inputs = {
-    # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; 
+    #################### Official NixOS and HM Package Sources ####################
 
-    # Home manager
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable"; # also see 'unstable-packages' overlay at 'overlays/default.nix"
 
-    # Stylix
-    stylix.url = "github:danth/stylix";
+    hardware.url = "github:nixos/nixos-hardware";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    #################### Utilities ####################
+
+    # Access flake-based devShells with nix-shell seamlessly
+    flake-compat.url = "github:edolstra/flake-compat";
+
+    # Declarative partitioning and formatting
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Secrets management. See ./docs/secretsmgmt.md
+    sops-nix = {
+      url = "github:mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # vim4LMFQR!
+    nixvim = {
+      #url = "github:nix-community/nixvim/nixos-23.11";
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    ...
-  } @ inputs:
+  outputs =
+    {
+      self,
+      disko,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
-      username = "choffmann";
-    in {
+      forAllSystems = nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+        #"aarch64-darwin"
+      ];
+      inherit (nixpkgs) lib;
+      configVars = import ./vars { inherit inputs lib; };
+      configLib = import ./lib { inherit lib; };
+      specialArgs = {
+        inherit
+          inputs
+          outputs
+          configVars
+          configLib
+          nixpkgs
+          ;
+      };
+    in
+    {
+      # Custom modules to enable special functionality for nixos or home-manager oriented configs.
+      nixosModules = import ./modules/nixos;
+      homeManagerModules = import ./modules/home-manager;
+
+      # Custom modifications/overrides to upstream packages.
+      overlays = import ./overlays { inherit inputs outputs; };
+
+      # Custom packages to be shared or upstreamed.
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        import ./pkgs { inherit pkgs; }
+      );
+
+      checks = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        import ./checks { inherit inputs system pkgs; }
+      );
+
+      # TODO change this to something that has better looking output rules
+      # Nix formatter available through 'nix fmt' https://nix-community.github.io/nixpkgs-fmt
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+
+      # ################### DevShell ####################
+      #
+      # Custom shell for bootstrapping on new hosts, modifying nix-config, and secrets management
+
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
+
+            inherit (self.checks.${system}.pre-commit-check) shellHook;
+            buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
+
+            nativeBuildInputs = builtins.attrValues {
+              inherit (pkgs)
+
+                nix
+                home-manager
+                git
+                just
+
+                age
+                ssh-to-age
+                sops
+                ;
+            };
+          };
+        }
+      );
+
+      #################### NixOS Configurations ####################
+      #
+      # Building configurations available through `just rebuild` or `nixos-rebuild --flake .#hostname`
+
       nixosConfigurations = {
-        vm = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs username outputs;};
+        macbook = lib.nixosSystem {
+          inherit specialArgs;
           modules = [
-            ./hosts/vm/configuration.nix
-
             home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users."${username}" = import ./hosts/vm/home.nix;
-
-                extraSpecialArgs = {
-                  inherit username;
-                };
-              };
-            }
-          ];
-        };
-
-        macbook = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs username outputs;};
-          modules = [
-            ./hosts/macbook/configuration.nix
-
-            inputs.stylix.nixosModules.stylix
-            # inputs.sops-nix.nixosModules.sops
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users."${username}" = import ./hosts/macbook/home.nix;
-
-                extraSpecialArgs = {
-                  inherit username;
-                };
-
-                sharedModules = [
-                  inputs.sops-nix.homeManagerModules.sops
-                ];
-              };
-            }
+            { home-manager.extraSpecialArgs = specialArgs; }
+            ./hosts/macbook
           ];
         };
       };
