@@ -17,8 +17,6 @@ let
     sha256 = "a20843af96a6254e11b8d506a38ee7d8a651280b2397b7abbf5b7f85760da3fe";
   };
 
-  # these are values we don't want to set if the environment is minimal. E.g. ISO or nixos-installer
-  # isMinimal is true in the nixos-installer/flake.nix
   fullUserConfig = lib.optionalAttrs (!configVars.isMinimal) {
     users.users.${configVars.username} = {
       hashedPasswordFile = sopsHashedPasswordFile;

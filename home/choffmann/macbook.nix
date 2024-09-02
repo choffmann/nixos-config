@@ -12,7 +12,7 @@
     ./common/core # required
 
     #################### Host-specific Optional Configs ####################
-    ./common/optional/desktop/i3
+    ./common/optional/desktops/i3
   ];
 
   home = {

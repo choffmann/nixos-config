@@ -2,7 +2,7 @@ keys:
   - &users:
     - &choffmann age1h6w5ljasnhqqv5ju5lk6c0yedzqaxlkx2vm3x0msj9els9km8veq7srjf8
   - &hosts:
-    - &macbook age1h6w5ljasnhqqv5ju5lk6c0yedzqaxlkx2vm3x0msj9els9km8veq7srjf8
+    - &macbook age1c7f7g5lardqyshnasrmg4w4x0l7g8pdw6k8mw5hgdn83qwr4qqjqt6xnyu
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:
