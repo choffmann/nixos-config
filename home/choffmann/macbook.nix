@@ -1,6 +1,4 @@
 { lib, configVars, ... }:
-let
-in
 {
   imports = [
     #################### Hardware Modules ####################
@@ -14,6 +12,7 @@ in
     ./common/core # required
 
     #################### Host-specific Optional Configs ####################
+    ./common/optional/desktop/i3
   ];
 
   home = {
