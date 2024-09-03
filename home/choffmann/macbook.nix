@@ -12,7 +12,11 @@
     ./common/core # required
 
     #################### Host-specific Optional Configs ####################
-    ./common/optional/desktops/i3
+    ./common/optional/desktops/i3.nix
+    ./common/optional/desktops/wallpaper
+    ./common/optional/cli
+
+    ./common/optional/chromium.nix
   ];
 
   home = {

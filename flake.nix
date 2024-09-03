@@ -17,12 +17,7 @@
 
     # Access flake-based devShells with nix-shell seamlessly
     flake-compat.url = "github:edolstra/flake-compat";
-
-    # Declarative partitioning and formatting
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    stylix.url = "github:danth/stylix";
 
     # Secrets management. See ./docs/secretsmgmt.md
     sops-nix = {
@@ -30,16 +25,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # vim4LMFQR!
-    nixvim = {
-      #url = "github:nix-community/nixvim/nixos-23.11";
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    #################### Personal Repositories ####################
+
+    neovim = {
+      url = "github:choffmann/neovim";
+      flake = false;
+    };
+
+    dotfiles = {
+      url = "github:choffmann/dotfiles";
+      flake = false;
     };
   };
 

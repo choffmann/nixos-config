@@ -19,6 +19,7 @@ in
 {
   imports = [ inputs.sops-nix.nixosModules.sops ];
 
+
   sops = {
     defaultSopsFile = "${secretsFile}";
     validateSopsFiles = false;
@@ -39,12 +40,12 @@ in
       # the age key.
       # These age keys are are unique for the user on each host and are generated on their own (i.e. they are not derived
       # from an ssh key).
-      # "user_age_keys/${configVars.username}_${config.networking.hostName}" = {
-      #   owner = config.users.users.${configVars.username}.name;
-      #   inherit (config.users.users.${configVars.username}) group;
-      #   # We need to ensure the entire directory structure is that of the user...
-      #   path = "${homeDirectory}/.config/sops/age/keys.txt";
-      # };
+      "user_age_keys/${configVars.username}_${config.networking.hostName}" = {
+        owner = config.users.users.${configVars.username}.name;
+        inherit (config.users.users.${configVars.username}) group;
+        # We need to ensure the entire directory structure is that of the user...
+        path = "${homeDirectory}/.config/sops/age/keys.txt";
+      };
 
       # extract username/password to /run/secrets-for-users/ so it can be used to create the user
       "${configVars.username}/password".neededForUsers = true;

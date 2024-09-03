@@ -1,12 +1,8 @@
-{ config, pkgs, ... }:
-let
-  nixProjectPath = "${config.home.homeDirectory}/.config/nixos-config";
-in
+{pkgs, inputs, config, ...}:
 {
-  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${nixProjectPath}/home/neovim/config";
+  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink inputs.neovim;
 
   home.packages = with pkgs; [
-    neovim
     go
     ripgrep
     gnumake
@@ -23,10 +19,9 @@ in
   ];
 
   programs.neovim = {
-    enable = false;
+    enable = true;
     viAlias = true;
     vimAlias = true;
     defaultEditor = true;
   };
-
 }

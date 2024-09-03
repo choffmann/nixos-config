@@ -30,6 +30,10 @@ let
   };
 in
 {
+  imports = (configLib.scanPaths ./.) 
+    ++ [
+      inputs.stylix.nixosModules.stylix
+    ];
   config =
     lib.recursiveUpdate fullUserConfig
       #this is the second argument to recursiveUpdate

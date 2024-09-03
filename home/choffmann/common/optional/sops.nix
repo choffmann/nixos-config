@@ -7,6 +7,11 @@ in
     inputs.sops-nix.homeManagerModules.sops
   ];
 
+  home.packages = with pkgs; [
+    sops
+    age
+  ];
+
   sops = {
     age.keyFile = "${homeDirectory}/.config/sops/age/keys.txt";
 

@@ -29,6 +29,8 @@
 
   networking = {
     hostName = "macbook";
+    networkmanager.enable = true;
+    enableIPv6 = false;
   };
 
   services.gnome.gnome-keyring.enable = true;
