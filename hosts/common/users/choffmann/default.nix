@@ -30,19 +30,15 @@ let
   };
 in
 {
-  imports = (configLib.scanPaths ./.) 
-    ++ [
-      inputs.stylix.nixosModules.stylix
-    ];
   config =
     lib.recursiveUpdate fullUserConfig
-      #this is the second argument to recursiveUpdate
       {
         users.mutableUsers = false; # Only allow declarative credentials; Required for sops
         users.users.${configVars.username} = {
           home = "/home/${configVars.username}";
           isNormalUser = true;
-          password = "nixos"; # Overridden if sops is working
+          initialPassword = "geheim";
+          password = "geheim"; # Overridden if sops is working
 
           extraGroups =
             [ "wheel" ]
@@ -60,6 +56,7 @@ in
         # Proper root use required for borg and some other specific operations
         users.users.root = {
           hashedPasswordFile = config.users.users.${configVars.username}.hashedPasswordFile;
+          initialPassword = "geheim";
           password = lib.mkForce config.users.users.${configVars.username}.password;
           # root's ssh keys are mainly used for remote deployment.
           openssh.authorizedKeys.keys = config.users.users.${configVars.username}.openssh.authorizedKeys.keys;

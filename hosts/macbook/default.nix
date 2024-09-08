@@ -15,8 +15,9 @@
     ++ (map configLib.relativeToRoot [
       "hosts/common/core"
 
+      "hosts/common/optional/services/openssh.nix"
+
       # Desktop
-      "hosts/common/optional/services/openssh.nix" # display manager
       "hosts/common/optional/i3.nix" # window manager
 
       # Users to create
@@ -26,6 +27,9 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  home-manager.backupFileExtension = "backup";
+
 
   networking = {
     hostName = "macbook";
