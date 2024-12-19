@@ -19,6 +19,7 @@
     ../common/i3
     ../common/zsh
     ../common/lazygit
+    ./sops.nix
   ];
 
   nixpkgs = {
