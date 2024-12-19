@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, outputs, ... }:
 let
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
   choPubKeys = pkgs.fetchurl {
@@ -101,6 +101,13 @@ in
           "git"
           "networkmanager"
         ];
+    };
+  };
+
+    home-manager = {
+    extraSpecialArgs = { inherit inputs outputs; };
+    users = {
+      choffmann = import ../home-manager/home.nix;
     };
   };
 
