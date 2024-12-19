@@ -21,10 +21,13 @@ in
       ];
   };
 
+  programs.zsh.enable = true;
+
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
       choffmann = import ../../../home-manager/home.nix;
     };
+    backupFileExtension = "backup";
   };
 }

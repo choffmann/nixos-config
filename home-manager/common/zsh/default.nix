@@ -3,8 +3,8 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    enableLsColors = true;
-    enableBashCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
     shellAliases = {
       ll = "ls -l";
       la = "ls -lah";
@@ -20,7 +20,6 @@
       enable = true;
       plugins = [
         "git"
-        "nix"
       ];
     };
   };
