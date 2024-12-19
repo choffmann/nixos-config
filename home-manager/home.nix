@@ -20,6 +20,7 @@
     # ./nvim.nix
     ./common/i3
     ./common/zsh
+    ./common/lazygit
   ];
 
   nixpkgs = {
