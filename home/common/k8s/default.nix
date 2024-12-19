@@ -5,11 +5,10 @@ in
 {
   sops.secrets."k8s/config/green-ecolution" = {};
 
-  home.packages = [ pkgs.kubectl ];
   home.sessionVariables.KUBECONFIG = "${homeDir}/.kube/config";
 
   home.activation = {
-    mergeKubeConfig = lib.mkAfter ''
+    mergeKubeConfig = lib.hm.dag.entryAfter [ "sops-nix" ] ''
       mkdir -p ~/.kube
 
       export PATH=${pkgs.kubectl}/bin:$PATH
@@ -20,4 +19,13 @@ in
       chmod 600 ${homeDir}/.kube/config
     '';
   };
+
+  home.packages = with pkgs; [ 
+    kubectl
+    doctl
+    kubectx
+    minikube
+  ];
+
+  programs.k9s.enable = true;
 }
