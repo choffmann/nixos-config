@@ -19,6 +19,7 @@
     ../common/i3
     ../common/zsh
     ../common/lazygit
+    ../common/k8s
     ./sops.nix
   ];
 

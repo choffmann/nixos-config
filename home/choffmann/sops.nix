@@ -9,6 +9,5 @@
     defaultSopsFormat = "yaml";
 
     age.keyFile = "/home/choffmann/.config/sops/age/keys.txt";
-    secrets."k8s/config/green-ecolution" = { };
   };
 }
