@@ -25,6 +25,6 @@
       me-accept-entry = "MousePrimary";
       kb-cancel = "Escape,MouseMiddle";
     };
-    theme = "catppuccino-mocha";
+    theme = "catppuccin-mocha";
   };
 }

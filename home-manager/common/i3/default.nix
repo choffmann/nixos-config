@@ -2,6 +2,7 @@
 {
   imports = [ 
     ../rofi
+    ../alacritty
   ];
 
   home.file.".config/i3" = {
