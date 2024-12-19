@@ -8,6 +8,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../common/i3
+      ../common/docker
       ../users/choffmann
       inputs.home-manager.nixosModules.default
     ];
