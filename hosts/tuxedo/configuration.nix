@@ -2,19 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, outputs, ... }:
-let
-  ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
-  choPubKeys = pkgs.fetchurl {
-    url = "https://github.com/choffmann.keys";
-    sha256 = "a20843af96a6254e11b8d506a38ee7d8a651280b2397b7abbf5b7f85760da3fe";
-  };
-in
+{ pkgs, inputs, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../common/i3
+      ../users/choffmann
       inputs.home-manager.nixosModules.default
     ];
 
@@ -87,31 +81,6 @@ in
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users = {
-    choffmann = {
-      initialPassword = "geheim";
-      isNormalUser = true;
-      openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile choPubKeys);
-      extraGroups =
-        [ "wheel" ]
-        ++ ifTheyExist [
-          "docker"
-          "git"
-          "networkmanager"
-        ];
-    };
-  };
-
-    home-manager = {
-    extraSpecialArgs = { inherit inputs outputs; };
-    users = {
-      choffmann = import ../../home-manager/home.nix;
-    };
-  };
-
-  # Install firefox.
-  programs.firefox.enable = true;
-  programs.zsh.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -159,5 +128,4 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
-
 }
