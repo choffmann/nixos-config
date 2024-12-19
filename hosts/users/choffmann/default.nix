@@ -26,7 +26,7 @@ in
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
-      choffmann = import ../../../home-manager/home.nix;
+      choffmann = import ../../../home/choffmann;
     };
     backupFileExtension = "backup";
   };
