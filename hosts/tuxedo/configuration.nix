@@ -14,6 +14,7 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../common/i3
       inputs.home-manager.nixosModules.default
     ];
 
@@ -51,20 +52,17 @@ in
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "alt-intl";
-  };
-
-  # Configure console keymap
-  console.keyMap = "dvorak";
+  # services.xserver.xkb = {
+  #   layout = "us";
+  #   variant = "alt-intl";
+  # };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -107,7 +105,7 @@ in
     home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
-      choffmann = import ../home-manager/home.nix;
+      choffmann = import ../../home-manager/home.nix;
     };
   };
 
