@@ -22,6 +22,7 @@
     ../common/lazygit
     ../common/k8s
     ../common/cli-tools
+    ../common/nvim
   ];
 
   nixpkgs = {
