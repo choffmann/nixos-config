@@ -2,10 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, outputs, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
+      outputs.nixosModules.yubikey
+
       inputs.home-manager.nixosModules.default
       inputs.nixos-hardware.nixosModules.common-cpu-intel
       inputs.nixos-hardware.nixosModules.common-pc-laptop
@@ -16,6 +18,8 @@
       ../common/docker
       ../common/spotify
       ../common/fonts
+      ../common/yubikey
+
       ../common/stylix/default.nix
       ../users/choffmann
     ];

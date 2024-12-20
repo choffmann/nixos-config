@@ -13,5 +13,11 @@
     defaultSopsFormat = "yaml";
 
     age.keyFile = "/home/choffmann/.config/sops/age/keys.txt";
+
+    secrets = {
+      "ssh_keys/yubi" = {
+        path = "${config.home.homeDirectory}/.ssh/id_yubi";
+      };
+    };
   };
 }

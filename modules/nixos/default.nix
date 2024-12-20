@@ -1,0 +1,3 @@
+{
+  yubikey = import ./yubikey;
+}
