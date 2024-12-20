@@ -9,6 +9,7 @@
       ./hardware-configuration.nix
       ../common/i3
       ../common/docker
+      ../common/stylix/progeek.nix
       ../users/choffmann
       inputs.home-manager.nixosModules.default
     ];
