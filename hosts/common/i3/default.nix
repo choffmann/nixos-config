@@ -1,6 +1,10 @@
 {config, pkgs, ...}:
 
 {
+  imports = [
+    ../desktop/x11
+  ];
+
   services.xserver = {
     enable = true;
     desktopManager = {xterm.enable=false;};
