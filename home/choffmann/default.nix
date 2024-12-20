@@ -15,12 +15,13 @@
 
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
+    ./sops.nix
 
     ../common/i3
     ../common/zsh
     ../common/lazygit
     ../common/k8s
-    ./sops.nix
+    ../common/cli-tools
   ];
 
   nixpkgs = {
