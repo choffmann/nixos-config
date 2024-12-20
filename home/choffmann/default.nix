@@ -24,6 +24,7 @@
     ../common/cli-tools
     ../common/nvim
     ../common/chromium
+    ../common/discord
   ];
 
   nixpkgs = {
