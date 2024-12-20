@@ -1,9 +1,5 @@
 { pkgs, ...}:
 {
-  home.file.".config/rofi/catppuccin-mocha.rasi" = {
-    source = ./catppuccin-mocha.rasi;
-  };
-
   programs.rofi = {
     enable = true;
     extraConfig = {
@@ -25,6 +21,5 @@
       me-accept-entry = "MousePrimary";
       kb-cancel = "Escape,MouseMiddle";
     };
-    theme = "catppuccin-mocha";
   };
 }
