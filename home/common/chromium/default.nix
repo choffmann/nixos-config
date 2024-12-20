@@ -6,6 +6,11 @@
       # bitwarden
       "nngceckbapebfimnlniiiahkandclblb"
     ];
+
+    commandLineArgs = [
+      "--ignore-gpu-blocklist"
+      "--enable-zero-copy"
+    ];
   };
 }
 
