@@ -19,6 +19,7 @@
       ../common/spotify
       ../common/fonts
       ../common/yubikey
+      ../common/sops
 
       ../common/stylix/default.nix
       ../users/choffmann

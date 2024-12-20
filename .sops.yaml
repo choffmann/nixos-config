@@ -1,9 +1,11 @@
 keys:
-  - &primary age1mvm3yv2tw7d6neus8hkefdhny9ja4qyzk229vpzhhd3wc6nr8c8sqev2st
-  - &tuxedo age1g37dyafq30s2alae6er7e243raj0uhfpwxlatxq7axe64uf3cclqtgdh0c
+  - &users:
+    - &choffmann age1mvm3yv2tw7d6neus8hkefdhny9ja4qyzk229vpzhhd3wc6nr8c8sqev2st
+  - &hosts:
+    - &tuxedo age1nks4y4mmsdksg33gnpk20r40seckj0449vzmdqtyk5j2jzjqvpsqmm34tx
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
       - age:
-          - *primary
+          - *choffmann
           - *tuxedo
