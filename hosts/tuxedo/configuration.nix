@@ -15,7 +15,7 @@
       ../common/i3
       ../common/docker
       ../common/fonts
-      ../common/stylix/progeek.nix
+      ../common/stylix/default.nix
       ../users/choffmann
     ];
 
