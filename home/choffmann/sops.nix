@@ -4,6 +4,10 @@
     inputs.sops-nix.homeManagerModules.sops
   ];
 
+  home.packages = with pkgs; [
+    sops
+  ];
+
   sops = {
     defaultSopsFile = ../../secrets/secrets.yaml;
     defaultSopsFormat = "yaml";

@@ -1,5 +1,7 @@
 {pkgs, ...}:
 {
+  home.sessionVariables.EDITOR = "nvim";
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -15,6 +17,8 @@
       kctx = "kubectx";
       clr = "clear";
       open = "xdg-open";
+      vi = "nvim";
+      vim = "nvim";
     };
     oh-my-zsh = {
       enable = true;

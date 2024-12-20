@@ -17,10 +17,7 @@
     stylix.url = "github:danth/stylix";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    neovim = {
-      url = "github:choffmann/neovim";
-      flake = false;
-    };
+    neovim.url = "github:choffmann/nixvim";
   };
 
   outputs = {

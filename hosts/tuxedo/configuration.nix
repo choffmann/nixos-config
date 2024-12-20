@@ -100,6 +100,10 @@
     git
   ];
 
+  environment.variables = {
+    EDITOR = "nvim";
+  };
+
   hardware.tuxedo-rs = {
     enable = true;
     tailor-gui.enable = true;
