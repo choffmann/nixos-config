@@ -23,6 +23,7 @@
     ../common/k8s
     ../common/cli-tools
     ../common/nvim
+    ../common/chromium
   ];
 
   nixpkgs = {
@@ -59,7 +60,11 @@
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
-  programs.git.enable = true;
+  programs.git = {
+    enable = true;
+    userEmail = "dev@choffmann.io";
+    userName = "Cedrik Hoffmann";
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
