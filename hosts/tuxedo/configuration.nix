@@ -14,6 +14,7 @@
 
       ../common/i3
       ../common/docker
+      ../common/spotify
       ../common/fonts
       ../common/stylix/default.nix
       ../users/choffmann
