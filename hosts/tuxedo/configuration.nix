@@ -6,13 +6,17 @@
 {
   imports =
     [ # Include the results of the hardware scan.
+      inputs.home-manager.nixosModules.default
+      inputs.nixos-hardware.nixosModules.common-cpu-intel
+      inputs.nixos-hardware.nixosModules.common-pc-laptop
+      inputs.nixos-hardware.nixosModules.common-pc-ssd
       ./hardware-configuration.nix
+
       ../common/i3
       ../common/docker
       ../common/fonts
       ../common/stylix/progeek.nix
       ../users/choffmann
-      inputs.home-manager.nixosModules.default
     ];
 
   # Bootloader.
@@ -95,6 +99,11 @@
     wget
     git
   ];
+
+  hardware.tuxedo-rs = {
+    enable = true;
+    tailor-gui.enable = true;
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

@@ -15,6 +15,7 @@
 
     sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:danth/stylix";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs = {
