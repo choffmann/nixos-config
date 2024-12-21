@@ -65,6 +65,14 @@
           ./hosts/tuxedo/configuration.nix
         ];
       };
+
+      homepc = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          # > Our main nixos configuration file <
+          ./hosts/homepc/configuration.nix
+        ];
+      };
     };
   };
 }
