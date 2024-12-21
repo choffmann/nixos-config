@@ -20,6 +20,7 @@
       ../common/fonts
       ../common/yubikey
       ../common/sops
+      ../common/ssh
 
       ../common/stylix/default.nix
       ../users/choffmann
@@ -124,18 +125,6 @@
   # };
 
   # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    settings = {
-      # Opinionated: forbid root login through SSH.
-      PermitRootLogin = "no";
-      # Opinionated: use keys only.
-      # Remove if you want to SSH using passwords
-      PasswordAuthentication = false;
-    };
-  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

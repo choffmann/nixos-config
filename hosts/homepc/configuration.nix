@@ -23,6 +23,7 @@
     ../common/fonts
     ../common/yubikey
     ../common/sops
+    ../common/ssh
 
     ../common/stylix/default.nix
     ../users/choffmann
@@ -33,7 +34,7 @@
   boot.loader.grub.device = "/dev/nvme0n1";
   boot.loader.grub.useOSProber = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "home-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
