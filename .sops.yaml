@@ -1,4 +1,5 @@
 keys:
+  - &fallback age1ha9wjtcmzu49nceqah00f70t4r2s7uzgqkt76quxkpgfzhz4u4aqagnr7x
   - &users:
     - &choffmann age1mvm3yv2tw7d6neus8hkefdhny9ja4qyzk229vpzhhd3wc6nr8c8sqev2st
   - &hosts:
@@ -9,3 +10,4 @@ creation_rules:
       - age:
           - *choffmann
           - *tuxedo
+          - *fallback
