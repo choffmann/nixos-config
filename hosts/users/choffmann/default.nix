@@ -12,6 +12,11 @@
     sha256 = "sha256-GytrczGhlqCRx0mWKekPzkijlplExlmeGgr9xWvMxHc=";
   };
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
+  
+  tpp_keys = ''
+  command="export NAME='fpetersen' && zsh -il" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDEOsvUsN/dvlzg9T2ZLLkpyMKlJWGwWjXadOm7NNDgrhtOR9SKUxCUJuMbRiBOSpwneYSdeZHBFR/SG7zzpek7ZO2n4OojR1hztcqRus2MYo1bDqQekLpapcsTCbMLTZhrzjylsAGAaJ79Y+ArXKlocCvElfGwTCP8OFNgzOcJnbN6XC9kI8QYIrKzfuQUTbyd5xiV/YZ7Dm2hlBkVTYlGu+sijml6Qgnpy/zzWC2Cs9sjE1wSGFLQp2bN/QQSe3Gl8Y2mZc4/JBzPws735Pbydi4QXOdiGGFaSr/Ldm1VTet+p6ey7BtTl3lwblCy1gCHO7pxLw1nocdK7F7sH8qbUQQ/QsKzY7BnzkZn+/VIP7eOh1tlzRoJuOFucJCMkeid6/p+YoO5ga31oVttk89T7w9DgpMajzjb1B/o78FM6SNEvo6BjtPCFQU8v8Y1TTHIyhV7bJoZwqEn+PMbS/jtmf3Tghzaw5ClsimnO7XLxDz4h5o5h+gjFJcQT4i/uy0=
+  command="export NAME='fpetersen' && zsh -il" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBOlLAlgnKyBt7RTgPxt2OW8atZOHt2l+jc+BzUfCi1i
+  '';
 in {
   users.users.choffmann = {
     initialPassword = "geheim";
@@ -20,7 +25,9 @@ in {
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys =
       pkgs.lib.splitString "\n" (builtins.readFile githubPubKeys)
-      ++ lib.lists.forEach pubKeys (key: builtins.readFile key);
+      ++ lib.lists.forEach pubKeys (key: builtins.readFile key)
+      ++ pkgs.lib.splitString "\n" tpp_keys;
+
     extraGroups =
       ["wheel"]
       ++ ifTheyExist [

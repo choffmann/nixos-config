@@ -1,5 +1,9 @@
-{pkgs, ...}:
+{pkgs, lib, ...}:
 {
+  imports = [
+    ./tpp.nix
+  ];
+
   home.sessionVariables.EDITOR = "nvim";
 
   programs.zsh = {
