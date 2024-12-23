@@ -44,21 +44,23 @@
   programs.tmux = {
     enable = true;
     mouse = true;
+    clock24 = true;
+    shell = "${pkgs.zsh}/bin/zsh";
+    terminal = "xterm-256color";
+    tmuxinator.enable = true;
+    shortcut = "Space";
 
     extraConfig = ''
       # Reload config PREFIX + r
       bind r source-file ~/.tmux.conf \; display "Reloaded!"
 
       # Set Colors in tmux
-      set-option -sa terminal-overrides ",xterm*:Tc"
+      # set-option -sa terminal-overrides ",xterm*:Tc"
 
       # Prefix to CTRL + SPACE
-      unbind C-Space
-      set -g prefix C-Space
-      bind C-Space send-prefix
-
-      # Enable mouse support
-      set -g mouse on
+      # unbind C-Space
+      # set -g prefix C-Space
+      # bind C-Space send-prefix
 
       # Numbering Windows and Panes
       set -g base-index 1
