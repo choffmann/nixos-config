@@ -22,6 +22,11 @@
     enableZshIntegration = true;
   };
 
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   programs.bat.enable = true;
   programs.yazi = {
     enable = true;
@@ -29,7 +34,6 @@
   };
 
   programs.jq.enable = true;
-
   programs.ranger.enable = true;
 
   programs.lf = {
