@@ -18,6 +18,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     neovim.url = "github:choffmann/nixvim";
+    ghostty.url = "github:ghostty-org/ghostty";
   };
 
   outputs = {

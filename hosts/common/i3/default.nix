@@ -1,8 +1,12 @@
-{config, pkgs, ...}:
+{config, pkgs, inputs, ...}:
 
 {
   imports = [
     ../desktop/x11
+  ];
+
+  environment.systemPackages = [
+    inputs.ghostty.packages.x86_64-linux.default
   ];
 
   services.xserver = {
