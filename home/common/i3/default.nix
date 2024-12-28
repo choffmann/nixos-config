@@ -2,7 +2,8 @@
 {
   imports = [ 
     ../rofi
-    ../alacritty
+    # ../alacritty
+    ../ghostty
   ];
 
   home.file.".config/i3" = {

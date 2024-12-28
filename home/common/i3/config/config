@@ -12,7 +12,7 @@
 # Mod4 -> Super
 
 set $mod Mod1
-set $term alacritty
+set $term ghostty
 set $browser chromium --profile-directory=Default
 set $spotify "chromium --profile-directory=Default --app-id=pjibgclleladliembfgfagdaldikeohf --app-launch-url-for-shortcuts-menu-item=https://open.spotify.com/intl-de"
 set $i3lockwall betterlockscreen -l dim
