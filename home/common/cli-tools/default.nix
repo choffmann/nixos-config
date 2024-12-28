@@ -53,6 +53,8 @@
     terminal = "xterm-256color";
     tmuxinator.enable = true;
     shortcut = "Space";
+    baseIndex = 1;
+    keyMode = "vi";
 
     extraConfig = ''
       # Reload config PREFIX + r
