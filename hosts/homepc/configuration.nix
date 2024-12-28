@@ -26,7 +26,7 @@
     ../common/sops
     ../common/ssh
     ../common/services/common.nix
-    ../common/services/sound.nix
+    ../common/audio
 
     ../common/stylix/default.nix
     ../users/choffmann
