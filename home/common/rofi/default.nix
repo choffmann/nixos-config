@@ -1,25 +1,21 @@
-{ pkgs, ...}:
-{
+{pkgs, config, ...}: {
+  home.file.".local/share/rofi/themes" = {
+    source = ./themes;
+    recursive = true;
+  };
+
+  home.file.".config/rofi/config.rasi" = {
+    source = ./config.rasi;
+    recursive = true;
+  };
+
   programs.rofi = {
     enable = true;
-    extraConfig = {
-      modi = "run,drun,window";
-      font = "Noto Sans CJK JP 12";
-      show-icons = true;
-      disable-history = true;
-      hover-select = true;
-      bw = 0;
-      display-drun = "   Apps ";
-      display-run = "   Run ";
-      display-window = "   Window";
-      display-network = "   Network";
-      icon-theme = "Oranchelo";
-      terminal = "alacritty";
-      drun-match-fields = "name";
-      drun-display-format = "{icon} {name}";
-      me-select-entry = "";
-      me-accept-entry = "MousePrimary";
-      kb-cancel = "Escape,MouseMiddle";
+    package = pkgs.rofi-wayland;
+    pass = {
+      enable = true;
+      package = pkgs.rofi-pass-wayland;
     };
+    configPath = "$XDG_CONFIG_HOME/rofi/config.rasi";
   };
 }
