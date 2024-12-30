@@ -1,17 +1,24 @@
-{inputs, pkgs, ...}:
 {
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     inputs.stylix.nixosModules.stylix
   ];
+
+  boot.plymouth.enable = true;
 
   stylix = {
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
-    image = ../../../home/wallpaper/progeek/progeek-2.png;
+    image = ../../../home/wallpaper/vibrant-landscape.jpg;
+    imageScalingMode = "center";
 
     cursor.package = pkgs.bibata-cursors;
     cursor.name = "Bibata-Modern-Ice";
+    cursor.size = 25;
 
     fonts = {
       serif = {
@@ -44,17 +51,23 @@
     };
 
     fonts.sizes = {
-      applications = 12;
+      applications = 10;
       desktop = 10;
       terminal = 10;
       popups = 10;
     };
 
-     opacity = {
+    opacity = {
       applications = 0.8;
       terminal = 0.8;
       desktop = 1.0;
       popups = 1.0;
+    };
+
+    targets.nixvim = {
+      plugin = "base16-nvim";
+      transparentBackground.main = true;
+      transparentBackground.signColumn = true;
     };
 
     polarity = "dark";

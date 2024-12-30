@@ -1,18 +1,16 @@
-{lib, ...}:
-let
+{lib, ...}: let
   pathToKeys = ../../../hosts/users/choffmann/keys;
-  yubikeys = 
+  yubikeys =
     lib.lists.forEach (builtins.attrNames (builtins.readDir pathToKeys))
-      # Remove the .pub suffix
-      (key: lib.substring 0 (lib.stringLength key - lib.stringLength ".pub") key);
+    # Remove the .pub suffix
+    (key: lib.substring 0 (lib.stringLength key - lib.stringLength ".pub") key);
   yubikeyPublicKeyEntries = lib.attrsets.mergeAttrsList (
     lib.lists.map
-      # list of dicts
-      (key: {".ssh/${key}.pub".source = "${pathToKeys}/${key}.pub"; })
-      yubikeys
+    # list of dicts
+    (key: {".ssh/${key}.pub".source = "${pathToKeys}/${key}.pub";})
+    yubikeys
   );
-in 
-{
+in {
   programs.ssh = {
     enable = true;
     controlMaster = "auto";
@@ -34,7 +32,9 @@ in
     };
   };
 
-  home.file = {
-    ".ssh/sockets/.keep".text = "# Managed by Home Manager";
-  } // yubikeyPublicKeyEntries;
+  home.file =
+    {
+      ".ssh/sockets/.keep".text = "# Managed by Home Manager";
+    }
+    // yubikeyPublicKeyEntries;
 }

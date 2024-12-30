@@ -50,7 +50,7 @@
     mouse = true;
     clock24 = true;
     shell = "${pkgs.zsh}/bin/zsh";
-    terminal = "xterm-256color";
+    terminal = "xterm-ghostty";
     tmuxinator.enable = true;
     shortcut = "Space";
     baseIndex = 1;

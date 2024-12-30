@@ -17,7 +17,8 @@
     # inputs.nix-colors.homeManagerModules.default
     ./sops.nix
 
-    ../common/i3
+    # ../common/i3
+    ../common/hyprland
     ../common/zsh
     ../common/lazygit
     ../common/k8s
@@ -35,6 +36,8 @@
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
+
+      outputs.overlays.hyprpanel
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default

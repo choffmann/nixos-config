@@ -1,6 +1,5 @@
-{pkgs, ...}:
-{
-  imports = [ 
+{pkgs, ...}: {
+  imports = [
     ../rofi
     # ../alacritty
     ../ghostty

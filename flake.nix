@@ -19,6 +19,8 @@
 
     neovim.url = "github:choffmann/nixvim";
     ghostty.url = "github:ghostty-org/ghostty";
+
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
   };
 
   outputs = {

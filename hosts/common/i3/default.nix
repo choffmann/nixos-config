@@ -1,6 +1,9 @@
-{config, pkgs, inputs, ...}:
-
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     ../desktop/x11
   ];
@@ -10,8 +13,8 @@
   ];
 
   services.xserver = {
-    enable = true;
-    desktopManager = {xterm.enable=false;};
+    enable = false;
+    desktopManager = {xterm.enable = false;};
     displayManager = {
       defaultSession = "none+i3";
     };
