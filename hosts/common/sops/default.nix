@@ -17,7 +17,7 @@
     };
 
     secrets = {
-      "user_age_keys/${config.users.users.choffmann.name}" = {
+      "user_age_keys/keys.txt" = {
         owner = config.users.users.choffmann.name;
         inherit (config.users.users.choffmann) group;
         path = "/home/choffmann/.config/sops/age/keys.txt";
