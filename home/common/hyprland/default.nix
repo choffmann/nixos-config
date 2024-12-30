@@ -16,6 +16,7 @@
     enable = true;
     settings = {
       preload = [ "../../wallpaper/madeira.jpeg" ];
+      wallpaper = [ ", ../../wallpaper/madeira.jpeg" ]; 
     };
   };
 
@@ -153,13 +154,13 @@
           "$mod, l, movefocus, r"
           "$mod, j, movefocus, d"
           "$mod, k, movefocus, u"
-          "$mod, , exec, ${pkgs.hyprpanel} toggleWindow dashboardmenu"
-          "$mod, -, exec, ${pkgs.hyprpanel} toggleWindow powermenu"
+          "$mod, , exec, ${pkgs.hyprpanel}/bin/hyprpanel toggleWindow dashboardmenu"
+          "$mod, -, exec, ${pkgs.hyprpanel}/bin/hyprpanel toggleWindow powermenu"
 
-          ", XF86AudioPlay, exec, ${pkgs.playerctl} play-pause"
-          ", XF86AudioPause, exec, ${pkgs.playerctl} play-pause"
-          ", XF86AudioNext, exec, ${pkgs.playerctl} next"
-          ", XF86AudioNext, exec, ${pkgs.playerctl} previous"
+          ", XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
+          ", XF86AudioPause, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
+          ", XF86AudioNext, exec, ${pkgs.playerctl}/bin/playerctl next"
+          ", XF86AudioNext, exec, ${pkgs.playerctl}/bin/playerctl previous"
         ]
         ++ (
           # workspaces
