@@ -13,7 +13,7 @@
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
-    image = ../../../home/wallpaper/vibrant-landscape.jpg;
+    image = ../../../home/wallpaper/madeira.jpeg;
     imageScalingMode = "center";
 
     cursor.package = pkgs.bibata-cursors;

@@ -15,7 +15,7 @@
   services.hyprpaper = {
     enable = true;
     settings = {
-      preload = [ "../../wallpaper/vibrant-landscape.jpg" ];
+      preload = [ "../../wallpaper/madeira.jpeg" ];
     };
   };
 
@@ -49,6 +49,7 @@
       "$terminal" = "ghostty";
       "$fileManager" = "nautilus";
       "$menu" = "rofi -show drun -show-icons";
+      "$editor" = "nvim";
       input = {
         kb_layout = "us";
         kb_variant = "altgr-intl";
@@ -127,9 +128,10 @@
         "$mod, mouse:273, resizewindow"
       ];
 
-      debug = {
-        disable_logs = false;
-      };
+      binde = [
+        ", XF86AudioRaiseVolume, exec, ${pkgs.hyprpanel} vol 5"
+        ", XF86AudioLowerVolume, exec, ${pkgs.hyprpanel} vol -5"
+      ];
 
       bind =
         [
@@ -141,6 +143,8 @@
           "$mod, SPACE, exec, $menu"
           "$mod, I, fullscreen, 1"
           "$mod, SHIFT I, fullscreen, 0"
+          "$mod, T, togglesplit"
+          "$mod, P, pseudo"
           "$mod, mouse_down, workspace, e+1" # Scroll through existing workspaces with mainMod + scroll
           "$mod, mouse_down, workspace, e-2" # Scroll through existing workspaces with mainMod + scroll
           "$mod, r, togglespecialworkspace, magic"
@@ -149,10 +153,13 @@
           "$mod, l, movefocus, r"
           "$mod, j, movefocus, d"
           "$mod, k, movefocus, u"
-          "$mod, SHIFT h, movefocus, l"
-          "$mod, SHIFT l, movefocus, r"
-          "$mod, SHIFT j, movefocus, d"
-          "$mod, SHIFT k, movefocus, u"
+          "$mod, , exec, ${pkgs.hyprpanel} toggleWindow dashboardmenu"
+          "$mod, -, exec, ${pkgs.hyprpanel} toggleWindow powermenu"
+
+          ", XF86AudioPlay, exec, ${pkgs.playerctl} play-pause"
+          ", XF86AudioPause, exec, ${pkgs.playerctl} play-pause"
+          ", XF86AudioNext, exec, ${pkgs.playerctl} next"
+          ", XF86AudioNext, exec, ${pkgs.playerctl} previous"
         ]
         ++ (
           # workspaces
