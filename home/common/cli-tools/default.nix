@@ -31,6 +31,12 @@
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
+    keymap = {
+      manager.prepend_keymap = [
+        { on = ["!"]; run = "shell \"$SHELL\" --block --confirm"; desc = "Open shell here"; }
+        { on = ["<Esc>"]; run = "close"; desc = "Cancel input"; }
+      ];
+    };
     settings = {
       manager = {
         show_hidden = true;
