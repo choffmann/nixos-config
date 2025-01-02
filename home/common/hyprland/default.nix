@@ -48,7 +48,7 @@
       ];
       "$mod" = "ALT";
       "$terminal" = "ghostty";
-      "$fileManager" = "nautilus";
+      "$fileManager" = "$terminal -e yazi";
       "$menu" = "rofi -show drun -show-icons";
       "$editor" = "nvim";
       input = {
@@ -130,8 +130,8 @@
       ];
 
       binde = [
-        ", XF86AudioRaiseVolume, exec, ${pkgs.hyprpanel} vol 5"
-        ", XF86AudioLowerVolume, exec, ${pkgs.hyprpanel} vol -5"
+        ", XF86AudioRaiseVolume, exec, ${pkgs.hyprpanel}/bin/hyprpanel vol 5"
+        ", XF86AudioLowerVolume, exec, ${pkgs.hyprpanel}/bin/hyprpanel vol -5"
       ];
 
       bind =

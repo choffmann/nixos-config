@@ -19,8 +19,8 @@
   "bar.launcher.autoDetectIcon": true,
   "bar.workspaces.showAllActive": false,
   "bar.workspaces.show_icons": false,
-  "bar.workspaces.showWsIcons": true,
-  "bar.workspaces.showApplicationIcons": true,
+  "bar.workspaces.showWsIcons": false,
+  "bar.workspaces.showApplicationIcons": false,
   "theme.bar.buttons.volume.enableBorder": false,
   "bar.volume.label": true,
   "bar.network.showWifiInfo": true,
@@ -80,5 +80,15 @@
   "bar.windowtitle.custom_title": false,
   "bar.customModules.ram.leftClick": "",
   "bar.customModules.ram.pollingInterval": 2000,
-  "menus.power.lowBatteryNotification": true
+  "menus.power.lowBatteryNotification": true,
+  "theme.bar.buttons.network.enableBorder": false,
+  "bar.network.truncation": true,
+  "bar.workspaces.applicationIconOncePerWorkspace": true,
+  "theme.bar.buttons.workspaces.smartHighlight": true,
+  "bar.workspaces.numbered_active_indicator": "underline",
+  "theme.bar.buttons.workspaces.enableBorder": false,
+  "bar.workspaces.workspaceMask": false,
+  "bar.workspaces.monitorSpecific": false,
+  "bar.workspaces.hideUnoccupied": false,
+  "bar.workspaces.show_numbered": true
 }
