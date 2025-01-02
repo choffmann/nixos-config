@@ -27,6 +27,7 @@ in {
         user = "git";
         identityFile = [
           "~/.ssh/id_yubikey" # auto symlink to yubikey
+          "~/.ssh/id_choffmann"
         ];
       };
     };

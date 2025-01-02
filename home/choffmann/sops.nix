@@ -18,6 +18,9 @@ in
     age.keyFile = "${homeDir}/.config/sops/age/keys.txt";
 
     secrets = {
+      "ssh_keys/choffmann" = {
+        path = "${homeDir}/.ssh/id_choffmann";
+      };
       "ssh_keys/yubi" = {
         path = "${homeDir}/.ssh/id_yubi";
       };
