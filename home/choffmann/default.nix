@@ -27,6 +27,7 @@
     ../common/chromium
     ../common/discord
     ../common/ssh
+    ../common/davinci
   ];
 
   nixpkgs = {
