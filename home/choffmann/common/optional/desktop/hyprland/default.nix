@@ -12,6 +12,11 @@
     polkit_gnome
     nwg-displays
     hyprpanel
+    hyprlock
+    nautilus
+
+    hyprshot
+    satty
   ];
 
   services.hyprpaper = {

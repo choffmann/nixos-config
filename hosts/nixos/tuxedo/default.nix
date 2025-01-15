@@ -36,6 +36,7 @@
     ../../common/optional/wayland.nix
     ../../common/optional/vlc.nix
     ../../common/optional/yubikey.nix
+    ../../common/optional/docker.nix
   ];
 
   hostSpec = {
@@ -82,7 +83,7 @@
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
-    image = ../../../home/wallpaper/madeira.jpeg;
+    image = ../../../home/wallpaper/progeek/progeek-2.png;
     imageScalingMode = "center";
 
     cursor.package = pkgs.bibata-cursors;

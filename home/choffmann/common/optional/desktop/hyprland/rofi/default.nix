@@ -2,9 +2,12 @@
   pkgs,
   lib,
   ...
-}: let
-  rofiTheme = builtins.readFile ./themes/catppuccin-mocha.rasi;
-in {
+}: {
+  home.file.".local/share/rofi/themes" = {
+    source = ./themes;
+    recursive = true;
+  };
+
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
@@ -27,6 +30,6 @@ in {
       display-Network = " 󰤨  Network";
       sidebar-mode = true;
     };
-    theme = lib.mkForce rofiTheme;
+    theme = lib.mkForce "catppuccin-mocha";
   };
 }

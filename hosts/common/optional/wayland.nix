@@ -1,5 +1,12 @@
 {pkgs, ...}: {
-  environment.systemPackages = [
-    pkgs.grim # screen capture component, required by flameshot
+  environment.sessionVariables = {
+    QT_QPA_PLATFORM = "wayland";
+  };
+
+  environment.systemPackages = with pkgs; [
+    grim # screen capture component, required by flameshot
+
+    grimblast
+    satty
   ];
 }
