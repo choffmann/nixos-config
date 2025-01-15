@@ -1,5 +1,5 @@
 {lib, ...}: let
-  pathToKeys = ../../../hosts/users/choffmann/keys;
+  pathToKeys = lib.custom.relativeToRoot "hosts/common/users/choffmann/keys";
   yubikeys =
     lib.lists.forEach (builtins.attrNames (builtins.readDir pathToKeys))
     # Remove the .pub suffix

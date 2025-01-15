@@ -4,9 +4,7 @@
   ...
 }: {
   imports = [
-    ../rofi
-    # ../alacritty
-    ../ghostty
+    ./rofi
   ];
 
   home.packages = with pkgs; [

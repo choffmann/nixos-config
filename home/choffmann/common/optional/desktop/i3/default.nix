@@ -1,8 +1,7 @@
 {pkgs, ...}: {
   imports = [
-    ../rofi
+    ./rofi
     # ../alacritty
-    ../ghostty
   ];
 
   home.file.".config/i3" = {

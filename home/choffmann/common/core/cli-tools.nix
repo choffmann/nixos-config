@@ -1,5 +1,4 @@
-{ pkgs, ...}:
-{
+{pkgs, ...}: {
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
@@ -10,8 +9,23 @@
     settings = {};
   };
 
-  programs.ripgrep.enable = true;
-  programs.btop.enable = true;
+  programs.bat = {
+    enable = true;
+    config = {
+      # Show line numbers, Git modifications and file header (but no grid)
+      style = "numbers,changes,header";
+      #      theme = "";
+    };
+    extraPackages = builtins.attrValues {
+      inherit
+        (pkgs.bat-extras)
+        batgrep # search through and highlight files using ripgrep
+        batdiff # Diff a file against the current git index, or display the diff between to files
+        batman
+        ; # read manpages using bat as the formatter
+    };
+  };
+
   programs.eza = {
     enable = true;
     enableZshIntegration = true;
@@ -20,21 +34,33 @@
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
+    options = [
+      "--cmd cd" # replace cd with z and zi (via cdi)
+    ];
   };
 
   programs.direnv = {
     enable = true;
+    enableBashIntegration = true;
     enableZshIntegration = true;
+    nix-direnv.enable = true; # better than native direnv nix functionality - https://github.com/nix-community/nix-direnv
   };
 
-  programs.bat.enable = true;
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
     keymap = {
       manager.prepend_keymap = [
-        { on = ["!"]; run = "shell \"$SHELL\" --block --confirm"; desc = "Open shell here"; }
-        { on = ["<Esc>"]; run = "close"; desc = "Cancel input"; }
+        {
+          on = ["!"];
+          run = "shell \"$SHELL\" --block --confirm";
+          desc = "Open shell here";
+        }
+        {
+          on = ["<Esc>"];
+          run = "close";
+          desc = "Cancel input";
+        }
       ];
     };
     settings = {
@@ -42,18 +68,6 @@
         show_hidden = true;
       };
     };
-  };
-
-  programs.jq.enable = true;
-  programs.ranger.enable = true;
-
-  programs.lf = {
-    enable = true;
-    settings = {
-      icons = true;
-    };
-    # keybindings = {};
-    # commands = {};
   };
 
   programs.tmux = {
@@ -107,16 +121,10 @@
     '';
 
     plugins = with pkgs.tmuxPlugins; [
-      { plugin = vim-tmux-navigator; }
-      { plugin = sensible; }
-      { plugin = tmux-fzf; }
-      { plugin = catppuccin; }
+      {plugin = vim-tmux-navigator;}
+      {plugin = sensible;}
+      {plugin = tmux-fzf;}
+      {plugin = catppuccin;}
     ];
   };
-
-  home.packages = with pkgs; [
-    yq-go
-    openssl
-    wget
-  ];
 }

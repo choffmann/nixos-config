@@ -1,8 +1,12 @@
-{pkgs, inputs, config, ...}:
-let
-  homeDir = config.home.homeDirectory;
-in 
 {
+  pkgs,
+  inputs,
+  config,
+  lib,
+  ...
+}: let
+  homeDir = config.home.homeDirectory;
+in {
   imports = [
     inputs.sops-nix.homeManagerModules.sops
   ];
@@ -12,7 +16,7 @@ in
   ];
 
   sops = {
-    defaultSopsFile = ../../secrets/secrets.yaml;
+    defaultSopsFile = lib.custom.relativeToRoot "secrets/secrets.yaml";
     defaultSopsFormat = "yaml";
 
     age.keyFile = "${homeDir}/.config/sops/age/keys.txt";

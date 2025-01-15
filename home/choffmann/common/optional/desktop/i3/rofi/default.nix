@@ -1,4 +1,4 @@
-{pkgs, config, ...}: {
+{pkgs, ...}: {
   home.file.".local/share/rofi/themes" = {
     source = ./themes;
     recursive = true;
@@ -11,11 +11,7 @@
 
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi-wayland;
-    pass = {
-      enable = true;
-      package = pkgs.rofi-pass-wayland;
-    };
+    package = pkgs.rofi;
     configPath = "$XDG_CONFIG_HOME/rofi/config.rasi";
   };
 }
