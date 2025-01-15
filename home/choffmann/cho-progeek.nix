@@ -7,6 +7,7 @@
     ./common/optional/discord.nix
     ./common/optional/brower
     ./common/optional/desktop/hyprland
+    ./common/optional/xdg.nix # file associations
   ];
 
   # services.yubikey-touch-detector.enable = true;

@@ -1,5 +1,4 @@
-{pkgs, lib, ...}:
-{
+{...}: {
   imports = [
     ./tpp.nix
   ];
@@ -10,6 +9,7 @@
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
+    autocd = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
       ll = "ls -l";
