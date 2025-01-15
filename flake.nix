@@ -72,11 +72,14 @@
         ];
       };
 
-      homepc = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
+      home-pc = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs outputs;
+          lib = nixpkgs.lib.extend (self: super: {custom = import ./lib {inherit (nixpkgs) lib;};});
+        };
         modules = [
           # > Our main nixos configuration file <
-          ./hosts/homepc/configuration.nix
+          ./hosts/nixos/home-pc
         ];
       };
     };

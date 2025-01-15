@@ -2,4 +2,5 @@
 # You can build them using 'nix build .#example'
 pkgs: {
   # example = pkgs.callPackage ./example { };
+  progeek-loading-plymouth-theme = pkgs.callPackage ./progeek-loading-plymouth-theme {};
 }

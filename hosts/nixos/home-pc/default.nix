@@ -5,16 +5,15 @@
   pkgs,
   inputs,
   outputs,
-  lib,
   ...
 }: {
   imports = [
-    # Include the results of the hardware scan.
     outputs.nixosModules.yubikey
+    outputs.nixosModules.nvidia
 
     inputs.home-manager.nixosModules.default
-    inputs.nixos-hardware.nixosModules.common-cpu-intel
-    inputs.nixos-hardware.nixosModules.common-pc-laptop
+    inputs.nixos-hardware.nixosModules.common-cpu-amd
+    # inputs.nixos-hardware.nixosModules.common-gpu-nvidia
     inputs.nixos-hardware.nixosModules.common-pc-ssd
     ./hardware-configuration.nix
 
@@ -26,7 +25,7 @@
 
     # optional
     ../../common/optional/services/mount.nix
-    ../../common/optional/services/greetd.nix
+    ../../common/optional/services/gdm.nix
     ../../common/optional/services/openssh.nix
     ../../common/optional/services/printing.nix
     ../../common/optional/services/xserver.nix
@@ -41,24 +40,26 @@
   ];
 
   hostSpec = {
-    hostName = "cho-progeek";
+    hostName = "home-pc";
     username = "choffmann";
     # useYubiKey = lib.mkForce true;
   };
 
-  networking = {
-    networkmanager.enable = true;
-    enableIPv6 = false;
-  };
-
   # Bootloader.
-  boot.loader = {
-    systemd-boot.enable = true;
-    systemd-boot.configurationLimit = lib.mkDefault 10;
-    efi.canTouchEfiVariables = true;
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/nvme0n1";
+    useOSProber = true;
   };
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
+
+  # Override nvidia stuff
+  services.xserver.videoDrivers = ["nvidia"];
+  hardware = {
+    graphics.enable = true;
+    nvidia.modesetting.enable = true;
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -84,7 +85,7 @@
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
-    image = ../../../home/wallpaper/progeek/progeek-2.png;
+    image = ../../../home/wallpaper/madeira.jpeg;
     imageScalingMode = "center";
 
     cursor.package = pkgs.bibata-cursors;

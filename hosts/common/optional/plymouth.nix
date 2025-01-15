@@ -10,9 +10,9 @@
     ];
     plymouth = {
       enable = true;
-      theme = lib.mkForce "hexagon_hud";
+      theme = lib.mkForce "ibm";
       themePackages = [
-        (pkgs.adi1090x-plymouth-themes.override {selected_themes = ["hexagon_hud"];})
+        (pkgs.adi1090x-plymouth-themes.override {selected_themes = ["ibm"];})
       ];
     };
     consoleLogLevel = 0;
