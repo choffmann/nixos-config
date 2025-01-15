@@ -62,10 +62,13 @@
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
       tuxedo = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
+        specialArgs = {
+          inherit inputs outputs;
+          lib = nixpkgs.lib.extend (self: super: {custom = import ./lib {inherit (nixpkgs) lib;};});
+        };
         modules = [
           # > Our main nixos configuration file <
-          ./hosts/tuxedo/configuration.nix
+          ./hosts/nixos/tuxedo
         ];
       };
 

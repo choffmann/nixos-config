@@ -4,13 +4,15 @@
   config,
   ...
 }: {
+  # TODO: Remove
+
   imports = [
     ../desktop/wayland
   ];
 
-  boot = {
-    extraModulePackages = [config.boot.kernelPackages.nvidia_x11];
-  };
+  # boot = {
+  #   extraModulePackages = [config.boot.kernelPackages.nvidia_x11];
+  # };
 
   environment.systemPackages = with pkgs; [
     inputs.ghostty.packages.x86_64-linux.default
@@ -19,12 +21,7 @@
     udiskie
     adwaita-icon-theme
     gnome-themes-extra
-    nvidia-vaapi-driver
-    gsettings-desktop-schemas
-    swaynotificationcenter
-    wlr-randr
-    ydotool
-
+    # nvidia-vaapi-driver
     wl-clipboard
     hyprland-protocols
     hyprpicker
@@ -34,16 +31,15 @@
     xdg-utils
     xdg-desktop-portal
     xdg-desktop-portal-gtk
+
     qt5.qtwayland
     qt6.qmake
     qt6.qtwayland
     adwaita-qt
     adwaita-qt6
 
-    waybar
     mako
     libnotify
-    wl-clipboard
     wlogout
 
     hyprlock
@@ -89,7 +85,7 @@
         variant = "altgr-intl";
       };
       excludePackages = [pkgs.xterm];
-      videoDrivers = ["nvidia"];
+      # videoDrivers = ["nvidia"];
       displayManager.gdm = {
         enable = true;
         wayland = true;
@@ -109,8 +105,8 @@
     xwayland.enable = true;
   };
 
-  hardware = {
-    graphics.enable = true;
-    nvidia.modesetting.enable = true;
-  };
+  # hardware = {
+  #   graphics.enable = true;
+  #   nvidia.modesetting.enable = true;
+  # };
 }

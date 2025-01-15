@@ -1,17 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}: {
-  imports = [
-    ../desktop/x11
-  ];
-
-  environment.systemPackages = [
-    inputs.ghostty.packages.x86_64-linux.default
-  ];
-
+{pkgs, ...}: {
   services.xserver = {
     enable = false;
     desktopManager = {xterm.enable = false;};
