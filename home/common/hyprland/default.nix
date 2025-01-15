@@ -1,4 +1,8 @@
-{pkgs, inputs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     ../rofi
     # ../alacritty
@@ -15,8 +19,8 @@
   services.hyprpaper = {
     enable = true;
     settings = {
-      preload = [ "../../wallpaper/madeira.jpeg" ];
-      wallpaper = [ ", ../../wallpaper/madeira.jpeg" ]; 
+      preload = ["../../wallpaper/madeira.jpeg"];
+      wallpaper = [", ../../wallpaper/madeira.jpeg"];
     };
   };
 
@@ -119,9 +123,8 @@
       };
 
       monitor = [
-        "HDMI-A-1,1920x1080@60.0,3440x0,1.0"
-        "HDMI-A-1,transform,3"
-        "DP-3,3440x1440@59.97,0x0,1.0"
+        "eDP-1,1920x1080@60.0,3440x0,1.0"
+        "DP-1,3440x1440@59.97,0x0,1.0"
       ];
 
       bindm = [

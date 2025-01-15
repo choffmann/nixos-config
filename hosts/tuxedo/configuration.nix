@@ -14,17 +14,18 @@
       inputs.nixos-hardware.nixosModules.common-pc-ssd
       ./hardware-configuration.nix
 
-      ../common/i3
-      ../common/docker
-      ../common/spotify
-      ../common/fonts
-      ../common/yubikey
-      ../common/sops
-      ../common/ssh
-      ../common/audio
+    ../common/hyprland
+    ../common/docker
+    ../common/spotify
+    ../common/fonts
+    ../common/yubikey
+    ../common/sops
+    ../common/ssh
+    ../common/services/common.nix
+    ../common/audio
 
-      ../common/stylix/default.nix
-      ../users/choffmann
+    ../common/stylix/default.nix
+    ../users/choffmann
     ];
 
   # Bootloader.
