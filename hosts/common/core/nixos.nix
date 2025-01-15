@@ -18,6 +18,13 @@
     Defaults env_keep+=SSH_AUTH_SOCK
   '';
 
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 20d --keep 20";
+    flake = "/home/user/${config.hostSpec.home}/nix-config";
+  };
+
   i18n.defaultLocale = lib.mkDefault "de_DE.UTF-8";
   time.timeZone = lib.mkDefault "Europe/Berlin";
 }

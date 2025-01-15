@@ -61,14 +61,14 @@
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
-      tuxedo = nixpkgs.lib.nixosSystem {
+      cho-progeek = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs outputs;
           lib = nixpkgs.lib.extend (self: super: {custom = import ./lib {inherit (nixpkgs) lib;};});
         };
         modules = [
           # > Our main nixos configuration file <
-          ./hosts/nixos/tuxedo
+          ./hosts/nixos/cho-progeek
         ];
       };
 
