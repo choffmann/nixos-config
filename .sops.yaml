@@ -4,6 +4,7 @@ keys:
     - &choffmann age1mvm3yv2tw7d6neus8hkefdhny9ja4qyzk229vpzhhd3wc6nr8c8sqev2st
   - &hosts:
     - &tuxedo age1nks4y4mmsdksg33gnpk20r40seckj0449vzmdqtyk5j2jzjqvpsqmm34tx
+    - &cho-progeek age1ct84sc7n2nwrmg65mwnqtjxjyk0d52nke860cg04lrphgn3zhctsrtvu4f
     - &homepc age19xaxx92erreapmscev25dswu8rygfpv3um28uwrt2tj6zl8qmgrqpq66r2
 creation_rules:
   - path_regex: secrets/secrets.yaml$
@@ -12,4 +13,5 @@ creation_rules:
           - *choffmann
           - *tuxedo
           - *homepc
+          - *cho-progeek
           - *fallback
