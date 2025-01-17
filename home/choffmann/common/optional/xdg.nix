@@ -1,5 +1,4 @@
 {pkgs, ...}: let
-  # FIXME:(xdg) That should use config options and just reference whatever is configured as the default
   browser = ["chromium.desktop"];
   editor = ["nvim.desktop"];
   media = ["vlc.desktop"];

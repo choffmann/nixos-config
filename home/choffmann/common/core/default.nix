@@ -12,6 +12,7 @@
     ./fonts.nix
     ./git.nix
     ./ssh.nix
+    ./xdg.nix
   ];
 
   home = {
