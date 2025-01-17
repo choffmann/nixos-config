@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   config,
   ...
 }: let
@@ -44,6 +43,12 @@ in {
     systemd.variables = ["--all"];
 
     settings = {
+      "$mod" = "ALT";
+      "$terminal" = "ghostty";
+      "$fileManager" = "$terminal -e yazi";
+      "$menu" = "rofi -show drun -show-icons";
+      "$editor" = "nvim";
+
       source = [
         monitorsConf
         workspacesConf
@@ -55,11 +60,7 @@ in {
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
         "nm-applet --indicator"
       ];
-      "$mod" = "ALT";
-      "$terminal" = "ghostty";
-      "$fileManager" = "$terminal -e yazi";
-      "$menu" = "rofi -show drun -show-icons";
-      "$editor" = "nvim";
+
       input = {
         kb_layout = "us";
         kb_variant = "altgr-intl";
@@ -132,6 +133,44 @@ in {
       #   "DP-1,3440x1440@59.97,0x0,1.0"
       # ];
 
+      workspace = [
+        "special:teams, on-created-empty:/usr/bin/env chromium --profile-directory=Default --app-id=cifhbcnohmdccbgoicgdjpfamggdegmo" # chrome://web-app-internals/
+        "special:terminal, on-created-empty:/usr/bin/env ghostty"
+      ];
+
+      windowrule = [
+        # Dialogs
+        "float, title:^(Open File)(.*)$"
+        "float, title:^(Select a File)(.*)$"
+        "float, title:^(Choose wallpaper)(.*)$"
+        "float, title:^(Open Folder)(.*)$"
+        "float, title:^(Save As)(.*)$"
+        "float, title:^(Library)(.*)$"
+        "float, title:^(Accounts)(.*)$"
+      ];
+      windowrulev2 = [
+        "float, class:^(galculator)$"
+        "float, class:^(waypaper)$"
+        "float, class:^(keymapp)$"
+
+        #
+        # ========== Always opaque ==========
+        #
+        "opaque, class:^([Gg]imp)$"
+        "opaque, class:^([Ff]lameshot)$"
+        "opaque, class:^([Ii]nkscape)$"
+        "opaque, class:^([Bb]lender)$"
+        "opaque, class:^([Oo][Bb][Ss])$"
+        "opaque, class:^([Ss]team)$"
+        "opaque, class:^([Ss]team_app_*)$"
+        "opaque, class:^([Vv]lc)$"
+
+        # Remove transparency from video
+        "opaque, title:^(Netflix)(.*)$"
+        "opaque, title:^(.*YouTube.*)$"
+        "opaque, title:^(Picture-in-Picture)$"
+      ];
+
       bindm = [
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
@@ -152,12 +191,19 @@ in {
           "$mod, SPACE, exec, $menu"
           "$mod, I, fullscreen, 1"
           "$mod, SHIFT I, fullscreen, 0"
-          "$mod, T, togglesplit"
+          "$mod, S, togglesplit"
           "$mod, P, pseudo"
           "$mod, mouse_down, workspace, e+1" # Scroll through existing workspaces with mainMod + scroll
           "$mod, mouse_down, workspace, e-2" # Scroll through existing workspaces with mainMod + scroll
           "$mod, r, togglespecialworkspace, magic"
           "$mod SHIFT, r, movetoworkspace, special:magic"
+
+          "$mod, T, togglespecialworkspace, teams"
+          "$mod SHIFT, T, movetoworkspace, special:teams"
+
+          "$mod, G, togglespecialworkspace, terminal"
+          "$mod SHIFT, G, movetoworkspace, special:terminal"
+
           "$mod, h, movefocus, l"
           "$mod, l, movefocus, r"
           "$mod, j, movefocus, d"
