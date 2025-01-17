@@ -9,6 +9,8 @@
 in {
   imports = [
     ./rofi
+    ./hyprlock.nix
+    ./hypridle.nix
   ];
 
   home.packages = with pkgs; [
@@ -16,7 +18,6 @@ in {
     polkit_gnome
     nwg-displays
     hyprpanel
-    hyprlock
     nautilus
 
     hyprshot
@@ -48,6 +49,7 @@ in {
       "$fileManager" = "$terminal -e yazi";
       "$menu" = "rofi -show drun -show-icons";
       "$editor" = "nvim";
+      "$lock" = "hyprlock";
 
       source = [
         monitorsConf
@@ -135,7 +137,7 @@ in {
 
       workspace = [
         "special:teams, on-created-empty:/usr/bin/env chromium --profile-directory=Default --app-id=cifhbcnohmdccbgoicgdjpfamggdegmo" # chrome://web-app-internals/
-        "special:terminal, on-created-empty:/usr/bin/env ghostty"
+        "special:terminal, on-created-empty:$terminal"
       ];
 
       windowrule = [
@@ -203,6 +205,8 @@ in {
 
           "$mod, G, togglespecialworkspace, terminal"
           "$mod SHIFT, G, movetoworkspace, special:terminal"
+
+          "$mod, y, exec, $lock"
 
           "$mod, h, movefocus, l"
           "$mod, l, movefocus, r"
