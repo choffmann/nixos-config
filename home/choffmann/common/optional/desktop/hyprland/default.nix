@@ -1,8 +1,13 @@
 {
   pkgs,
-  inputs,
+  lib,
+  config,
   ...
-}: {
+}: let
+  homeDir = config.home.homeDirectory;
+  workspacesConf = "${homeDir}/.config/hypr/workspaces.conf";
+  monitorsConf = "${homeDir}/.config/hypr/monitors.conf";
+in {
   imports = [
     ./rofi
   ];
@@ -18,14 +23,6 @@
     hyprshot
     satty
   ];
-
-  services.hyprpaper = {
-    enable = true;
-    settings = {
-      preload = ["../../wallpaper/madeira.jpeg"];
-      wallpaper = [", ../../wallpaper/madeira.jpeg"];
-    };
-  };
 
   home.sessionVariables = {
     GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
@@ -47,6 +44,11 @@
     systemd.variables = ["--all"];
 
     settings = {
+      source = [
+        monitorsConf
+        workspacesConf
+      ];
+
       exec-once = [
         "${pkgs.hyprpanel}/bin/hyprpanel"
         "${pkgs.hyprpaper}/bin/hyprpaper"
@@ -125,10 +127,10 @@
         swallow_regex = "^($terminal)$";
       };
 
-      monitor = [
-        "eDP-1,1920x1080@60.0,3440x0,1.0"
-        "DP-1,3440x1440@59.97,0x0,1.0"
-      ];
+      # monitor = [
+      #   "eDP-1,1920x1080@60.0,3440x0,1.0"
+      #   "DP-1,3440x1440@59.97,0x0,1.0"
+      # ];
 
       bindm = [
         "$mod, mouse:272, movewindow"
