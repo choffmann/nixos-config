@@ -45,6 +45,12 @@
     # useYubiKey = lib.mkForce true;
   };
 
+  networking = {
+    networkmanager.enable = true;
+    enableIPv6 = false;
+    firewall.enable = false;
+  };
+
   # Bootloader.
   boot.loader.grub = {
     enable = true;
@@ -78,7 +84,6 @@
     tailor-gui.enable = true;
   };
 
-  networking.firewall.enable = false;
   system.stateVersion = "24.11"; # Did you read the comment?
 
   stylix = {
