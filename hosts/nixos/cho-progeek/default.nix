@@ -26,14 +26,15 @@
 
     # optional
     ../../common/optional/services/mount.nix
-    ../../common/optional/services/greetd.nix
+    # ../../common/optional/services/greetd.nix
+    ../../common/optional/services/gdm.nix
     ../../common/optional/services/openssh.nix
     ../../common/optional/services/printing.nix
     ../../common/optional/services/xserver.nix
     ../../common/optional/audio.nix
     ../../common/optional/hyprland.nix
     ../../common/optional/obsidian.nix
-    ../../common/optional/plymouth.nix
+    # ../../common/optional/plymouth.nix
     ../../common/optional/wayland.nix
     ../../common/optional/vlc.nix
     ../../common/optional/yubikey.nix
@@ -55,7 +56,11 @@
   boot.loader = {
     systemd-boot.enable = true;
     systemd-boot.configurationLimit = lib.mkDefault 10;
-    efi.canTouchEfiVariables = true;
+  };
+
+  boot.loader.efi = {
+    canTouchEfiVariables = true;
+    efiSysMountPoint = "/boot/efi";
   };
 
   nix.settings.experimental-features = ["nix-command" "flakes"];

@@ -1,9 +1,5 @@
 # Core functionality for every nixos host
-{
-  config,
-  lib,
-  ...
-}: {
+{lib, ...}: {
   # Database for aiding terminal-based programs
   environment.enableAllTerminfo = true;
   # Enable firmware with a license allowing redistribution
@@ -22,7 +18,7 @@
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 20d --keep 20";
-    flake = "/home/user/${config.hostSpec.home}/nix-config";
+    flake = "/home/user/nixos-config";
   };
 
   i18n.defaultLocale = lib.mkDefault "de_DE.UTF-8";
