@@ -17,7 +17,7 @@
     stylix.url = "github:danth/stylix";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    neovim.url = "github:choffmann/nixvim";
+    # neovim.url = "github:choffmann/nixvim";
     ghostty.url = "github:ghostty-org/ghostty";
 
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";

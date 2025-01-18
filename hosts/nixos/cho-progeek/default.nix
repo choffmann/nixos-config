@@ -58,25 +58,10 @@
   boot.loader = {
     systemd-boot.enable = true;
     systemd-boot.configurationLimit = lib.mkDefault 10;
-  };
-
-  boot.loader.efi = {
-    canTouchEfiVariables = true;
-    efiSysMountPoint = "/boot/efi";
-  };
-
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [
-    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    git
-  ];
-
-  environment.variables = {
-    EDITOR = "nvim";
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/efi";
+    };
   };
 
   hardware.tuxedo-rs = {
@@ -84,6 +69,8 @@
     tailor-gui.enable = true;
   };
 
+  nixpkgs.config.allowUnfree = true;
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   system.stateVersion = "24.11"; # Did you read the comment?
 
   stylix = {

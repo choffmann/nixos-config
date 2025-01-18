@@ -79,16 +79,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [
-    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    git
-  ];
-
-  environment.variables = {
-    EDITOR = "nvim";
-  };
-
   system.stateVersion = "24.11"; # Did you read the comment?
 
   stylix = {

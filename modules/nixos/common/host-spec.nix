@@ -18,6 +18,13 @@
       type = lib.types.attrsOf lib.types.str;
       description = "The email of the user";
     };
+    flake = lib.mkOption {
+      type = lib.types.str;
+      description = "Location of flake";
+      default = let
+        home = config.hostSpec.home;
+      in "${home}/nixos-config";
+    };
     # FIXME: Set an assert to make sure this is set if isWork is true
     work = lib.mkOption {
       default = {};
