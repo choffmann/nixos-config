@@ -13,6 +13,10 @@ in {
     tree-sitter
     manix
     neovim
+    wl-clipboard
+    lua51Packages.lua
+    luarocks
+    nodejs
 
     # lsp
     lua-language-server
