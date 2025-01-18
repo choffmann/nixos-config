@@ -1,0 +1,3 @@
+[submodule "home/neovim"]
+	path = home/neovim
+	url = git@github.com:choffmann/neovim.git

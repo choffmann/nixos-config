@@ -6,8 +6,8 @@
 }: {
   imports = [
     ./ghostty
-    ./nvim
     ./zsh
+    ./neovim.nix
     ./cli-tools.nix
     ./fonts.nix
     ./git.nix
