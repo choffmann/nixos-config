@@ -61,6 +61,15 @@
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
+  virtualisation.vmVariant = {
+    # following configuration is added only when building VM with build-vm
+    virtualisation = {
+      memorySize = 2048; # Use 2048MiB memory.
+      cores = 4;
+      graphics = false;
+    };
+  };
+
   # Override nvidia stuff
   services.xserver.videoDrivers = ["nvidia"];
   hardware = {
@@ -78,11 +87,6 @@
 
   environment.variables = {
     EDITOR = "nvim";
-  };
-
-  hardware.tuxedo-rs = {
-    enable = true;
-    tailor-gui.enable = true;
   };
 
   system.stateVersion = "24.11"; # Did you read the comment?
