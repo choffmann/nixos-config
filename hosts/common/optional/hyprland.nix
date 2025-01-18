@@ -1,4 +1,12 @@
 {pkgs, ...}: {
+  environment.systemPackages = with pkgs; [
+    qt5.qtwayland
+    qt6.qmake
+    qt6.qtwayland
+    adwaita-qt
+    adwaita-qt6
+  ];
+
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
