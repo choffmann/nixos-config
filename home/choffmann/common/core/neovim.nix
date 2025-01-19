@@ -29,6 +29,7 @@ in {
     rustc
     cargo
     nixd
+    zls
 
     # formatter
     stylua
