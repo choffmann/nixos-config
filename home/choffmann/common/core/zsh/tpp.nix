@@ -1,16 +1,19 @@
-{pkgs, lib, config, ...}:
-let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   tpp_ngrok = pkgs.writeShellScriptBin "tpp_ngrok" (builtins.readFile ./scripts/tpp_ngrok.sh);
   tpp_ssh_startup = pkgs.writeShellScriptBin "tpp_ssh_startup" (builtins.readFile ./scripts/tpp_ssh_startup.sh);
-in 
-{
+in {
   # TODO: move to own module
 
   home.packages = with pkgs; [
     tmux
     yq-go
     ngrok
-    xclip
+    # xclip
+    wl-clipboard
   ];
 
   programs.zsh = {

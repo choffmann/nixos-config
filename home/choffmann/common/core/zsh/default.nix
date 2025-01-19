@@ -10,6 +10,7 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     autocd = true;
+    initExtra = builtins.readFile ./scripts/git_clone_with_fzf.sh;
     syntaxHighlighting.enable = true;
     shellAliases = {
       ll = "ls -l";
