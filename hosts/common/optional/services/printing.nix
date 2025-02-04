@@ -2,7 +2,7 @@
 {pkgs, ...}: {
   services.printing = {
     enable = true;
-    drivers = []; # TODO: find drivers
+    drivers = [pkgs.brgenml1lpr pkgs.brgenml1cupswrapper]; # TODO: find drivers
     #logging = "debug";
   };
 
