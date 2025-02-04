@@ -23,7 +23,7 @@ in {
 
     matchBlocks = {
       "git" = {
-        host = "gitlab.com github.com";
+        host = "gitlab.com github.com git.progeek.de";
         user = "git";
         identityFile = [
           "~/.ssh/id_yubikey" # auto symlink to yubikey
