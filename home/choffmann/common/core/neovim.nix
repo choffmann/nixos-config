@@ -21,6 +21,7 @@ in {
     # lsp
     lua-language-server
     gopls
+    typescript
     typescript-language-server
     tailwindcss-language-server
     vscode-langservers-extracted # jsonls
