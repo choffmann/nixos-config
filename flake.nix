@@ -14,12 +14,14 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     sops-nix.url = "github:Mic92/sops-nix";
-    stylix.url = "github:danth/stylix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    stylix.url = "github:danth/stylix/release-24.11";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # neovim.url = "github:choffmann/nixvim";
-    ghostty.url = "github:ghostty-org/ghostty";
-
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
   };
 
