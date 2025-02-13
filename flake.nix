@@ -22,7 +22,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # neovim.url = "github:choffmann/nixvim";
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    ags-bar.url = "github:choffmann/ags-bar";
   };
 
   outputs = {

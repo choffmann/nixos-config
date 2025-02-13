@@ -20,6 +20,4 @@
       config.allowUnfree = true;
     };
   };
-
-  hyprpanel = inputs.hyprpanel.overlay;
 }

@@ -1,6 +1,8 @@
 {
   pkgs,
   config,
+  inputs,
+  lib,
   ...
 }: let
   homeDir = config.home.homeDirectory;
@@ -14,10 +16,10 @@ in {
   ];
 
   home.packages = with pkgs; [
+    inputs.ags-bar.packages."x86_64-linux".default
     networkmanagerapplet
     polkit_gnome
     nwg-displays
-    hyprpanel
     nautilus
 
     hyprshot
@@ -57,7 +59,7 @@ in {
       ];
 
       exec-once = [
-        "${pkgs.hyprpanel}/bin/hyprpanel"
+        "${lib.getExe inputs.ags-bar.packages."x86_64-linux".default}"
         "${pkgs.hyprpaper}/bin/hyprpaper"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
         "nm-applet --indicator"
@@ -179,8 +181,6 @@ in {
       ];
 
       binde = [
-        ", XF86AudioRaiseVolume, exec, ${pkgs.hyprpanel}/bin/hyprpanel vol 5"
-        ", XF86AudioLowerVolume, exec, ${pkgs.hyprpanel}/bin/hyprpanel vol -5"
       ];
 
       bind =
@@ -212,8 +212,6 @@ in {
           "$mod, l, movefocus, r"
           "$mod, j, movefocus, d"
           "$mod, k, movefocus, u"
-          "$mod, , exec, ${pkgs.hyprpanel}/bin/hyprpanel toggleWindow dashboardmenu"
-          "$mod, -, exec, ${pkgs.hyprpanel}/bin/hyprpanel toggleWindow powermenu"
 
           ", XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
           ", XF86AudioPause, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
