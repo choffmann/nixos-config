@@ -29,7 +29,7 @@
       TERMINAL = "ghostty";
       VISUAL = "nvim";
       EDITOR = "nvim";
-      MANPAGER = "batman";
+      MANPAGER = "nvim +Man!";
     };
     preferXdgDirectories = true;
   };
@@ -39,6 +39,7 @@
     copyq # clipboard manager
     coreutils # basic gnu utils
     curl
+    manix # nix man pages
     eza # ls replacement
     dust # disk usage
     fd # tree style ls
@@ -65,6 +66,7 @@
     yq-go
     openssl
     wget
+    tealdeer # tldr
   ];
 
   nix = {
