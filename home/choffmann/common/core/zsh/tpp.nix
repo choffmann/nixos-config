@@ -14,11 +14,15 @@ in {
     ngrok
     # xclip
     wl-clipboard
+    manix
   ];
 
   programs.zsh = {
     shellAliases.tpp = "${lib.getBin tpp_ngrok}/bin/tpp_ngrok";
     shellAliases.tpp-kill = "pkill ngrok";
+    shellAliases.mx = ''
+      manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix '{}'" | xargs manix
+    '';
     initExtra = "source ${lib.getBin tpp_ssh_startup}/bin/tpp_ssh_startup";
   };
 }

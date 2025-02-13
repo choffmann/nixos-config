@@ -39,7 +39,6 @@
     copyq # clipboard manager
     coreutils # basic gnu utils
     curl
-    manix # nix man pages
     eza # ls replacement
     dust # disk usage
     fd # tree style ls
