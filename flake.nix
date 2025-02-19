@@ -23,6 +23,7 @@
 
     # neovim.url = "github:choffmann/nixvim";
     ags-bar.url = "github:choffmann/ags-bar";
+    ags-bar.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
