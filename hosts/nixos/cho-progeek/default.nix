@@ -25,6 +25,7 @@
     ../../common/core
 
     # optional
+    ../../common/optional/services/bluetooth.nix
     ../../common/optional/services/mount.nix
     # ../../common/optional/services/greetd.nix
     ../../common/optional/services/gdm.nix
