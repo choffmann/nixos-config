@@ -1,15 +1,19 @@
-{pkgs, config, lib, ...}:
-let
-  homeDir = config.home.homeDirectory;
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  homeDir = config.home.homeDirectory;
+in {
   sops.secrets."k8s/config/green-ecolution" = {};
   sops.secrets."k8s/config/k3s-cluster" = {};
+  sops.secrets."k8s/config/progeek" = {};
 
   home.sessionVariables.KUBECONFIG = "${homeDir}/.kube/config";
 
   home.activation = {
-    mergeKubeConfig = lib.hm.dag.entryAfter [ "sops-nix" ] ''
+    mergeKubeConfig = lib.hm.dag.entryAfter ["sops-nix"] ''
       mkdir -p ~/.kube
 
       if [ -f ${homeDir}/.kube/config ]; then
@@ -25,13 +29,13 @@ in
     '';
   };
 
-  home.packages = with pkgs; [ 
+  home.packages = with pkgs; [
     kubectl
     doctl
     kubectx
     minikube
     argocd
-    helm
+    kubernetes-helm
   ];
 
   programs.k9s.enable = true;
