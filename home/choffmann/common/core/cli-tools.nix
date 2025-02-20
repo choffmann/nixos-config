@@ -114,6 +114,7 @@ in {
     mouse = true;
     clock24 = true;
     shell = "${pkgs.zsh}/bin/zsh";
+    terminal = "tmux-256color";
     tmuxinator.enable = true;
     shortcut = "Space";
     baseIndex = 1;

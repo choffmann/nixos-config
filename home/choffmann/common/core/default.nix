@@ -25,7 +25,7 @@
     sessionVariables = {
       FLAKE = "$HOME/nixos-config";
       SHELL = "zsh";
-      TERM = "ghostty";
+      TERM = "xterm-ghostty";
       TERMINAL = "ghostty";
       VISUAL = "nvim";
       EDITOR = "nvim";
