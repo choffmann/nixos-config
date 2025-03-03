@@ -1,4 +1,5 @@
 {
+  pkgs,
   inputs,
   config,
   outputs,
@@ -20,6 +21,14 @@
   home-manager.useGlobalPkgs = true;
   home-manager.backupFileExtension = "bk";
 
+  # list of all packages with their versions
+  environment.etc."current-system-packages".text = let
+    packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
+    sortedUnique = builtins.sort builtins.lessThan (pkgs.lib.lists.unique packages);
+    formatted = builtins.concatStringsSep "\n" sortedUnique;
+  in
+    formatted;
+
   nixpkgs = {
     # You can add overlays here
     overlays = [
@@ -27,6 +36,7 @@
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
+      inputs.hyprpanel.overlay
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default

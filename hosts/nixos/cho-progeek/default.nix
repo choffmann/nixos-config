@@ -27,8 +27,7 @@
     # optional
     ../../common/optional/services/bluetooth.nix
     ../../common/optional/services/mount.nix
-    # ../../common/optional/services/greetd.nix
-    ../../common/optional/services/gdm.nix
+    ../../common/optional/services/display-manager/greetd.nix
     ../../common/optional/services/openssh.nix
     ../../common/optional/services/printing.nix
     ../../common/optional/services/xserver.nix

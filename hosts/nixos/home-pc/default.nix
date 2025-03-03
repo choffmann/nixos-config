@@ -13,7 +13,7 @@
 
     inputs.home-manager.nixosModules.default
     inputs.nixos-hardware.nixosModules.common-cpu-amd
-    # inputs.nixos-hardware.nixosModules.common-gpu-nvidia
+    inputs.nixos-hardware.nixosModules.common-gpu-nvidia
     inputs.nixos-hardware.nixosModules.common-pc-ssd
     ./hardware-configuration.nix
 
@@ -25,7 +25,7 @@
 
     # optional
     ../../common/optional/services/mount.nix
-    ../../common/optional/services/gdm.nix
+    ../../common/optional/services/display-manager/greetd.nix
     ../../common/optional/services/openssh.nix
     ../../common/optional/services/printing.nix
     ../../common/optional/services/xserver.nix
@@ -74,7 +74,11 @@
   services.xserver.videoDrivers = ["nvidia"];
   hardware = {
     graphics.enable = true;
-    nvidia.modesetting.enable = true;
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement.enable = false;
+      prime.offload.enable = false;
+    };
   };
 
   # Allow unfree packages
