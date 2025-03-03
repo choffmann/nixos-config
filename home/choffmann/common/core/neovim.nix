@@ -24,7 +24,7 @@ in {
     typescript
     typescript-language-server
     tailwindcss-language-server
-    vscode-langservers-extracted # jsonls
+    vscode-langservers-extracted # jsonls, html, css
     yaml-language-server
     rust-analyzer
     rustc
