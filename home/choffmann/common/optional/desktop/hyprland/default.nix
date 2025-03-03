@@ -20,6 +20,21 @@ in {
     nwg-displays
     nautilus
 
+    brightnessctl
+    cliphist
+    fuzzel
+    grim
+    hyprpicker
+    imagemagick
+    pavucontrol
+    playerctl
+    swappy
+    slurp
+    swww
+    wayshot
+    wlsunset
+    wl-clipboard
+    wf-recorder
     hyprshot
     satty
   ];
