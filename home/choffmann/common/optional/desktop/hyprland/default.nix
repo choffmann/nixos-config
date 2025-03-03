@@ -1,8 +1,6 @@
 {
   pkgs,
   config,
-  inputs,
-  lib,
   ...
 }: let
   homeDir = config.home.homeDirectory;
@@ -13,10 +11,10 @@ in {
     ./rofi
     ./hyprlock.nix
     ./hypridle.nix
+    ./hyprpanel.nix
   ];
 
   home.packages = with pkgs; [
-    inputs.ags-bar.packages."x86_64-linux".default
     networkmanagerapplet
     polkit_gnome
     nwg-displays
@@ -58,9 +56,12 @@ in {
         workspacesConf
       ];
 
+      xwayland = {
+        force_zero_scaling = true;
+      };
+
       exec-once = [
-        "${lib.getExe inputs.ags-bar.packages."x86_64-linux".default}"
-        "${pkgs.hyprpaper}/bin/hyprpaper"
+        # "${lib.getExe inputs.ags-bar.packages."x86_64-linux".default}"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
         "nm-applet --indicator"
       ];

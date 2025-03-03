@@ -6,7 +6,6 @@
     ./common/optional/sops.nix
     ./common/optional/discord.nix
     ./common/optional/brower
-    ./common/optional/davinci.nix
     ./common/optional/desktop/hyprland
     ./common/optional/xdg.nix # file associations
   ];
