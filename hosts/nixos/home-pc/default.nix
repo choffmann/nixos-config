@@ -56,7 +56,7 @@
   boot.loader.grub = {
     enable = true;
     device = "/dev/nvme0n1";
-    useOSProber = true;
+    useOSProber = false;
   };
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
