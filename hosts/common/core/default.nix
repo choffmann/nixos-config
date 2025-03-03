@@ -14,6 +14,7 @@
 
     ./nixos.nix
     ./sops.nix
+    ./cachix.nix
     ../users/choffmann
   ];
 
