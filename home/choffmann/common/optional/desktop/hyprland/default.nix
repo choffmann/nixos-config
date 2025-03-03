@@ -109,15 +109,26 @@ in {
 
       animations = {
         enabled = true;
-        bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
-
+        bezier = [
+          "md3_decel, 0.05, 0.7, 0.1, 1"
+          "md3_accel, 0.3, 0, 0.8, 0.15"
+          "overshot, 0.05, 0.9, 0.1, 1.1"
+          "crazyshot, 0.1, 1.5, 0.76, 0.92"
+          "hyprnostretch, 0.05, 0.9, 0.1, 1.0"
+          "fluent_decel, 0.1, 1, 0, 1"
+          "easeInOutCirc, 0.85, 0, 0.15, 1"
+          "easeOutCirc, 0, 0.55, 0.45, 1"
+          "easeOutExpo, 0.16, 1, 0.3, 1"
+        ];
         animation = [
-          "windows, 1, 7, myBezier"
-          "windowsOut, 1, 7, default, popin 80%"
+          "windows, 1, 3, md3_decel, popin 60%"
           "border, 1, 10, default"
-          "borderangle, 1, 8, default"
-          "fade, 1, 7, default"
-          "workspaces, 1, 6, default"
+          "fade, 1, 2.5, md3_decel"
+          # "workspaces, 1, 3.5, md3_decel, slide"
+          "workspaces, 1, 7, fluent_decel, slide"
+          # "workspaces, 1, 7, fluent_decel, slidefade 15%"
+          # "specialWorkspace, 1, 3, md3_decel, slidefadevert 15%"
+          "specialWorkspace, 1, 3, md3_decel, slidevert"
         ];
       };
 
@@ -127,10 +138,18 @@ in {
       };
 
       misc = {
-        force_default_wallpaper = 0;
-        disable_hyprland_logo = true;
-        enable_swallow = true;
+        vfr = 1;
+        vrr = 1;
+        # layers_hog_mouse_focus = true;
+        focus_on_activate = true;
+        animate_manual_resizes = false;
+        animate_mouse_windowdragging = false;
+        enable_swallow = false;
         swallow_regex = "^($terminal)$";
+
+        disable_hyprland_logo = true;
+        force_default_wallpaper = 0;
+        new_window_takes_over_fullscreen = 2;
       };
 
       # monitor = [
@@ -175,13 +194,57 @@ in {
         "opaque, title:^(.*YouTube.*)$"
         "opaque, title:^(Picture-in-Picture)$"
       ];
+      layerrule = [
+        "xray 1, .*"
+        "noanim, selection"
+        "noanim, overview"
+        "noanim, anyrun"
+        "blur, swaylock"
+        "blur, eww"
+        "ignorealpha 0.8, eww"
+        "noanim, noanim"
+        "blur, noanim"
+        "blur, gtk-layer-shell"
+        "ignorezero, gtk-layer-shell"
+        "blur, launcher"
+        "ignorealpha 0.5, launcher"
+        "blur, notifications"
+        "ignorealpha 0.69, notifications"
+        "blur, session"
+        "noanim, sideright"
+        "noanim, sideleft"
+      ];
 
       bindm = [
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
+        "$mod, Z, movewindow"
       ];
 
       binde = [
+        "$mod, Minus, splitratio, -0.1"
+        "$mod, Equal, splitratio, 0.1"
+        "$mod, Semicolon, splitratio, -0.1"
+        "$mod, Apostrophe, splitratio, 0.1"
+      ];
+      bindle = [
+        ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+        ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        # ",XF86MonBrightnessUp, exec, ags run-js 'brightness.screen_value += 0.05;indicator.popup(1);'"
+        # ",XF86MonBrightnessDown, exec, ags run-js 'brightness.screen_value -= 0.05;indicator.popup(1);'"
+        # ",XF86MonBrightnessUp, exec, ags run-js 'indicator.popup(1);'"
+        # ",XF86MonBrightnessDown, exec, ags run-js 'indicator.popup(1);'"
+        # "Alt, I, exec, ydotool key 103:1 103:0 "
+        # "Alt, K, exec, ydotool key 108:1 108:0"
+        # "Alt, J, exec, ydotool key 105:1 105:0"
+        # "Alt, L, exec, ydotool key 106:1 106:0"
+      ];
+
+      bindl = [
+        ", XF86AudioPlay, exec,  playerctl play-pause"
+        ", XF86AudioPause, exec, playerctl play-pause"
+        ", XF86AudioNext, exec,  playerctl next"
+        ", XF86AudioPrev, exec,  playerctl previous"
       ];
 
       bind =
@@ -193,7 +256,7 @@ in {
           "$mod, V, togglefloating,"
           "$mod, SPACE, exec, $menu"
           "$mod, I, fullscreen, 1"
-          "$mod, SHIFT I, fullscreen, 0"
+          "$mod SHIFT, I, fullscreen, 0"
           "$mod, S, togglesplit"
           "$mod, P, pseudo"
           "$mod, mouse_down, workspace, e+1" # Scroll through existing workspaces with mainMod + scroll
@@ -214,10 +277,11 @@ in {
           "$mod, j, movefocus, d"
           "$mod, k, movefocus, u"
 
-          ", XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
-          ", XF86AudioPause, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
-          ", XF86AudioNext, exec, ${pkgs.playerctl}/bin/playerctl next"
-          ", XF86AudioNext, exec, ${pkgs.playerctl}/bin/playerctl previous"
+          "$mod, B, togglespecialworkspace, magic"
+          "$mod, B, movetoworkspace, +0"
+          "$mod, B, togglespecialworkspace, magic"
+          "$mod, B, movetoworkspace, special:magic"
+          "$mod, B, togglespecialworkspace, magic"
         ]
         ++ (
           # workspaces
