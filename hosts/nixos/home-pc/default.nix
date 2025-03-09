@@ -32,7 +32,7 @@
     ../../common/optional/audio.nix
     ../../common/optional/hyprland.nix
     ../../common/optional/obsidian.nix
-    ../../common/optional/plymouth.nix
+    # ../../common/optional/plymouth.nix
     ../../common/optional/wayland.nix
     ../../common/optional/vlc.nix
     ../../common/optional/yubikey.nix
@@ -63,6 +63,10 @@
   # boot.blacklistedKernelModules = ["nvidia" "nouveau"];
   boot.initrd.kernelModules = ["amdgpu"];
   services.xserver.videoDrivers = ["amdgpu"];
+
+  boot.kernelParams = [
+    "video=DP-1:3440x1440@59.97300"
+  ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
