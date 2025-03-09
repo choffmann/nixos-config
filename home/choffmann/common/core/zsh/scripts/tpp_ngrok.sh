@@ -97,7 +97,13 @@ for ((i = 0 ; i < ${#APPS[@]} ; i++ )); do
   fi
 done
 
-echo "$clip" | xclip -sel c
+# echo "$clip" | xclip -sel c
+wl-copy "$clip"
 
-tmux attach -t "$USER" || tmux new -s "$USER"
+if [ -z "$TMUX" ]; then
+  echo "$USER" > /tmp/tpp-sessionname
+  tmux new-session -A -s "$USER"
+else 
+  tmux display-message -p '#S' > /tmp/tpp-sessionname
+fi
 

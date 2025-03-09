@@ -5,15 +5,15 @@
   pkgs,
   inputs,
   outputs,
+  config,
   ...
 }: {
   imports = [
     outputs.nixosModules.yubikey
-    outputs.nixosModules.nvidia
 
     inputs.home-manager.nixosModules.default
     inputs.nixos-hardware.nixosModules.common-cpu-amd
-    inputs.nixos-hardware.nixosModules.common-gpu-nvidia
+    inputs.nixos-hardware.nixosModules.common-gpu-amd
     inputs.nixos-hardware.nixosModules.common-pc-ssd
     ./hardware-configuration.nix
 
@@ -38,6 +38,7 @@
     ../../common/optional/yubikey.nix
     ../../common/optional/docker.nix
     ../../common/optional/spotify.nix
+    ../../common/optional/passthrough-gpu.nix
   ];
 
   hostSpec = {
@@ -59,6 +60,10 @@
     useOSProber = false;
   };
 
+  # boot.blacklistedKernelModules = ["nvidia" "nouveau"];
+  boot.initrd.kernelModules = ["amdgpu"];
+  services.xserver.videoDrivers = ["amdgpu"];
+
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   virtualisation.vmVariant = {
@@ -70,16 +75,17 @@
     };
   };
 
+  services.fwupd.enable = true;
   # Override nvidia stuff
-  services.xserver.videoDrivers = ["nvidia"];
-  hardware = {
-    graphics.enable = true;
-    nvidia = {
-      modesetting.enable = true;
-      powerManagement.enable = false;
-      prime.offload.enable = false;
-    };
-  };
+  # services.xserver.videoDrivers = ["nvidia"];
+  # hardware = {
+  #   graphics.enable = true;
+  #   nvidia = {
+  #     modesetting.enable = true;
+  #     powerManagement.enable = false;
+  #     prime.offload.enable = false;
+  #   };
+  # };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

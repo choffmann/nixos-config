@@ -18,12 +18,12 @@
 
     layout = {
       "bar.layouts" = {
-        "1" = {
+        "0" = {
           left = ["dashboard" "workspaces" "windowtitle"];
           middle = ["media"];
           right = ["ram" "cpu" "storage" "network" "volume" "systray" "clock" "notifications"];
         };
-        "0" = {
+        "1" = {
           left = ["dashboard" "workspaces"];
           middle = ["media"];
           right = ["volume" "clock" "notifications"];

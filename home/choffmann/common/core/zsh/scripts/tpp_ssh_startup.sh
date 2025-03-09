@@ -8,7 +8,9 @@ if ([[ "$SSH_CLIENT" == *"127.0.0.1"* ]] || [[ "$SSH_CLIENT" == *"::1"* ]]) && [
   sleep 1
     
   if [ -z "$TMUX" ]; then
-    tmux attach -t "$NAME" || tmux new -t "$USER" -s "$NAME"
+    SESSION_NAME=$(cat /tmp/tpp-sessionname 2>/dev/null)
+    SESSION_NAME="${SESSION_NAME:-$USER}"
+    tmux attach -t "$NAME" || tmux new -t "$SESSION_NAME" -s "$NAME"
     exit 1
   fi
 fi
