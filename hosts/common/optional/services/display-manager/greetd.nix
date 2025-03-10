@@ -1,7 +1,3 @@
-#
-# greeter -> tuigreet https://github.com/apognu/tuigreet?tab=readme-ov-file
-# display manager -> greetd https://man.sr.ht/~kennylevinsen/greetd/
-#
 {
   config,
   pkgs,
@@ -10,7 +6,6 @@
 }: let
   cfg = config.autoLogin;
 in {
-  # Declare custom options for conditionally enabling auto login
   options.autoLogin = {
     enable = lib.mkEnableOption "Enable automatic login";
 
@@ -22,11 +17,11 @@ in {
   };
 
   config = {
-    #    environment.systemPackages = [ pkgs.greetd.tuigreet ];
+    boot.kernelParams = ["console=tty1"];
     services.greetd = {
       enable = true;
-
       restart = true;
+      vt = 2;
       settings = {
         default_session = {
           command = "${pkgs.greetd.tuigreet}/bin/tuigreet --asterisks --time --time-format '%I:%M %p | %a • %h | %F' --cmd Hyprland";
