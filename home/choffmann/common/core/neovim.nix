@@ -31,11 +31,14 @@ in {
     cargo
     nixd
     zls
+    markdownlint-cli2
+    marksman
 
     # formatter
     stylua
     prettierd
     alejandra
+    vimPlugins.vim-markdown-toc
   ];
 
   xdg.configFile = {
