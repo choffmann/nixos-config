@@ -17,4 +17,21 @@
     userEmail = "choffmann@progeek.de";
     userName = "Cedrik Hoffmann";
   };
+
+  programs.hyprpanel = {
+    layout = {
+      "bar.layouts" = {
+        "0" = {
+          left = ["dashboard" "workspaces" "windowtitle"];
+          middle = ["media"];
+          right = ["ram" "cpu" "battery" "network" "volume" "systray" "clock" "notifications"];
+        };
+        "1" = {
+          left = ["dashboard" "workspaces" "windowtitle"];
+          middle = ["media"];
+          right = ["ram" "cpu" "storage" "network" "volume" "systray" "clock" "notifications"];
+        };
+      };
+    };
+  };
 }

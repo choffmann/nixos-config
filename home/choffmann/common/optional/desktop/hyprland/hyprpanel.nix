@@ -7,6 +7,7 @@
 
   home.packages = with pkgs; [
     hyprpanel
+    adwaita-icon-theme
   ];
 
   programs.hyprpanel = {
@@ -15,21 +16,6 @@
     overwrite.enable = true;
 
     theme = "catppuccin_mocha";
-
-    layout = {
-      "bar.layouts" = {
-        "0" = {
-          left = ["dashboard" "workspaces" "windowtitle"];
-          middle = ["media"];
-          right = ["ram" "cpu" "storage" "network" "volume" "systray" "clock" "notifications"];
-        };
-        "1" = {
-          left = ["dashboard" "workspaces"];
-          middle = ["media"];
-          right = ["volume" "clock" "notifications"];
-        };
-      };
-    };
 
     settings = {
       menus.dashboard.powermenu.avatar.image = "/home/choffmann/Bilder/profilbilder/73289312.jpeg";
