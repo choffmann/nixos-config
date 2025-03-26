@@ -27,7 +27,7 @@ in {
     win-virtio
     win-spice
     looking-glass-client
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
   ];
 
   programs.dconf.enable = true;
