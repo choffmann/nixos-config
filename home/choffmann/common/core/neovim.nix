@@ -7,12 +7,13 @@
   nvimConfig = "${hostSpec.flake}/home/neovim";
 in {
   home.packages = with pkgs; [
+    unstable.neovim # for latest version
+
     gcc
     gnumake
     neovim-node-client
     tree-sitter
     manix
-    neovim
     wl-clipboard
     lua51Packages.lua
     luarocks
