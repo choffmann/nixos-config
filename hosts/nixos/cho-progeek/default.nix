@@ -40,6 +40,7 @@
     ../../common/optional/yubikey.nix
     ../../common/optional/docker.nix
     ../../common/optional/spotify.nix
+    ../../common/optional/prusa.nix
   ];
 
   hostSpec = {

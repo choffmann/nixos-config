@@ -39,6 +39,7 @@
     ../../common/optional/docker.nix
     ../../common/optional/spotify.nix
     ../../common/optional/passthrough-gpu.nix
+    ../../common/optional/prusa.nix
   ];
 
   hostSpec = {
