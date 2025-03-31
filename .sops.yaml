@@ -5,7 +5,7 @@ keys:
   - &hosts:
     - &tuxedo age1nks4y4mmsdksg33gnpk20r40seckj0449vzmdqtyk5j2jzjqvpsqmm34tx
     - &cho-progeek age1ct84sc7n2nwrmg65mwnqtjxjyk0d52nke860cg04lrphgn3zhctsrtvu4f
-    - &homepc age19xaxx92erreapmscev25dswu8rygfpv3um28uwrt2tj6zl8qmgrqpq66r2
+    - &homepc age16mrg8h87xz4prag6cjr9z43nu6dg8tem6spwtw3rw5zwzppss5asa4p7hl
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:

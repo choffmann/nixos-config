@@ -55,11 +55,8 @@
   };
 
   # Bootloader.
-  boot.loader.grub = {
-    enable = true;
-    device = "/dev/nvme0n1";
-    useOSProber = false;
-  };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   # boot.blacklistedKernelModules = ["nvidia" "nouveau"];
   boot.initrd.kernelModules = ["amdgpu"];
