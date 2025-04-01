@@ -31,20 +31,6 @@ in {
   ];
 
   programs.dconf.enable = true;
-  security.pam.loginLimits = [
-    {
-      domain = "@kvm";
-      type = "hard";
-      item = "memlock";
-      value = "28388608";
-    }
-    {
-      domain = "@kvm";
-      type = "soft";
-      item = "memlock";
-      value = "28388608";
-    }
-  ];
 
   systemd.services.libvirtd.serviceConfig = {
     LimitMEMLOCK = "infinity";

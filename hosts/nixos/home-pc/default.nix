@@ -58,7 +58,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # boot.blacklistedKernelModules = ["nvidia" "nouveau"];
   boot.initrd.kernelModules = ["amdgpu"];
   services.xserver.videoDrivers = ["amdgpu"];
 
@@ -78,16 +77,6 @@
   };
 
   services.fwupd.enable = true;
-  # Override nvidia stuff
-  # services.xserver.videoDrivers = ["nvidia"];
-  # hardware = {
-  #   graphics.enable = true;
-  #   nvidia = {
-  #     modesetting.enable = true;
-  #     powerManagement.enable = false;
-  #     prime.offload.enable = false;
-  #   };
-  # };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
