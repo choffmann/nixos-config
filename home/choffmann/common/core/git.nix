@@ -9,8 +9,9 @@
     userEmail = lib.mkDefault "dev@choffmann.io";
     userName = lib.mkDefault "Cedrik Hoffmann";
     signing.key = "3BC97278FCE8CD8D";
-    extraConfig.commit.gpgsign = true;
     extraConfig = {
+      commit.gpgsign = true;
+      tag.gpgsign = true;
       pull.rebase = "true";
       url = {
         "ssh://git@github.com" = {
