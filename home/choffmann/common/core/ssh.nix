@@ -30,6 +30,12 @@ in {
           "~/.ssh/id_choffmann"
         ];
       };
+      "home-pc" = {
+        user = "choffmann";
+        identityFile = [
+          "~/.ssh/id_choffmann"
+        ];
+      };
     };
   };
 
