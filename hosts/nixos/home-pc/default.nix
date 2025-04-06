@@ -48,16 +48,28 @@
     # useYubiKey = lib.mkForce true;
   };
 
+  # greetd options
+  autoLogin = {
+    enable = true;
+    username = "choffmann";
+  };
+
   networking = {
     networkmanager.enable = true;
     enableIPv6 = false;
     firewall.enable = false;
+
+    interfaces = {
+      eno1.wakeOnLan.enable = true;
+    };
   };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
+  boot.blacklistedKernelModules = ["nvidia" "nouveau"];
   boot.initrd.kernelModules = ["amdgpu"];
   services.xserver.videoDrivers = ["amdgpu"];
 
