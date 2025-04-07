@@ -10,7 +10,7 @@
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
   githubPubKeys = pkgs.fetchurl {
     url = "https://github.com/choffmann.keys";
-    sha256 = "sha256-KSYfJ7pEKkZ5tSbIV9X8vqEwNkrklE+WIFsGAhPbjBA=";
+    sha256 = "sha256-gjYEcQ6h6IZwb8UU1/3P9ciVNfFcbye6SzWMoBkA+Vs=";
   };
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
 
