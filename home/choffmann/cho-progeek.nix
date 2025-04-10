@@ -8,6 +8,7 @@
     ./common/optional/brower
     ./common/optional/desktop/hyprland
     ./common/optional/xdg.nix # file associations
+    ./common/optional/thunderbird.nix
   ];
 
   # services.yubikey-touch-detector.enable = true;
