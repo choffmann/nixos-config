@@ -65,6 +65,8 @@
     };
   };
 
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+
   hardware.tuxedo-rs = {
     enable = true;
     tailor-gui.enable = true;
