@@ -1,5 +1,9 @@
 # Core functionality for every nixos host
-{lib, ...}: {
+{
+  lib,
+  inputs,
+  ...
+}: {
   # Database for aiding terminal-based programs
   environment.enableAllTerminfo = true;
   # Enable firmware with a license allowing redistribution
@@ -23,4 +27,5 @@
 
   i18n.defaultLocale = lib.mkDefault "de_DE.UTF-8";
   time.timeZone = lib.mkDefault "Europe/Berlin";
+  nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
 }
