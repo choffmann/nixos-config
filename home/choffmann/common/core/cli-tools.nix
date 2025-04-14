@@ -87,6 +87,7 @@ in {
 
   programs.yazi = {
     enable = true;
+    package = pkgs.unstable.yazi;
     enableZshIntegration = true;
     keymap = {
       manager.prepend_keymap = [

@@ -3,7 +3,11 @@
   lib,
   ...
 }: {
-  programs.lazygit.enable = true;
+  programs.lazygit = {
+    enable = true;
+    package = pkgs.unstable.lazygit;
+  };
+
   programs.git = {
     enable = true;
     userEmail = lib.mkDefault "dev@choffmann.io";
