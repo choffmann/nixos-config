@@ -173,6 +173,28 @@
         "type": "github"
       }
     },
+    "firefox-addons": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "pkgs/firefox-addons",
+        "lastModified": 1744736073,
+        "narHash": "sha256-lG0aGQcwo9vrSP/xdHFgluNKBz4Px641A6zjKsaGiC8=",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "rev": "15516c20d4e0d28f7cc49ddcc3b75abca0175f6f",
+        "type": "gitlab"
+      },
+      "original": {
+        "dir": "pkgs/firefox-addons",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "type": "gitlab"
+      }
+    },
     "firefox-gnome-theme": {
       "flake": false,
       "locked": {
@@ -438,6 +460,7 @@
     "root": {
       "inputs": {
         "ags-bar": "ags-bar",
+        "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
         "hyprpanel": "hyprpanel",
         "nixos-hardware": "nixos-hardware",

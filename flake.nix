@@ -27,12 +27,14 @@
 
     hyprpanel.url = "github:jas-singhfsu/hyprpanel";
     hyprpanel.inputs.nixpkgs.follows = "nixpkgs";
+
+    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
     self,
     nixpkgs,
-    home-manager,
     ...
   } @ inputs: let
     inherit (self) outputs;
