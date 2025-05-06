@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  browser = ["chromium.desktop"];
+  browser = ["firefox.desktop"];
   editor = ["nvim.desktop"];
   media = ["vlc.desktop"];
   writer = ["libreoffice-writer.desktop"];
