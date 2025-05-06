@@ -30,6 +30,13 @@ in {
           "~/.ssh/id_choffmann"
         ];
       };
+      "mail.green-ecolution.de" = {
+        host = "mail.green-ecolution.de";
+        user = "root";
+        identityFile = [
+          "~/.ssh/id_mail_green_ecolution"
+        ];
+      };
       "home-pc" = {
         user = "choffmann";
         identityFile = [

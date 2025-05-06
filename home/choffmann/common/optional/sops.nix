@@ -28,6 +28,9 @@ in {
       "ssh_keys/yubi" = {
         path = "${homeDir}/.ssh/id_yubi";
       };
+      "ssh_keys/mail.green-ecolution.de" = {
+        path = "${homeDir}/.ssh/id_mail_green_ecolution";
+      };
     };
   };
 }
