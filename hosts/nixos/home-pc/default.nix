@@ -40,6 +40,7 @@
     ../../common/optional/spotify.nix
     ../../common/optional/passthrough-gpu.nix
     ../../common/optional/prusa.nix
+    ../../common/optional/steam.nix
   ];
 
   hostSpec = {

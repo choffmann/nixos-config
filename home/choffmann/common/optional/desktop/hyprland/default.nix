@@ -99,6 +99,7 @@ in {
         gaps_out = 10;
         border_size = 2;
         layout = "dwindle";
+        allow_tearing = true;
       };
 
       decoration = {
@@ -204,6 +205,10 @@ in {
         "opaque, title:^(Netflix)(.*)$"
         "opaque, title:^(.*YouTube.*)$"
         "opaque, title:^(Picture-in-Picture)$"
+
+        # Steam
+        "stayfocused, title:^()$,class:^(steam)$"
+        "minsize 1 1, title:^()$,class:^(steam)$"
       ];
       layerrule = [
         "xray 1, .*"

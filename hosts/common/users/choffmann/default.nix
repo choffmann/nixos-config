@@ -35,6 +35,7 @@ in {
         "docker"
         "git"
         "networkmanager"
+        "gamemode"
       ];
   };
 
