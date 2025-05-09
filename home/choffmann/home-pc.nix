@@ -23,6 +23,7 @@ in {
     ./common/optional/desktop/hyprland
     ./common/optional/xdg.nix # file associations
     ./common/optional/thunderbird.nix
+    ./common/optional/pdf-tools.nix
   ];
 
   # services.yubikey-touch-detector.enable = true;
