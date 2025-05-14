@@ -10,6 +10,7 @@
       services = {
         "git.progeek.de:2222" = "gitea:git.progeek.de";
       };
+      git.overrideGpg = true;
     };
   };
 
