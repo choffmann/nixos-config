@@ -6,6 +6,10 @@
 }: let
   homeDir = config.home.homeDirectory;
 in {
+  home.packages = with pkgs; [
+    zotero
+  ];
+
   programs.firefox = {
     enable = true;
     languagePacks = ["de" "en"];
@@ -58,6 +62,8 @@ in {
         user-agent-string-switcher
         catppuccin-web-file-icons
         multi-account-containers
+        zotero-connector
+        sidebery
       ];
 
       bookmarks = [
@@ -192,14 +198,15 @@ in {
         	#navigator-toolbox { flex-direction: column-reverse !important; }
         	#urlbar {
         		top: unset !important;
-        		bottom: calc(var(--urlbar-container-height) + 2 * var(--urlbar-padding-block)) !important;
+        		/* bottom: calc(var(--urlbar-container-height) + 2 * var(--urlbar-padding-block)) !important; */
+                        bottom: 5px !important;
         		box-shadow: none !important;
         		display: flex !important;
         		flex-direction: column !important;
         	}
-        		#urlbar > * {
-        			flex: none;
-        		}
+                #urlbar > * {
+                        flex: none;
+                }
         	#urlbar .urlbar-input-container {
         		order: 2;
         	}
@@ -246,6 +253,9 @@ in {
         	#navigator-toolbox .panel-viewstack { max-height: 75vh !important; }
         	panelview.cui-widget-panelview { flex: 1; }
         	panelview.cui-widget-panelview > vbox { flex: 1; min-height: 50vh; }
+
+                /* Disabel Toolbar */
+                #TabsToolbar { visibility: collapse; }
         }
       '';
     };
