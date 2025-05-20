@@ -34,6 +34,7 @@ in {
     zls
     markdownlint-cli2
     marksman
+    astro-language-server
 
     # formatter
     stylua
