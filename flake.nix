@@ -25,7 +25,7 @@
     ags-bar.url = "github:choffmann/ags-bar";
     ags-bar.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprpanel.url = "github:jas-singhfsu/hyprpanel";
+    hyprpanel.url = "github:jas-singhfsu/hyprpanel?ref=3bcd3c4710fc025bbe403948f10c3922a8bf5193";
     hyprpanel.inputs.nixpkgs.follows = "nixpkgs";
 
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
