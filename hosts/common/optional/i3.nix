@@ -1,10 +1,8 @@
 {pkgs, ...}: {
+  environment.pathsToLink = ["/libexec"];
   services.xserver = {
-    enable = false;
+    enable = true;
     desktopManager = {xterm.enable = false;};
-    displayManager = {
-      defaultSession = "none+i3";
-    };
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
@@ -16,6 +14,9 @@
   };
 
   services.xserver.windowManager.i3.package = pkgs.i3-gaps;
+  services.displayManager = {
+    defaultSession = "none+i3";
+  };
   programs.dconf.enable = true;
 
   services.xserver.xkb = {
