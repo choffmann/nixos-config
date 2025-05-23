@@ -8,10 +8,18 @@
   vfioIds = ["10de:1b81" "10de:10f0"];
 in {
   boot = {
-    kernelModules = ["kvm-${platform}" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio"];
+    kernelModules = ["kvm-${platform}" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "kvmfr"];
     kernelParams = ["${platform}_iommu=on" "${platform}_iommu=pt" "kvm.ignore_msrs=1"];
-    extraModprobeConfig = "options vfio-pci ids=${builtins.concatStringsSep "," vfioIds}";
+    extraModulePackages = [config.boot.kernelPackages.kvmfr];
+    extraModprobeConfig = ''
+      options vfio-pci ids=${builtins.concatStringsSep "," vfioIds}
+      options kvmfr static_size_mb=128
+    '';
   };
+
+  services.udev.extraRules = ''
+    SUBSYSTEM=="kvmfr", OWNER="${user}", GROUP="kvm", MODE="0660"
+  '';
 
   systemd.tmpfiles.rules = [
     "f /dev/shm/looking-glass 0660 ${user} qemu-libvirtd -"
@@ -39,10 +47,6 @@ in {
   virtualisation = {
     libvirtd = {
       enable = true;
-      # extraConfig = ''
-      #   user="${user}"
-      # '';
-      #
       onBoot = "ignore";
       onShutdown = "shutdown";
 
@@ -53,10 +57,14 @@ in {
           enable = true;
           packages = [pkgs.OVMFFull.fd];
         };
-        # verbatimConfig = ''
-        #    namespaces = []
-        #   user = "+${builtins.toString config.users.users.${user}.uid}"
-        # '';
+        verbatimConfig = ''
+          cgroup_device_acl = [
+              "/dev/null", "/dev/full", "/dev/zero",
+              "/dev/random", "/dev/urandom",
+              "/dev/ptmx", "/dev/kvm",
+              "/dev/kvmfr0"
+          ]
+        '';
       };
     };
     spiceUSBRedirection.enable = true;
