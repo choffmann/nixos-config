@@ -30,6 +30,9 @@
 
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
     firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
+
+    solaar.url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
+    solaar.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {

@@ -30,6 +30,7 @@
     ../../common/optional/services/openssh.nix
     ../../common/optional/services/printing.nix
     ../../common/optional/services/xserver.nix
+    ../../common/optional/services/logitech-mx.nix
     ../../common/optional/audio.nix
     ../../common/optional/hyprland.nix
     ../../common/optional/obsidian.nix
