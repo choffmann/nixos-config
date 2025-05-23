@@ -1,6 +1,6 @@
 {pkgs, ...}: let
   virtLookingGlassHandler = let
-    vmName = "win10";
+    vmName = "win11";
   in
     pkgs.writeShellApplication {
       name = "virt-hyprland-handler";
@@ -9,7 +9,7 @@
           virsh --connect qemu:///system start ${vmName}
         fi
 
-        looking-glass-client -F
+        looking-glass-client -f /dev/kvmfr0 -F
       '';
     };
 in {
