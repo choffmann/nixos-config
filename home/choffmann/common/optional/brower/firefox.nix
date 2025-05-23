@@ -15,6 +15,7 @@ in {
     languagePacks = ["de" "en"];
     policies = {
       AppAutoUpdate = true;
+      StartPage = "previous-session";
       BackgroundAppUpdate = false;
       DefaultDownloadDirectory = "${config.home.homeDirectory}/downloads";
       DisableBuiltinPDFViewer = false;
