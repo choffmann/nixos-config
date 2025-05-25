@@ -87,6 +87,7 @@ in {
         follow_mouse = 1;
         mouse_refocus = false;
         touchpad.natural_scroll = true;
+        emulate_discrete_scroll = 0;
       };
 
       env = [
