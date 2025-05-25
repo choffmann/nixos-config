@@ -40,10 +40,6 @@ in {
 
   programs.dconf.enable = true;
 
-  systemd.services.libvirtd.serviceConfig = {
-    LimitMEMLOCK = "infinity";
-  };
-
   virtualisation = {
     libvirtd = {
       enable = true;
@@ -52,10 +48,16 @@ in {
 
       qemu = {
         package = pkgs.qemu_kvm;
+        vhostUserPackages = [pkgs.virtiofsd];
         swtpm.enable = true;
         ovmf = {
           enable = true;
-          packages = [pkgs.OVMFFull.fd];
+          packages = [
+            (pkgs.OVMF.override {
+              secureBoot = true;
+              tpmSupport = true;
+            }).fd
+          ];
         };
         verbatimConfig = ''
           cgroup_device_acl = [

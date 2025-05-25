@@ -8,6 +8,7 @@
   home.packages = with pkgs; [
     hyprpanel
     adwaita-icon-theme
+    nerd-fonts.jetbrains-mono
   ];
 
   programs.hyprpanel = {
@@ -15,13 +16,12 @@
     hyprland.enable = true;
     overwrite.enable = true;
 
-    theme = "catppuccin_mocha";
-
     settings = {
       menus.dashboard.powermenu.avatar.image = "/home/choffmann/Bilder/profilbilder/73289312.jpeg";
       bar.launcher.autoDetectIcon = true;
       menus.dashboard.directories.enabled = false;
       menus.dashboard.stats.enable_gpu = true;
+      theme.name = "catppuccin_mocha";
       theme.bar.transparent = true;
     };
   };

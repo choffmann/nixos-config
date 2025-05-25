@@ -55,7 +55,7 @@ in {
       name = "Cedrik";
       isDefault = true;
 
-      extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
+      extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [
         bitwarden
         react-devtools
         surfingkeys
@@ -67,42 +67,45 @@ in {
         sidebery
       ];
 
-      bookmarks = [
-        {
-          name = "NixOS home-manager";
-          tags = ["search" "nix" "home-manager"];
-          url = "https://nix-community.github.io/home-manager/options.xhtml";
-        }
-        {
-          name = "NixOS Wiki";
-          tags = ["wiki" "nix"];
-          url = "https://wiki.nixos.org/";
-        }
-        {
-          toolbar = false;
-          bookmarks = [
-            {
-              name = "GitHub";
-              tags = ["dev"];
-              keyword = "github";
-              url = "https://github.com";
-            }
-            {
-              name = "YouTube";
-              url = "https://youtube.com";
-            }
-            {
-              name = "Excalidraw";
-              url = "https://excalidraw.com";
-            }
-            {
-              name = "NixOS Search";
-              tags = ["search" "nix"];
-              url = "https://search.nixos.org/packages";
-            }
-          ];
-        }
-      ];
+      bookmarks = {
+        force = true;
+        settings = [
+          {
+            name = "NixOS home-manager";
+            tags = ["search" "nix" "home-manager"];
+            url = "https://nix-community.github.io/home-manager/options.xhtml";
+          }
+          {
+            name = "NixOS Wiki";
+            tags = ["wiki" "nix"];
+            url = "https://wiki.nixos.org/";
+          }
+          {
+            toolbar = false;
+            bookmarks = [
+              {
+                name = "GitHub";
+                tags = ["dev"];
+                keyword = "github";
+                url = "https://github.com";
+              }
+              {
+                name = "YouTube";
+                url = "https://youtube.com";
+              }
+              {
+                name = "Excalidraw";
+                url = "https://excalidraw.com";
+              }
+              {
+                name = "NixOS Search";
+                tags = ["search" "nix"];
+                url = "https://search.nixos.org/packages";
+              }
+            ];
+          }
+        ];
+      };
 
       settings = {
         "signon.rememberSignons" = false; # Disable built-in password manager
@@ -118,7 +121,7 @@ in {
 
       search = {
         force = true;
-        default = "DuckDuckGo";
+        default = "ddg";
         engines = {
           nix-packages = {
             name = "Nix Packages";

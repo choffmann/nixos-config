@@ -23,6 +23,6 @@ in {
     shellAliases.mx = ''
       manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix '{}'" | xargs manix
     '';
-    initExtra = "source ${lib.getBin tpp_ssh_startup}/bin/tpp_ssh_startup";
+    initContent = "source ${lib.getBin tpp_ssh_startup}/bin/tpp_ssh_startup";
   };
 }

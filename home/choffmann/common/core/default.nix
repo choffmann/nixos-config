@@ -20,10 +20,10 @@
     homeDirectory = lib.mkDefault config.hostSpec.home;
     stateVersion = "23.05";
     sessionPath = [
-      "$HOME/.local/bin"
+      "/home/choffmann/.local/bin"
     ];
     sessionVariables = {
-      FLAKE = "$HOME/nixos-config";
+      NH_FLAKE = "/home/choffmann/nixos-config";
       SHELL = "zsh";
       TERM = "xterm-ghostty";
       TERMINAL = "ghostty";

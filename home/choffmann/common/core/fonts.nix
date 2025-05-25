@@ -1,8 +1,13 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   fonts.fontconfig.enable = true;
-  home.packages = [
-    pkgs.noto-fonts
-    pkgs.nerdfonts # loads the complete collection. look into overide for FiraMono or potentially mononoki
-    pkgs.meslo-lgs-nf
-  ];
+  home.packages =
+    [
+      pkgs.noto-fonts
+      pkgs.meslo-lgs-nf
+    ]
+    ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 }
