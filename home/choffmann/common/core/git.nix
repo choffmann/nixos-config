@@ -19,10 +19,15 @@
     userEmail = lib.mkDefault "dev@choffmann.io";
     userName = lib.mkDefault "Cedrik Hoffmann";
     signing.key = "3BC97278FCE8CD8D";
+    aliases = {
+      fixup = "!git log --oneline --no-decorate --no-merges | fzf -0 --preview 'git show --color=always --format=oneline {1}' | awk '{print $1}' | xargs -r git commit --fixup";
+    };
     extraConfig = {
       commit.gpgsign = true;
       tag.gpgsign = true;
       pull.rebase = "true";
+      rebase.autostash = true;
+      rebase.autosquash = true;
       url = {
         "ssh://git@github.com" = {
           insteadOf = "https://github.com";
