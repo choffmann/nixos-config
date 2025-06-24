@@ -33,6 +33,7 @@
     ../../common/optional/audio.nix
     ../../common/optional/hyprland.nix
     ../../common/optional/obsidian.nix
+    ../../common/optional/pi.nix
     # ../../common/optional/plymouth.nix
     ../../common/optional/wayland.nix
     ../../common/optional/vlc.nix
