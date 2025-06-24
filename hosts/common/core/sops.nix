@@ -12,6 +12,11 @@
     };
 
     secrets = {
+      "netrc" = {
+        owner = config.users.users.choffmann.name;
+        inherit (config.users.users.choffmann) group;
+        path = "/etc/nix/netrc";
+      };
       "user_age_keys/keys.txt" = {
         owner = config.users.users.choffmann.name;
         inherit (config.users.users.choffmann) group;

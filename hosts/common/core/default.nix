@@ -81,6 +81,8 @@
         "nix-command"
         "flakes"
       ];
+
+      netrc-file = /etc/nix/netrc;
     };
   };
 
