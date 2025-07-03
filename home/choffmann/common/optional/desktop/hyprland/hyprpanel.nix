@@ -1,21 +1,11 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: {
-  imports = [inputs.hyprpanel.homeManagerModules.hyprpanel];
-
+{pkgs, ...}: {
   home.packages = with pkgs; [
-    hyprpanel
     adwaita-icon-theme
     nerd-fonts.jetbrains-mono
   ];
 
   programs.hyprpanel = {
     enable = true;
-    hyprland.enable = true;
-    overwrite.enable = true;
-
     settings = {
       menus.dashboard.powermenu.avatar.image = "/home/choffmann/Bilder/profilbilder/73289312.jpeg";
       bar.launcher.autoDetectIcon = true;
