@@ -9,6 +9,7 @@ in {
   sops.secrets."k8s/config/green-ecolution" = {};
   sops.secrets."k8s/config/k3s-cluster" = {};
   sops.secrets."k8s/config/progeek" = {};
+  sops.secrets."k8s/config/progeek-utility" = {};
 
   home.sessionVariables.KUBECONFIG = "${homeDir}/.kube/config";
 
