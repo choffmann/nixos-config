@@ -9,6 +9,8 @@
       "https://nix-community.cachix.org"
       # Nix-community
       "https://nix-community.cachix.org"
+      # green-ecolution
+      "https://green-ecolution.cachix.org"
     ];
     trusted-public-keys = [
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
@@ -18,6 +20,8 @@
       "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
       # Nix-community
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      # green-ecolution
+      "green-ecolution.cachix.org-1:te9SGbuElhDIRHbR4lsUARuqZdf5rkKy2l1Yh03mj6c="
     ];
   };
 }
