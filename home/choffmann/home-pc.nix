@@ -24,6 +24,7 @@ in {
     ./common/optional/xdg.nix # file associations
     ./common/optional/thunderbird.nix
     ./common/optional/pdf-tools.nix
+    ./common/optional/matrix.nix
   ];
 
   # services.yubikey-touch-detector.enable = true;
