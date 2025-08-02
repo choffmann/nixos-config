@@ -43,6 +43,7 @@
     ../../common/optional/passthrough-gpu.nix
     ../../common/optional/prusa.nix
     ../../common/optional/steam.nix
+    ../../common/optional/android.nix
   ];
 
   hostSpec = {
