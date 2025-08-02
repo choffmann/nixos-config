@@ -6,10 +6,6 @@
 }: let
   homeDir = config.home.homeDirectory;
 in {
-  home.packages = with pkgs; [
-    zotero
-  ];
-
   programs.firefox = {
     enable = true;
     languagePacks = ["de" "en"];
