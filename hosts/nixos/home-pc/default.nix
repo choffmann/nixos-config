@@ -66,6 +66,10 @@
     interfaces = {
       eno1.wakeOnLan.enable = true;
     };
+
+    hosts = {
+      "192.168.122.192" = ["naboo" "naboo.local"];
+    };
   };
 
   # Bootloader.

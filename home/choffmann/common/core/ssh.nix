@@ -43,6 +43,12 @@ in {
           "~/.ssh/id_choffmann"
         ];
       };
+      "naboo" = {
+        user = "choffmann";
+        identityFile = [
+          "~/.ssh/id_choffmann"
+        ];
+      };
     };
   };
 
