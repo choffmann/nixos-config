@@ -25,6 +25,7 @@
     ../../common/core
 
     # optional
+    ../../common/optional/vpn.nix
     ../../common/optional/services/bluetooth.nix
     ../../common/optional/services/mount.nix
     ../../common/optional/services/display-manager/greetd.nix

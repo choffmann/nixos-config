@@ -7,7 +7,7 @@ keys:
     - &cho-progeek age1ct84sc7n2nwrmg65mwnqtjxjyk0d52nke860cg04lrphgn3zhctsrtvu4f
     - &homepc age16mrg8h87xz4prag6cjr9z43nu6dg8tem6spwtw3rw5zwzppss5asa4p7hl
 creation_rules:
-  - path_regex: secrets/secrets.yaml$
+  - path_regex: secrets/.*.yaml$
     key_groups:
       - age:
           - *choffmann
