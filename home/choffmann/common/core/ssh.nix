@@ -30,6 +30,12 @@ in {
           "~/.ssh/id_choffmann"
         ];
       };
+      "progeek" = {
+        host = "gitlab-runner-1";
+        identityFile = [
+          "~/.ssh/id_choffmann"
+        ];
+      };
       "mail.green-ecolution.de" = {
         host = "mail.green-ecolution.de";
         user = "root";
