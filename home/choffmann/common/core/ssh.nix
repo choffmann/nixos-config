@@ -23,8 +23,17 @@ in {
 
     matchBlocks = {
       "git" = {
-        host = "gitlab.com github.com git.progeek.de gitlab.progeek.de";
+        host = "gitlab.com github.com git.progeek.de gitlab.progeek.de gitlab.hs-flensburg.de";
         user = "git";
+        identityFile = [
+          "~/.ssh/id_yubikey" # auto symlink to yubikey
+          "~/.ssh/id_choffmann"
+        ];
+      };
+      "git@hs-flensburg" = {
+        host = "gitlab.hs-flensburg.de";
+        user = "git";
+        port = 22006;
         identityFile = [
           "~/.ssh/id_yubikey" # auto symlink to yubikey
           "~/.ssh/id_choffmann"
