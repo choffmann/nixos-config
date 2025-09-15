@@ -1,4 +1,8 @@
-{lib, ...}: let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   pathToKeys = lib.custom.relativeToRoot "hosts/common/users/choffmann/keys";
   yubikeys =
     lib.lists.forEach (builtins.attrNames (builtins.readDir pathToKeys))
@@ -45,6 +49,13 @@ in {
           "~/.ssh/id_choffmann"
         ];
       };
+      "homebin.dev" = {
+        host = "*.homebin.dev";
+        user = "root";
+        identityFile = [
+          "~/.ssh/id_choffmann"
+        ];
+      };
       "mail.green-ecolution.de" = {
         host = "mail.green-ecolution.de";
         user = "root";
@@ -67,9 +78,16 @@ in {
     };
   };
 
+  home.packages = with pkgs; [
+    lemonade
+  ];
+
   home.file =
     {
       ".ssh/sockets/.keep".text = "# Managed by Home Manager";
+      ".config/lemonade.toml".text = ''
+        allow = '0.0.0.0/0'
+      '';
     }
     // yubikeyPublicKeyEntries;
 }
