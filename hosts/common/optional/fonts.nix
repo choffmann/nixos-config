@@ -14,6 +14,7 @@
       mplus-outline-fonts.githubRelease
       dina-font
       proggyfonts
+      roboto
     ]
     ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 }
