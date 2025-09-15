@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   environment.sessionVariables = {
-    QT_QPA_PLATFORM = "wayland";
+    QT_QPA_PLATFORM = "xcb";
   };
 
   environment.systemPackages = with pkgs; [
