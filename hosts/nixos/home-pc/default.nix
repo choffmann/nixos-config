@@ -34,6 +34,7 @@
     ../../common/optional/audio.nix
     ../../common/optional/hyprland.nix
     ../../common/optional/obsidian.nix
+    ../../common/optional/office.nix
     ../../common/optional/pi.nix
     # ../../common/optional/plymouth.nix
     ../../common/optional/wayland.nix
@@ -72,6 +73,9 @@
       "192.168.122.192" = ["naboo" "naboo.local"];
     };
   };
+
+  # Common packages
+  environment.systemPackages = with pkgs; [];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
