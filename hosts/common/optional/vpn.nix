@@ -9,7 +9,20 @@
     owner = "choffmann";
   };
 
+  sops.secrets."office/vpn.conf" = {
+    sopsFile = ../../../secrets/vpn.yaml;
+    owner = "choffmann";
+  };
+
   services.openvpn.servers = {
-    homeVPN = {config = ''config ${config.sops.secrets."homeVPN/vpn.conf".path} '';};
+    homeVPN = {
+      autoStart = false;
+      config = ''config ${config.sops.secrets."homeVPN/vpn.conf".path} '';
+    };
+    office = {
+      autoStart = false;
+      updateResolvConf = true;
+      config = ''config ${config.sops.secrets."homeVPN/vpn.conf".path} '';
+    };
   };
 }
