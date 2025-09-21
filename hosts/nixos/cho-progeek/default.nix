@@ -26,6 +26,8 @@
 
     # optional
     ../../common/optional/vpn.nix
+    ../../common/optional/office.nix
+    ../../common/optional/android.nix
     ../../common/optional/services/bluetooth.nix
     ../../common/optional/services/mount.nix
     ../../common/optional/services/display-manager/greetd.nix
