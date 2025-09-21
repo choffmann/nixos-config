@@ -1,3 +1,10 @@
 {pkgs, ...}: {
-  environment.systemPackages = [pkgs.libreoffice];
+  fonts.packages = with pkgs; [
+    poppins
+    noto-fonts
+  ];
+
+  environment.systemPackages = with pkgs; [
+    libreoffice
+  ];
 }
