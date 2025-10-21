@@ -75,7 +75,10 @@
   };
 
   # Common packages
-  environment.systemPackages = with pkgs; [];
+  environment.systemPackages = with pkgs; [
+    unstable.openvpn
+    remmina
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -88,7 +91,12 @@
 
   boot.kernelParams = [
     "video=DP-1:3440x1440@59.97300"
+    "pcie_aspm=off"
   ];
+
+  boot.extraModprobeConfig = ''
+    options igc disable_msi=1
+  '';
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
