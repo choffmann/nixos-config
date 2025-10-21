@@ -18,6 +18,7 @@
     Defaults env_keep+=SSH_AUTH_SOCK
   '';
 
+  programs.nix-ld.enable = true;
   programs.nh = {
     enable = true;
     clean.enable = true;
