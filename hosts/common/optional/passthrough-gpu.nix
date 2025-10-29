@@ -52,11 +52,13 @@ in {
         swtpm.enable = true;
         ovmf = {
           enable = true;
-          packages = [
-            (pkgs.OVMF.override {
+          packages = let
+            ovmfSecure = (pkgs.OVMFFull.override {
               secureBoot = true;
               tpmSupport = true;
-            }).fd
+            }).fd;
+          in [
+            ovmfSecure
           ];
         };
         verbatimConfig = ''

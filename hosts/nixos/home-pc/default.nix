@@ -97,6 +97,7 @@
   boot.extraModprobeConfig = ''
     options igc disable_msi=1
   '';
+  services.udev.packages = [pkgs.hwids pkgs.usbutils];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
