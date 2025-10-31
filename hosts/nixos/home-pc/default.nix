@@ -108,7 +108,11 @@ in {
   };
 
   networking = {
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      # Use systemd-resolved instead of openresolv to prevent DNS errors
+      dns = "systemd-resolved";
+    };
     enableIPv6 = false;
     firewall.enable = false;
 
@@ -119,6 +123,13 @@ in {
     hosts = {
       "192.168.122.192" = ["naboo" "naboo.local"];
     };
+  };
+
+  # Enable systemd-resolved for proper DNS management
+  services.resolved = {
+    enable = true;
+    dnssec = "allow-downgrade";
+    fallbackDns = ["1.1.1.1" "8.8.8.8"];
   };
 
   # Common packages
@@ -145,6 +156,8 @@ in {
     # Intel I226-V driver tuning
     "igc.RSS=1"  # Enable Receive Side Scaling
     "igc.InterruptThrottleRate=3000"  # Adaptive interrupt throttling
+    # Suppress NVMe SUBNQN warning (harmless but annoying)
+    "nvme_core.default_ps_max_latency_us=0"
   ];
 
   # Additional kernel modules configuration for I226-V
