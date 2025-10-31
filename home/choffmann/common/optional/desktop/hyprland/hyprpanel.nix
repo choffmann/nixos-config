@@ -10,7 +10,8 @@
       menus.dashboard.powermenu.avatar.image = "/home/choffmann/Bilder/profilbilder/73289312.jpeg";
       bar.launcher.autoDetectIcon = true;
       menus.dashboard.directories.enabled = false;
-      menus.dashboard.stats.enable_gpu = true;
+      # Disable GPU stats to prevent repeated errors with AMD GPUs
+      menus.dashboard.stats.enable_gpu = false;
       theme.bar.transparent = true;
       theme = {
         "theme.bar.menus.menu.notifications.scrollbar.color" = "#b4befe";
