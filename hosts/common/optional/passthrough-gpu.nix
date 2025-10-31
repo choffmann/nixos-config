@@ -52,13 +52,12 @@ in {
         swtpm.enable = true;
         ovmf = {
           enable = true;
-          packages = let
-            ovmfSecure = (pkgs.OVMFFull.override {
+          packages = [
+            # Use OVMFFull which includes both standard and secure boot variants
+            (pkgs.OVMFFull.override {
               secureBoot = true;
               tpmSupport = true;
-            }).fd;
-          in [
-            ovmfSecure
+            }).fd
           ];
         };
         verbatimConfig = ''
@@ -68,6 +67,9 @@ in {
               "/dev/ptmx", "/dev/kvm",
               "/dev/kvmfr0"
           ]
+          # Suppress USB device property warnings
+          log_level = 3
+          log_filters = "3:remote 4:event 3:util.json 3:util.object 3:util.dbus 3:util.udev 3:node_device 3:rpc 3:access"
         '';
       };
     };
