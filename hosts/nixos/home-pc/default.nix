@@ -24,7 +24,7 @@
         printf '%s' enabled | tee /sys/class/net/eno1/device/power/wakeup >/dev/null 2>&1 || true
       fi
 
-      # Disable Energy Efficient Ethernet (EEE) - known to cause issues
+      # Disable Energy Efficient Ethernet (EEE) - known to cause issues with I226-V
       if ethtool --show-eee eno1 >/dev/null 2>&1; then
         ethtool --set-eee eno1 eee off >/dev/null 2>&1 || true
       fi
@@ -32,25 +32,7 @@
       # Enable Wake-on-LAN with magic packet
       ethtool -s eno1 wol g 2>/dev/null || true
 
-      # Disable problematic hardware offloading features
-      ethtool -K eno1 tso off gso off gro off 2>/dev/null || true
-
-      # Keep tx-nocache-copy on for better performance
-      ethtool -K eno1 tx-nocache-copy on 2>/dev/null || true
-
-      # Disable flow control (can cause hangs under load)
-      ethtool -A eno1 rx off tx off 2>/dev/null || true
-
-      # Force link speed to 1000 Mbps Full Duplex with autonegotiation
-      ethtool -s eno1 speed 1000 duplex full autoneg on 2>/dev/null || true
-
-      # Increase ring buffer sizes for better throughput
-      ethtool -G eno1 rx 4096 tx 4096 2>/dev/null || true
-
-      # Adaptive interrupt coalescing
-      ethtool -C eno1 adaptive-rx on adaptive-tx on 2>/dev/null || true
-
-      logger -t tune-eno1 "Applied I226-V tuning: stability fixes + WoL enabled"
+      logger -t tune-eno1 "Applied I226-V tuning: Power management disabled, EEE off, WoL enabled"
     fi
   '';
 in {
@@ -108,11 +90,7 @@ in {
   };
 
   networking = {
-    networkmanager = {
-      enable = true;
-      # Use systemd-resolved instead of openresolv to prevent DNS errors
-      dns = "systemd-resolved";
-    };
+    networkmanager.enable = true;
     enableIPv6 = false;
     firewall.enable = false;
 
@@ -123,13 +101,6 @@ in {
     hosts = {
       "192.168.122.192" = ["naboo" "naboo.local"];
     };
-  };
-
-  # Enable systemd-resolved for proper DNS management
-  services.resolved = {
-    enable = true;
-    dnssec = "allow-downgrade";
-    fallbackDns = ["1.1.1.1" "8.8.8.8"];
   };
 
   # Common packages
@@ -151,23 +122,9 @@ in {
     "video=DP-1:3440x1440@59.97300"
     # PCIe power management fixes for I226-V stability
     "pcie_aspm=off"
-    "pcie_port_pm=off"
-    "pci=noaer"  # Disable PCIe Advanced Error Reporting
-    # Intel I226-V driver tuning
-    "igc.RSS=1"  # Enable Receive Side Scaling
-    "igc.InterruptThrottleRate=3000"  # Adaptive interrupt throttling
     # Suppress NVMe SUBNQN warning (harmless but annoying)
     "nvme_core.default_ps_max_latency_us=0"
   ];
-
-  # Additional kernel modules configuration for I226-V
-  boot.extraModprobeConfig = ''
-    # Intel I226-V (igc) tuning for stability
-    options igc InterruptThrottleRate=3000,3000,3000,3000
-    options igc RSS=1,1,1,1
-    # Disable MSI-X, use MSI only (sometimes more stable)
-    options igc IntMode=1
-  '';
 
   systemd.services.tune-eno1 = {
     description = "Apply Intel I226-V link stability tweaks";
@@ -179,47 +136,6 @@ in {
       RemainAfterExit = true;
     };
     script = ''${tuneEno1}'';
-  };
-
-  # Watchdog service to detect and recover from link failures
-  systemd.services.eno1-watchdog = {
-    description = "Monitor and recover Intel I226-V network link";
-    wantedBy = ["multi-user.target"];
-    after = ["network-online.target" "tune-eno1.service"];
-    wants = ["network-online.target"];
-    serviceConfig = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = "10s";
-    };
-    script = ''
-      PATH=${lib.makeBinPath [pkgs.coreutils pkgs.iproute2 pkgs.ethtool]}
-
-      while true; do
-        sleep 30
-
-        # Check if interface exists and is up
-        if [ -d /sys/class/net/eno1 ]; then
-          # Check carrier status
-          carrier=$(cat /sys/class/net/eno1/carrier 2>/dev/null || echo "0")
-          operstate=$(cat /sys/class/net/eno1/operstate 2>/dev/null || echo "down")
-
-          if [ "$carrier" = "0" ] || [ "$operstate" = "down" ]; then
-            logger -t eno1-watchdog "WARNING: Link down detected (carrier=$carrier, state=$operstate)"
-
-            # Try to recover by bouncing the interface
-            ip link set eno1 down 2>/dev/null || true
-            sleep 2
-            ip link set eno1 up 2>/dev/null || true
-
-            # Reapply tuning after recovery
-            ${tuneEno1} || true
-
-            logger -t eno1-watchdog "Recovery attempted for eno1"
-          fi
-        fi
-      done
-    '';
   };
 
   services.udev.extraRules = ''
