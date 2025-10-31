@@ -8,7 +8,7 @@
   vfioIds = ["10de:1b81" "10de:10f0"];
 in {
   boot = {
-    kernelModules = ["kvm-${platform}" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "kvmfr"];
+    kernelModules = ["kvm-${platform}" "vfio_pci" "vfio_iommu_type1" "vfio" "kvmfr"];
     kernelParams = ["${platform}_iommu=on" "${platform}_iommu=pt" "kvm.ignore_msrs=1"];
     extraModulePackages = [config.boot.kernelPackages.kvmfr];
     extraModprobeConfig = ''
