@@ -103,6 +103,15 @@ in {
     };
   };
 
+  systemd.services.NetworkManager-wait-online.enable = false;
+
+  systemd.extraConfig = ''
+    DefaultTimeoutStartSec=30s
+    DefaultTimeoutStopSec=15s
+  '';
+
+  systemd.services.systemd-udev-settle.enable = false;
+
   # Common packages
   environment.systemPackages = with pkgs; [
     unstable.openvpn

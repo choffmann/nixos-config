@@ -1,3 +1,8 @@
 {
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = false;
+  };
+
+  systemd.sockets.docker.wantedBy = ["sockets.target"];
 }
