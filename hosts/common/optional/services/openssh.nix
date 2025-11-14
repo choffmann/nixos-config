@@ -8,6 +8,7 @@
 in {
   services.openssh = {
     enable = true;
+    startWhenNeeded = true;
 
     ports = [sshPort];
     settings = {

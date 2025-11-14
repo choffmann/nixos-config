@@ -91,6 +91,7 @@ in {
 
   networking = {
     networkmanager.enable = true;
+    modemmanager.enable = false;
     enableIPv6 = false;
     firewall.enable = false;
 
@@ -119,8 +120,15 @@ in {
   ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    timeout = 1;
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 10;
+      editor = false;
+    };
+    efi.canTouchEfiVariables = true;
+  };
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
   boot.blacklistedKernelModules = ["nvidia" "nouveau"];
@@ -129,10 +137,13 @@ in {
 
   boot.kernelParams = [
     "video=DP-1:3440x1440@59.97300"
-    # PCIe power management fixes for I226-V stability
     "pcie_aspm=off"
-    # Suppress NVMe SUBNQN warning (harmless but annoying)
     "nvme_core.default_ps_max_latency_us=0"
+    "quiet"
+    "nowatchdog"
+    "loglevel=3"
+    "rd.systemd.show_status=auto"
+    "rd.udev.log_level=3"
   ];
 
   systemd.services.tune-eno1 = {

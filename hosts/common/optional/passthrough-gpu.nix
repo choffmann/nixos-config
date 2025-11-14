@@ -77,5 +77,7 @@ in {
   };
   services.spice-vdagentd.enable = true;
 
+  systemd.services.libvirtd.wantedBy = pkgs.lib.mkForce [];
+
   users.users.${user}.extraGroups = ["qemu-libvirtd" "libvirtd" "disk"];
 }
