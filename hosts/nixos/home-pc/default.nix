@@ -44,6 +44,7 @@ in {
     inputs.nixos-hardware.nixosModules.common-gpu-amd
     inputs.nixos-hardware.nixosModules.common-pc-ssd
     ./hardware-configuration.nix
+    ./hardware-optimization.nix
 
     # misc
     inputs.stylix.nixosModules.stylix
