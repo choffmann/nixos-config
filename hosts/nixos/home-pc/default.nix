@@ -90,6 +90,19 @@ in {
     username = "choffmann";
   };
 
+  # Storage drives
+  fileSystems."/storage/hdd" = {
+    device = "/dev/disk/by-uuid/1e8c6e42-ff5d-4e65-ae84-e32966009035";
+    fsType = "ext4";
+    options = ["defaults" "nofail" "exec" "x-gvfs-show"];
+  };
+
+  fileSystems."/storage/ssd" = {
+    device = "/dev/disk/by-uuid/bc11b81d-5a1b-42b4-bcd7-fbf80dd6635e";
+    fsType = "ext4";
+    options = ["defaults" "nofail" "exec" "x-gvfs-show"];
+  };
+
   networking = {
     networkmanager.enable = true;
     modemmanager.enable = false;
