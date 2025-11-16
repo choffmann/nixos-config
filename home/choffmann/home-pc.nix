@@ -25,6 +25,7 @@ in {
     ./common/optional/thunderbird.nix
     ./common/optional/pdf-tools.nix
     ./common/optional/matrix.nix
+    ./common/optional/synology-drive.nix
   ];
 
   # services.yubikey-touch-detector.enable = true;
