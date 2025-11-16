@@ -76,6 +76,7 @@ in {
     ../../common/optional/prusa.nix
     ../../common/optional/steam.nix
     ../../common/optional/android.nix
+    ../../common/optional/winbox.nix
   ];
 
   hostSpec = {
