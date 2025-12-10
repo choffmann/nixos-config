@@ -15,8 +15,8 @@
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
 
   tpp_keys = ''
-    command="export NAME='fpetersen' && zsh -il" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDEOsvUsN/dvlzg9T2ZLLkpyMKlJWGwWjXadOm7NNDgrhtOR9SKUxCUJuMbRiBOSpwneYSdeZHBFR/SG7zzpek7ZO2n4OojR1hztcqRus2MYo1bDqQekLpapcsTCbMLTZhrzjylsAGAaJ79Y+ArXKlocCvElfGwTCP8OFNgzOcJnbN6XC9kI8QYIrKzfuQUTbyd5xiV/YZ7Dm2hlBkVTYlGu+sijml6Qgnpy/zzWC2Cs9sjE1wSGFLQp2bN/QQSe3Gl8Y2mZc4/JBzPws735Pbydi4QXOdiGGFaSr/Ldm1VTet+p6ey7BtTl3lwblCy1gCHO7pxLw1nocdK7F7sH8qbUQQ/QsKzY7BnzkZn+/VIP7eOh1tlzRoJuOFucJCMkeid6/p+YoO5ga31oVttk89T7w9DgpMajzjb1B/o78FM6SNEvo6BjtPCFQU8v8Y1TTHIyhV7bJoZwqEn+PMbS/jtmf3Tghzaw5ClsimnO7XLxDz4h5o5h+gjFJcQT4i/uy0=
-    command="export NAME='fpetersen' && zsh -il" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBOlLAlgnKyBt7RTgPxt2OW8atZOHt2l+jc+BzUfCi1i
+    command="export NAME='fpetersen' && zsh -il" sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKP9gP8CiPE4akTr0pS3HIdZ2WJhAffoIp0D1tt+UbIgAAAABHNzaDo=
+    command="export NAME='fpetersen' && zsh -il" sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIHn89LV7UCzQCcgtjzfjmKYAhoHLlnHzJvTTzcoSJh0rAAAABHNzaDo=
   '';
 in {
   users.users.choffmann = {
