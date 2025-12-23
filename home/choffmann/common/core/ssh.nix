@@ -17,15 +17,17 @@
 in {
   programs.ssh = {
     enable = true;
-    controlMaster = "auto";
-    controlPath = "~/.ssh/sockets/S.%r@%h:%p";
-    controlPersist = "10m";
-
-    extraConfig = ''
-      AddKeysToAgent yes
-    '';
+    enableDefaultConfig = false;
 
     matchBlocks = {
+      "*" = {
+        controlMaster = "auto";
+        controlPath = "~/.ssh/sockets/S.%r@%h:%p";
+        controlPersist = "10m";
+        extraOptions = {
+          AddKeysToAgent = "yes";
+        };
+      };
       "git" = {
         host = "gitlab.com github.com git.progeek.de gitlab.progeek.de gitlab.hs-flensburg.de";
         user = "git";

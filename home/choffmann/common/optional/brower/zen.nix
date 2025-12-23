@@ -10,6 +10,8 @@ in {
     inputs.zen-browser.homeModules.beta
   ];
 
+  stylix.targets.zen-browser.profileNames = ["choffmann"];
+
   programs.zen-browser = {
     enable = true;
     policies = {

@@ -2,5 +2,4 @@ window-padding-color = background
 window-theme = ghostty
 window-decoration = false
 
-theme = catppuccin-mocha
 background-opacity = 0.7

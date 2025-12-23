@@ -21,10 +21,9 @@ in {
     services.greetd = {
       enable = true;
       restart = true;
-      vt = 2;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --asterisks --time --time-format '%I:%M %p | %a • %h | %F' --cmd Hyprland";
+          command = "${pkgs.tuigreet}/bin/tuigreet --asterisks --time --time-format '%I:%M %p | %a • %h | %F' --cmd Hyprland";
         };
 
         initial_session = lib.mkIf cfg.enable {

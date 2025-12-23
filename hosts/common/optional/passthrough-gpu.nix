@@ -32,7 +32,7 @@ in {
     spice
     spice-gtk
     spice-protocol
-    win-virtio
+    virtio-win
     win-spice
     looking-glass-client
     adwaita-icon-theme
@@ -50,16 +50,6 @@ in {
         package = pkgs.qemu_kvm;
         vhostUserPackages = [pkgs.virtiofsd];
         swtpm.enable = true;
-        ovmf = {
-          enable = true;
-          packages = [
-            # Use OVMFFull which includes both standard and secure boot variants
-            (pkgs.OVMFFull.override {
-              secureBoot = true;
-              tpmSupport = true;
-            }).fd
-          ];
-        };
         verbatimConfig = ''
           cgroup_device_acl = [
               "/dev/null", "/dev/full", "/dev/zero",

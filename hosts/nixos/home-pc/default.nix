@@ -121,10 +121,10 @@ in {
 
   systemd.services.NetworkManager-wait-online.enable = false;
 
-  systemd.extraConfig = ''
-    DefaultTimeoutStartSec=30s
-    DefaultTimeoutStopSec=15s
-  '';
+  systemd.settings.Manager = {
+    DefaultTimeoutStartSec = "30s";
+    DefaultTimeoutStopSec = "15s";
+  };
 
   systemd.services.systemd-udev-settle.enable = false;
 
@@ -229,7 +229,7 @@ in {
       };
 
       emoji = {
-        package = pkgs.noto-fonts-emoji;
+        package = pkgs.noto-fonts-color-emoji;
         name = "Noto Color Emoji";
       };
     };
