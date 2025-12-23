@@ -26,6 +26,7 @@ in {
         controlPersist = "10m";
         extraOptions = {
           AddKeysToAgent = "yes";
+          SetEnv = "TERM=xterm-256color";
         };
       };
       "git" = {
