@@ -238,6 +238,9 @@ in {
     keyMode = "vi";
 
     extraConfig = ''
+      # Status bar position
+      set -g status-position bottom
+
       # Reload config PREFIX + r
       bind r source-file ~/.tmux.conf \; display "Reloaded!"
 
