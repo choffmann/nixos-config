@@ -7,9 +7,17 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
-    # example = prev.example.overrideAttrs (oldAttrs: rec {
-    # ...
-    # });
+    synology-drive-client = prev.synology-drive-client.overrideAttrs (oldAttrs: rec {
+      version = "4.0.1-17885";
+      src = prev.fetchurl {
+        url = "https://global.synologydownload.com/download/Utility/SynologyDriveClient/${version}/Ubuntu/Installer/synology-drive-client-17885.x86_64.deb";
+        sha256 = "1j18baahvbfcsycwnrycgzgzb654rhk3a0179zb4jiilra3ymh8c";
+      };
+      autoPatchelfIgnoreMissingDeps = [
+        "libnautilus-extension.so.4"
+        "libQt5Pdf.so.5"
+      ];
+    });
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
