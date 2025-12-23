@@ -1,14 +1,16 @@
-{lib, ...}: {
+{lib, config, ...}: let
+  colors = config.lib.stylix.colors.withHashtag;
+  c = config.lib.stylix.colors;
+  font = config.stylix.fonts.monospace.name;
+  rgba = color: alpha: "rgba(${c."${color}-rgb-r"}, ${c."${color}-rgb-g"}, ${c."${color}-rgb-b"}, ${alpha})";
+in {
   services.mako = {
     enable = true;
 
     settings = {
-      font = lib.mkForce "JetBrainsMono Nerd Font 11";
-      background-color = lib.mkForce "#11111bcc";
-      text-color = lib.mkForce "#cdd6f4";
-      border-color = lib.mkForce "#a6e3a1";
+      font = lib.mkForce "${font} 11";
+      border-color = lib.mkForce colors.base0B;
       border-radius = lib.mkForce 0;
-      border-size = lib.mkForce 1;
       padding = "8";
       margin = "8";
       width = 350;
@@ -24,14 +26,14 @@
       max-icon-size = 48;
 
       "urgency=low" = {
-        text-color = lib.mkForce "#6c7086";
-        border-color = lib.mkForce "#313244";
+        text-color = lib.mkForce colors.base04;
+        border-color = lib.mkForce colors.base02;
         default-timeout = lib.mkForce 3000;
       };
 
       "urgency=critical" = {
-        text-color = lib.mkForce "#f38ba8";
-        border-color = lib.mkForce "#f38ba8";
+        text-color = lib.mkForce colors.base08;
+        border-color = lib.mkForce colors.base08;
         default-timeout = lib.mkForce 0;
       };
     };

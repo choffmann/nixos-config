@@ -1,8 +1,14 @@
 {
   pkgs,
   lib,
+  config,
   ...
-}: {
+}: let
+  colors = config.lib.stylix.colors.withHashtag;
+  c = config.lib.stylix.colors; # for rgba components
+  font = config.stylix.fonts.monospace.name;
+  rgba = color: alpha: "rgba(${c."${color}-rgb-r"}, ${c."${color}-rgb-g"}, ${c."${color}-rgb-b"}, ${alpha})";
+in {
   home.packages = [pkgs.socat pkgs.cava];
 
   xdg.configFile."cava/config-waybar".text = ''
@@ -242,7 +248,7 @@
 
     style = ''
       * {
-        font-family: "JetBrainsMono Nerd Font", monospace;
+        font-family: "${font}", monospace;
         font-size: 14px;
         border: none;
         border-radius: 0;
@@ -251,8 +257,8 @@
       }
 
       window#waybar {
-        background-color: rgba(17, 17, 27, 0.8);
-        color: #6c7086;
+        background-color: ${rgba "base00" "0.8"};
+        color: ${colors.base04};
         padding: 0;
       }
 
@@ -262,12 +268,12 @@
       }
 
       #custom-prompt {
-        color: #a6e3a1;
+        color: ${colors.base0B};
         padding: 0 0 0 8px;
       }
 
       #custom-separator {
-        color: #fab387;
+        color: ${colors.base09};
         padding: 0 6px;
       }
 
@@ -281,66 +287,66 @@
 
       #workspaces button {
         padding: 0 4px;
-        color: #6c7086;
+        color: ${colors.base04};
       }
 
       #workspaces button:hover {
-        color: #a6adc8;
+        color: ${colors.base06};
       }
 
       #workspaces button.active {
-        color: #cdd6f4;
+        color: ${colors.base05};
       }
 
       #workspaces button.urgent {
-        color: #f38ba8;
+        color: ${colors.base08};
       }
 
       #window {
         padding: 0 0 0 6px;
-        color: #a6adc8;
+        color: ${colors.base06};
       }
 
       #submap {
-        background-color: #fab387;
-        color: #11111b;
+        background-color: ${colors.base09};
+        color: ${colors.base00};
         padding: 0 6px;
         margin: 0 0 0 8px;
         font-weight: bold;
       }
 
       #custom-submap-hint {
-        color: #6c7086;
+        color: ${colors.base04};
         padding: 0 6px;
         font-style: italic;
       }
 
       #custom-media {
-        color: #a6adc8;
+        color: ${colors.base06};
         padding: 0 8px;
       }
 
       #custom-cava {
-        color: #a6e3a1;
+        color: ${colors.base0B};
         letter-spacing: 2px;
       }
 
       #custom-uptime {
-        color: #6c7086;
+        color: ${colors.base04};
         padding: 0 4px;
       }
 
       #custom-updates {
-        color: #a6e3a1;
+        color: ${colors.base0B};
         padding: 0 4px;
       }
 
       #custom-updates.warning {
-        color: #fab387;
+        color: ${colors.base09};
       }
 
       #custom-date {
-        color: #a6adc8;
+        color: ${colors.base06};
         padding: 0 8px 0 4px;
       }
 
@@ -352,11 +358,11 @@
       #battery,
       #clock {
         padding: 0 4px;
-        color: #6c7086;
+        color: ${colors.base04};
       }
 
       #clock {
-        color: #a6adc8;
+        color: ${colors.base06};
         padding-right: 8px;
       }
 
@@ -370,34 +376,34 @@
 
       #network.disconnected,
       #wireplumber.muted {
-        color: #45475a;
+        color: ${colors.base03};
       }
 
       #cpu.warning,
       #memory.warning,
       #disk.warning,
       #battery.warning {
-        color: #fab387;
+        color: ${colors.base09};
       }
 
       #cpu.critical,
       #memory.critical,
       #disk.critical,
       #battery.critical {
-        color: #f38ba8;
+        color: ${colors.base08};
       }
 
       #battery.charging {
-        color: #a6e3a1;
+        color: ${colors.base0B};
       }
 
       tooltip {
-        background-color: rgba(30, 30, 46, 0.9);
-        border: 1px solid #313244;
+        background-color: ${rgba "base01" "0.9"};
+        border: 1px solid ${colors.base02};
       }
 
       tooltip label {
-        color: #cdd6f4;
+        color: ${colors.base05};
       }
     '';
   };

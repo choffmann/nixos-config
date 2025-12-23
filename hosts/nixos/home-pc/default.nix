@@ -201,7 +201,7 @@ in {
 
   stylix = {
     enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    base16Scheme = ../../../themes/terminal-aesthetic.yaml;
 
     image = ../../../home/wallpaper/madeira.jpeg;
     imageScalingMode = "center";
@@ -222,10 +222,8 @@ in {
       };
 
       monospace = {
-        package = (
-          pkgs.nerd-fonts.fira-code
-        );
-        name = "FiraCode Nerd Font Mono Ret";
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrainsMono Nerd Font";
       };
 
       emoji = {
@@ -245,7 +243,7 @@ in {
       applications = 0.8;
       terminal = 0.8;
       desktop = 1.0;
-      popups = 1.0;
+      popups = 0.8;
     };
 
     targets.nixvim = {
