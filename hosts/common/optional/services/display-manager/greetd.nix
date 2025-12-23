@@ -23,7 +23,7 @@ in {
       restart = true;
       settings = {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --asterisks --time --time-format '%I:%M %p | %a • %h | %F' --cmd Hyprland";
+          command = "${pkgs.tuigreet}/bin/tuigreet --asterisks --time --time-format '[%H:%M] [%a %d.%m]' --greeting 'λ ❯ login' --cmd Hyprland";
         };
 
         initial_session = lib.mkIf cfg.enable {
