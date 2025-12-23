@@ -1,33 +1,42 @@
 {
   pkgs,
   config,
-  lib,
   ...
 }: let
   homeDir = config.home.homeDirectory;
+  sopsDir = "${homeDir}/.config/sops-nix/secrets";
+  kubeDir = "${homeDir}/.kube";
+  kubeConfig = "${kubeDir}/config";
+  kubeconfigs = [
+    "${sopsDir}/k8s/config/green-ecolution"
+    "${sopsDir}/k8s/config/k3s-cluster"
+    "${sopsDir}/k8s/config/progeek"
+    "${sopsDir}/k8s/config/progeek-utility"
+  ];
+  mergeScript = pkgs.writeShellScript "merge-kubeconfig" ''
+    mkdir -p ${kubeDir}
+    export KUBECONFIG=${builtins.concatStringsSep ":" kubeconfigs}
+    ${pkgs.kubectl}/bin/kubectl config view --flatten > ${kubeConfig}
+    chmod 600 ${kubeConfig}
+  '';
 in {
   sops.secrets."k8s/config/green-ecolution" = {};
   sops.secrets."k8s/config/k3s-cluster" = {};
   sops.secrets."k8s/config/progeek" = {};
   sops.secrets."k8s/config/progeek-utility" = {};
 
-  home.sessionVariables.KUBECONFIG = "${homeDir}/.kube/config";
+  home.sessionVariables.KUBECONFIG = kubeConfig;
 
-  home.activation = {
-    mergeKubeConfig = lib.hm.dag.entryAfter ["sops-nix"] ''
-      mkdir -p ~/.kube
-
-      if [ -f ${homeDir}/.kube/config ]; then
-        rm ${homeDir}/.kube/config
-      fi
-
-      export PATH=${pkgs.kubectl}/bin:$PATH
-      export KUBECONFIG=${homeDir}/.kube/config:$(find ${homeDir}/.config/sops-nix/secrets/k8s/config -type f | tr '\n' ':')
-
-      kubectl config view --flatten > ${homeDir}/.kube/config
-      export KUBECONFIG=${homeDir}/.kube/config
-      chmod 700 ${homeDir}/.kube/config
-    '';
+  systemd.user.services.merge-kubeconfig = {
+    Unit = {
+      Description = "Merge kubeconfig from sops secrets";
+      After = ["sops-nix.service"];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${mergeScript}";
+    };
+    Install.WantedBy = ["default.target"];
   };
 
   home.packages = with pkgs; [
