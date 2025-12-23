@@ -1,0 +1,118 @@
+* {
+    bg: #11111bcc;
+    bg-alt: #1e1e2ecc;
+    fg: #cdd6f4;
+    fg-alt: #6c7086;
+    accent: #fab387;
+    green: #a6e3a1;
+    urgent: #f38ba8;
+
+    font: "JetBrainsMono Nerd Font 13";
+    background-color: transparent;
+    text-color: @fg;
+}
+
+window {
+    width: 600px;
+    background-color: @bg;
+    border: 1px solid;
+    border-color: #313244;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [inputbar, message, listview, mode-switcher];
+}
+
+inputbar {
+    background-color: @bg-alt;
+    padding: 8px 12px;
+    children: [prompt, textbox-prompt-colon, entry];
+}
+
+prompt {
+    background-color: transparent;
+    text-color: @green;
+    padding: 0;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: " ❯ ";
+    text-color: @accent;
+    padding: 0;
+}
+
+entry {
+    background-color: transparent;
+    text-color: @fg;
+    placeholder: "type to search...";
+    placeholder-color: @fg-alt;
+    padding: 0;
+    cursor: text;
+}
+
+message {
+    background-color: @bg-alt;
+    padding: 6px 12px;
+}
+
+textbox {
+    background-color: transparent;
+    text-color: @fg-alt;
+}
+
+listview {
+    background-color: transparent;
+    padding: 4px 0;
+    lines: 12;
+    columns: 1;
+    fixed-height: true;
+    scrollbar: false;
+}
+
+element {
+    background-color: transparent;
+    padding: 4px 12px;
+}
+
+element selected {
+    background-color: @bg-alt;
+    text-color: @accent;
+}
+
+element urgent {
+    text-color: @urgent;
+}
+
+element active {
+    text-color: @green;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    highlight: bold underline;
+}
+
+element-icon {
+    background-color: transparent;
+    size: 18px;
+    margin: 0 8px 0 0;
+}
+
+mode-switcher {
+    background-color: @bg-alt;
+    padding: 0;
+}
+
+button {
+    background-color: transparent;
+    text-color: @fg-alt;
+    padding: 6px 12px;
+}
+
+button selected {
+    text-color: @accent;
+    background-color: transparent;
+}

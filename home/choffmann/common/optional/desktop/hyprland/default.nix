@@ -11,7 +11,7 @@ in {
     ./rofi
     ./hyprlock.nix
     ./hypridle.nix
-    ./hyprpanel.nix
+    ./waybar.nix
   ];
 
   home.packages = with pkgs; [
@@ -75,9 +75,11 @@ in {
       };
 
       exec-once = [
-        # "${lib.getExe inputs.ags-bar.packages."x86_64-linux".default}"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
         "nm-applet --indicator"
+        "sleep 3 && ${pkgs.synology-drive-client}/bin/synology-drive"
+        "wl-paste --type text --watch cliphist store"
+        "wl-paste --type image --watch cliphist store"
       ];
 
       input = {
@@ -96,27 +98,21 @@ in {
       ];
 
       general = {
-        gaps_in = 5;
-        gaps_out = 10;
-        border_size = 2;
+        gaps_in = 0;
+        gaps_out = 0;
+        border_size = 1;
         layout = "dwindle";
         allow_tearing = true;
       };
 
       decoration = {
-        rounding = 5;
+        rounding = 0;
         blur = {
-          enabled = true;
-          size = 3;
-          passes = 1;
-          new_optimizations = true;
+          enabled = false;
         };
 
         shadow = {
-          enabled = true;
-          range = 4;
-          render_power = 3;
-          # color = "rgba(1a1a1aee)";
+          enabled = false;
         };
       };
 
@@ -137,10 +133,7 @@ in {
           "windows, 1, 3, md3_decel, popin 60%"
           "border, 1, 10, default"
           "fade, 1, 2.5, md3_decel"
-          # "workspaces, 1, 3.5, md3_decel, slide"
           "workspaces, 1, 7, fluent_decel, slide"
-          # "workspaces, 1, 7, fluent_decel, slidefade 15%"
-          # "specialWorkspace, 1, 3, md3_decel, slidefadevert 15%"
           "specialWorkspace, 1, 3, md3_decel, slidevert"
         ];
       };
@@ -266,43 +259,79 @@ in {
 
       bind =
         [
+          # === Core ===
+          "$mod, Return, exec, $terminal"
           "$mod, W, exec, $terminal"
           "$mod, Q, killactive,"
-          "$mod, M, exit,"
           "$mod, E, exec, $fileManager"
-          "$mod, V, togglefloating,"
           "$mod, SPACE, exec, $menu"
-          "$mod, I, fullscreen, 1"
-          "$mod SHIFT, I, fullscreen, 0"
-          "$mod, S, togglesplit"
-          "$mod, P, pseudo"
-          "$mod, mouse_down, workspace, e+1" # Scroll through existing workspaces with mainMod + scroll
-          "$mod, mouse_down, workspace, e-2" # Scroll through existing workspaces with mainMod + scroll
-          "$mod, r, togglespecialworkspace, magic"
-          "$mod SHIFT, r, movetoworkspace, special:magic"
-
-          "$mod, T, togglespecialworkspace, teams"
-          "$mod SHIFT, T, movetoworkspace, special:teams"
-
-          "$mod, G, togglespecialworkspace, terminal"
-          "$mod SHIFT, G, movetoworkspace, special:terminal"
-
           "$mod, y, exec, $lock"
+          "$mod SHIFT, Q, exit,"
 
+          # === Rofi Modi ===
+          "$mod, d, exec, rofi -show drun"
+          "$mod, period, exec, rofi -show emoji"
+          "$mod, equal, exec, rofi -show calc -no-show-match -no-sort"
+          "$mod, o, exec, rofi -show ssh"
+          "$mod, b, exec, rofi-rbw"
+          "$mod, i, exec, cliphist list | rofi -dmenu -p 'Clipboard' | cliphist decode | wl-copy"
+
+          # === Navigation ===
           "$mod, h, movefocus, l"
           "$mod, l, movefocus, r"
           "$mod, j, movefocus, d"
           "$mod, k, movefocus, u"
 
-          "$mod, B, togglespecialworkspace, magic"
-          "$mod, B, movetoworkspace, +0"
-          "$mod, B, togglespecialworkspace, magic"
-          "$mod, B, movetoworkspace, special:magic"
-          "$mod, B, togglespecialworkspace, magic"
+          # === Move windows ===
+          "$mod SHIFT, h, movewindow, l"
+          "$mod SHIFT, l, movewindow, r"
+          "$mod SHIFT, j, movewindow, d"
+          "$mod SHIFT, k, movewindow, u"
+
+          # === Window state ===
+          "$mod, f, fullscreen, 1"
+          "$mod SHIFT, f, fullscreen, 0"
+          "$mod, v, togglefloating,"
+          "$mod, s, togglesplit"
+          "$mod, p, pseudo"
+
+          # === Tabs / Cycle ===
+          "$mod, Tab, cyclenext,"
+          "$mod SHIFT, Tab, cyclenext, prev"
+          "$mod, grave, focuscurrentorlast"
+
+          # === Workspace navigation ===
+          "$mod, n, workspace, e+1"
+          "$mod SHIFT, n, workspace, e-1"
+          "$mod, bracketright, workspace, e+1"
+          "$mod, bracketleft, workspace, e-1"
+
+          # === Special workspaces (like vim marks) ===
+          "$mod, r, togglespecialworkspace, magic"
+          "$mod SHIFT, r, movetoworkspace, special:magic"
+          "$mod, t, togglespecialworkspace, teams"
+          "$mod SHIFT, t, movetoworkspace, special:teams"
+          "$mod, g, togglespecialworkspace, terminal"
+          "$mod SHIFT, g, movetoworkspace, special:terminal"
+
+          # === Screenshots ===
+          "$mod SHIFT, s, exec, hyprshot -m region"
+          "$mod CTRL, s, exec, hyprshot -m output"
+          "$mod, c, exec, hyprshot -m window"
+          "$mod SHIFT, c, exec, hyprshot -m region --clipboard-only"
+          "$mod, a, exec, grim -g \"$(slurp)\" - | satty -f -"
+
+          # === Submaps (like vim modes) ===
+          "$mod, z, submap, resize"
+          "$mod, m, submap, move"
+          "$mod, x, submap, power"
+
+          # === Mouse ===
+          "$mod, mouse_down, workspace, e+1"
+          "$mod, mouse_up, workspace, e-1"
         ]
         ++ (
-          # workspaces
-          # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
+          # workspaces 1-9
           builtins.concatLists (builtins.genList (
               i: let
                 ws = i + 1;
@@ -314,5 +343,49 @@ in {
             9)
         );
     };
+
+    extraConfig = ''
+      # === Resize Submap ===
+      submap = resize
+      binde = , h, resizeactive, -50 0
+      binde = , l, resizeactive, 50 0
+      binde = , k, resizeactive, 0 -50
+      binde = , j, resizeactive, 0 50
+      binde = SHIFT, h, resizeactive, -150 0
+      binde = SHIFT, l, resizeactive, 150 0
+      binde = SHIFT, k, resizeactive, 0 -150
+      binde = SHIFT, j, resizeactive, 0 150
+      bind = , Return, submap, reset
+      bind = , Escape, submap, reset
+      bind = , q, submap, reset
+      submap = reset
+
+      # === Move Submap ===
+      submap = move
+      binde = , h, moveactive, -50 0
+      binde = , l, moveactive, 50 0
+      binde = , k, moveactive, 0 -50
+      binde = , j, moveactive, 0 50
+      binde = SHIFT, h, moveactive, -150 0
+      binde = SHIFT, l, moveactive, 150 0
+      binde = SHIFT, k, moveactive, 0 -150
+      binde = SHIFT, j, moveactive, 0 150
+      bind = , Return, submap, reset
+      bind = , Escape, submap, reset
+      bind = , q, submap, reset
+      submap = reset
+
+      # === Power Submap ===
+      submap = power
+      bind = , s, exec, systemctl poweroff
+      bind = , r, exec, systemctl reboot
+      bind = , p, exec, systemctl suspend
+      bind = , l, exec, hyprlock
+      bind = , e, exit,
+      bind = , Return, submap, reset
+      bind = , Escape, submap, reset
+      bind = , q, submap, reset
+      submap = reset
+    '';
   };
 }
