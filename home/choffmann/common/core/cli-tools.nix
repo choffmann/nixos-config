@@ -1,8 +1,10 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }: let
+  colors = config.lib.stylix.colors.withHashtag;
   tmux-sessionizer = pkgs.writeShellApplication {
     name = "tmux-sessionizer";
     # runtimeInputs = builtins.attrValues {inherit (pkgs) find fzf tmux;};
@@ -42,26 +44,140 @@ in {
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
+    defaultOptions = [
+      "--border=rounded"
+      "--prompt='λ ❯ '"
+      "--pointer='❯'"
+      "--marker='✓'"
+    ];
   };
 
   programs.starship = {
     enable = true;
-    settings = {};
+    settings = {
+      format = lib.concatStrings [
+        "$directory"
+        "$git_branch"
+        "$git_status"
+        "$rust"
+        "$golang"
+        "$nodejs"
+        "$python"
+        "$java"
+        "$kotlin"
+        "$lua"
+        "$nix_shell"
+        "$line_break"
+        "$character"
+      ];
+
+      right_format = "$cmd_duration";
+
+      rust = {
+        format = "[via](${colors.base05}) [$symbol$version](${colors.base08}) ";
+        symbol = "🦀 ";
+      };
+
+      golang = {
+        format = "[via](${colors.base05}) [$symbol$version](${colors.base0C}) ";
+        symbol = " ";
+      };
+
+      nodejs = {
+        format = "[via](${colors.base05}) [$symbol$version](${colors.base0B}) ";
+        symbol = " ";
+      };
+
+      python = {
+        format = "[via](${colors.base05}) [$symbol$version](${colors.base0D}) ";
+        symbol = " ";
+      };
+
+      java = {
+        format = "[via](${colors.base05}) [$symbol$version](${colors.base09}) ";
+        symbol = " ";
+      };
+
+      kotlin = {
+        format = "[via](${colors.base05}) [$symbol$version](${colors.base0E}) ";
+        symbol = " ";
+      };
+
+      lua = {
+        format = "[via](${colors.base05}) [$symbol$version](${colors.base0D}) ";
+        symbol = " ";
+      };
+
+      character = {
+        success_symbol = "[λ](${colors.base0B}) [❯](${colors.base09})";
+        error_symbol = "[λ](${colors.base08}) [❯](${colors.base09})";
+        vimcmd_symbol = "[λ](${colors.base0D}) [❮](${colors.base09})";
+      };
+
+      directory = {
+        style = "${colors.base0D}";
+        truncation_length = 3;
+        truncate_to_repo = true;
+        format = "[$path]($style)[$read_only]($read_only_style) ";
+      };
+
+      git_branch = {
+        style = "${colors.base0E}";
+        format = "[on](${colors.base05}) [$branch](${colors.base0E}) ";
+      };
+
+      git_status = {
+        style = "${colors.base09}";
+        format = "[\\[](${colors.base04})[$all_status$ahead_behind](${colors.base09})[\\]](${colors.base04}) ";
+        modified = "!";
+        staged = "+";
+        untracked = "?";
+        deleted = "✘";
+        conflicted = "═";
+        ahead = "↑";
+        behind = "↓";
+        diverged = "⇕";
+      };
+
+      nix_shell = {
+        format = "[in](${colors.base05}) [$symbol$state](${colors.base0C}) ";
+        symbol = " ";
+        style = "${colors.base0C}";
+        impure_msg = "[impure](${colors.base09})";
+        pure_msg = "[pure](${colors.base0B})";
+      };
+
+      cmd_duration = {
+        style = "${colors.base04}";
+        format = "[$duration]($style)";
+        min_time = 2000;
+      };
+    };
   };
 
   programs.bat = {
     enable = true;
     config = {
-      # Show line numbers, Git modifications and file header (but no grid)
       style = "numbers,changes,header";
-      #      theme = "";
     };
     extraPackages = builtins.attrValues {
       inherit
         (pkgs.bat-extras)
-        batgrep # search through and highlight files using ripgrep
-        batdiff # Diff a file against the current git index, or display the diff between to files
+        batgrep
+        batdiff
         ;
+    };
+  };
+
+  programs.btop = {
+    enable = true;
+    settings = {
+      theme_background = false;
+      vim_keys = true;
+      rounded_corners = false;
+      shown_boxes = "cpu mem net proc";
+      update_ms = 1000;
+      proc_tree = true;
     };
   };
 
@@ -125,14 +241,6 @@ in {
       # Reload config PREFIX + r
       bind r source-file ~/.tmux.conf \; display "Reloaded!"
 
-      # Set Colors in tmux
-      # set-option -sa terminal-overrides ",xterm*:Tc"
-
-      # Prefix to CTRL + SPACE
-      # unbind C-Space
-      # set -g prefix C-Space
-      # bind C-Space send-prefix
-
       # Numbering Windows and Panes
       set -g base-index 1
       set -g pane-base-index 1
@@ -158,13 +266,34 @@ in {
 
       set -ga update-environment TERM
       set -ga update-environment TERM_PROGRAM
+
+      # Terminal Aesthetic Theme
+      set -g status-style "bg=${colors.base02},fg=${colors.base05}"
+      set -g status-left "#[fg=${colors.base0B}]λ #[fg=${colors.base09}]❯ #[fg=${colors.base0D}]#S #[fg=${colors.base05}]│ "
+      set -g status-left-length 30
+      set -g status-right "#[fg=${colors.base05}]│ #[fg=${colors.base06}]%H:%M #[fg=${colors.base05}]│ #[fg=${colors.base06}]%d.%m"
+      set -g status-right-length 30
+
+      # Window status
+      set -g window-status-format "#[fg=${colors.base05}][#I:#W]"
+      set -g window-status-current-format "#[fg=${colors.base0B}][#I:#W]"
+      set -g window-status-separator " "
+
+      # Pane borders
+      set -g pane-border-style "fg=${colors.base02}"
+      set -g pane-active-border-style "fg=${colors.base0B}"
+
+      # Message style
+      set -g message-style "bg=${colors.base01},fg=${colors.base05}"
+
+      # Mode style (copy mode)
+      set -g mode-style "bg=${colors.base02},fg=${colors.base05}"
     '';
 
     plugins = with pkgs.tmuxPlugins; [
       {plugin = vim-tmux-navigator;}
       {plugin = sensible;}
       {plugin = tmux-fzf;}
-      {plugin = catppuccin;}
     ];
   };
 }

@@ -35,7 +35,6 @@
   };
 
   home.packages = with pkgs; [
-    btop # resource monitor
     copyq # clipboard manager
     coreutils # basic gnu utils
     curl
