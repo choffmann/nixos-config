@@ -148,6 +148,7 @@ in {
 
   boot.blacklistedKernelModules = ["nvidia" "nouveau"];
   boot.initrd.kernelModules = ["amdgpu"];
+  boot.kernelModules = ["hid-logitech-dj" "hid-logitech-hidpp"];
   services.xserver.videoDrivers = ["amdgpu"];
 
   boot.kernelParams = [
@@ -159,6 +160,8 @@ in {
     "loglevel=3"
     "rd.systemd.show_status=auto"
     "rd.udev.log_level=3"
+    # Reduce USB enumeration timeout for defective port 1-11 (default 5000ms)
+    "usbcore.initial_descriptor_timeout=500"
   ];
 
   systemd.services.tune-eno1 = {
@@ -179,6 +182,9 @@ in {
 
     # Reapply tuning on carrier change
     ACTION=="change", SUBSYSTEM=="net", KERNEL=="eno1", RUN+="${tuneEno1}"
+
+    # Disable defective USB port 1-11 to prevent 60s boot delay
+    ACTION=="add", SUBSYSTEM=="usb", DEVPATH=="*/usb1/1-11", ATTR{authorized}="0"
   '';
   services.udev.packages = [pkgs.usbutils];
 
