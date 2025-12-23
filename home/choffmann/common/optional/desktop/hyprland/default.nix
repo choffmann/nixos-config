@@ -12,6 +12,7 @@ in {
     ./hyprlock.nix
     ./hypridle.nix
     ./waybar.nix
+    ./mako.nix
   ];
 
   home.packages = with pkgs; [
@@ -26,6 +27,7 @@ in {
     grim
     hyprpicker
     imagemagick
+    libnotify
     pavucontrol
     playerctl
     swappy
