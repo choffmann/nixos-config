@@ -35,6 +35,7 @@
         position = "top";
         height = 22;
         spacing = 0;
+        output = ["DP-1" "eDP-1" "HDMI-A-1"];
 
         modules-left = ["custom/prompt" "custom/separator" "group/workspaces" "hyprland/submap" "custom/submap-hint"];
         modules-center = ["custom/cava" "custom/media"];
@@ -168,6 +169,75 @@
           spacing = 8;
         };
       };
+
+      secondaryBar = {
+        layer = "top";
+        position = "top";
+        height = 22;
+        spacing = 0;
+        output = ["DP-2"];
+
+        modules-left = ["custom/prompt" "custom/separator" "hyprland/workspaces" "hyprland/window"];
+        modules-center = [];
+        modules-right = ["custom/updates" "custom/uptime" "custom/date"];
+
+        "hyprland/workspaces" = {
+          format = "{name}";
+          on-click = "activate";
+          sort-by-number = true;
+        };
+
+        "hyprland/window" = {
+          format = "{title}";
+          format-empty = "";
+          max-length = 30;
+          separate-outputs = true;
+        };
+
+        "custom/prompt" = {
+          format = "λ";
+          tooltip = false;
+        };
+
+        "custom/separator" = {
+          format = "❯";
+          tooltip = false;
+        };
+
+        "custom/uptime" = {
+          exec = ''
+            awk '{d=int($1/86400);h=int($1%86400/3600);m=int($1%3600/60);if(d>0)printf "[up %dd%dh]",d,h;else if(h>0)printf "[up %dh%dm]",h,m;else printf "[up %dm]",m}' /proc/uptime
+          '';
+          interval = 60;
+          tooltip = false;
+        };
+
+        "custom/updates" = {
+          exec = ''
+            flake_lock="$HOME/nixos-config/flake.lock"
+            if [ -f "$flake_lock" ]; then
+              days_old=$(( ($(date +%s) - $(stat -c %Y "$flake_lock")) / 86400 ))
+              if [ "$days_old" -gt 7 ]; then
+                echo "{\"text\": \"[nix ''${days_old}d]\", \"class\": \"warning\"}"
+              else
+                echo "{\"text\": \"[nix ''${days_old}d]\", \"class\": \"ok\"}"
+              fi
+            else
+              echo "{\"text\": \"[nix --]\"}"
+            fi
+          '';
+          return-type = "json";
+          interval = 3600;
+          tooltip-format = "Days since last flake update";
+          on-click = "cd ~/nixos-config && nix flake update";
+        };
+
+        "custom/date" = {
+          exec = "date +'[%a %d.%m] [%H:%M]'";
+          interval = 60;
+          tooltip = false;
+        };
+      };
     };
 
     style = ''
@@ -253,6 +323,25 @@
       #custom-cava {
         color: #a6e3a1;
         letter-spacing: 2px;
+      }
+
+      #custom-uptime {
+        color: #6c7086;
+        padding: 0 4px;
+      }
+
+      #custom-updates {
+        color: #a6e3a1;
+        padding: 0 4px;
+      }
+
+      #custom-updates.warning {
+        color: #fab387;
+      }
+
+      #custom-date {
+        color: #a6adc8;
+        padding: 0 8px 0 4px;
       }
 
       #cpu,
