@@ -12,6 +12,7 @@
     "${sopsDir}/k8s/config/k3s-cluster"
     "${sopsDir}/k8s/config/progeek"
     "${sopsDir}/k8s/config/progeek-utility"
+    "${sopsDir}/k8s/config/homelab"
   ];
   mergeScript = pkgs.writeShellScript "merge-kubeconfig" ''
     mkdir -p ${kubeDir}
@@ -24,6 +25,7 @@ in {
   sops.secrets."k8s/config/k3s-cluster" = {};
   sops.secrets."k8s/config/progeek" = {};
   sops.secrets."k8s/config/progeek-utility" = {};
+  sops.secrets."k8s/config/homelab" = {};
 
   home.sessionVariables.KUBECONFIG = kubeConfig;
 

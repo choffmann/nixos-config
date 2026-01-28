@@ -8,7 +8,7 @@
   vfioIds = ["10de:1b81" "10de:10f0"];
 in {
   boot = {
-    kernelModules = ["kvm-${platform}" "vfio_pci" "vfio_iommu_type1" "vfio" "kvmfr"];
+    kernelModules = ["kvm-${platform}" "vfio_pci" "vfio_iommu_type1" "vfio"];
     kernelParams = ["${platform}_iommu=on" "${platform}_iommu=pt" "kvm.ignore_msrs=1"];
     extraModulePackages = [config.boot.kernelPackages.kvmfr];
     extraModprobeConfig = ''
@@ -17,8 +17,20 @@ in {
     '';
   };
 
+  # Load kvmfr via systemd (after udev is ready)
+  systemd.services.kvmfr-load = {
+    description = "Load kvmfr module";
+    wantedBy = ["multi-user.target"];
+    after = ["systemd-udev-settle.service"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.kmod}/bin/modprobe kvmfr";
+    };
+  };
+
   services.udev.extraRules = ''
-    SUBSYSTEM=="kvmfr", OWNER="${user}", GROUP="kvm", MODE="0660"
+    SUBSYSTEM=="kvmfr", KERNEL=="kvmfr*", GROUP="kvm", MODE="0660"
   '';
 
   systemd.tmpfiles.rules = [
