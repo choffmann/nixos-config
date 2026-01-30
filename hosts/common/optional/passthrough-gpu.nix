@@ -9,7 +9,14 @@
 in {
   boot = {
     kernelModules = ["kvm-${platform}" "vfio_pci" "vfio_iommu_type1" "vfio"];
-    kernelParams = ["${platform}_iommu=on" "${platform}_iommu=pt" "kvm.ignore_msrs=1"];
+    kernelParams = [
+      "${platform}_iommu=on"
+      "${platform}_iommu=pt"
+      "kvm.ignore_msrs=1"
+      "default_hugepagesz=2M"
+      "hugepagesz=2M"
+      "hugepages=8192" # 16GB for VM
+    ];
     extraModulePackages = [config.boot.kernelPackages.kvmfr];
     extraModprobeConfig = ''
       options vfio-pci ids=${builtins.concatStringsSep "," vfioIds}
@@ -82,4 +89,15 @@ in {
   systemd.services.libvirtd.wantedBy = pkgs.lib.mkForce [];
 
   users.users.${user}.extraGroups = ["qemu-libvirtd" "libvirtd" "disk"];
+
+  # Hugepages for VM memory
+  systemd.mounts = [
+    {
+      where = "/dev/hugepages";
+      what = "hugetlbfs";
+      type = "hugetlbfs";
+      options = "mode=0775,gid=libvirtd";
+      wantedBy = ["multi-user.target"];
+    }
+  ];
 }
