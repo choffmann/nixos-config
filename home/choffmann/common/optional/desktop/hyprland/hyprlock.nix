@@ -58,7 +58,7 @@ in {
         # Time
         {
           monitor = "";
-          text = "cmd[update:1000] echo \"[$(date +\"%H:%M\")]\"";
+          text = "cmd[update:30000] echo \"[$(date +\"%H:%M\")]\"";
           color = "${rgba "base05" "1.0"}";
           font_size = 80;
           font_family = "${font}";
@@ -69,7 +69,7 @@ in {
         # Date
         {
           monitor = "";
-          text = "cmd[update:1000] echo \"[$(date +\"%a %d.%m.%Y\")]\"";
+          text = "cmd[update:60000] echo \"[$(date +\"%a %d.%m.%Y\")]\"";
           color = "${rgba "base04" "1.0"}";
           font_size = 20;
           font_family = "${font}";
