@@ -58,7 +58,7 @@ in {
     ../../common/optional/desktop-apps.nix
     ../../common/optional/office.nix
     ../../common/optional/pi.nix
-    # ../../common/optional/plymouth.nix
+    ../../common/optional/plymouth.nix
     ../../common/optional/wayland.nix
     ../../common/optional/yubikey.nix
     ../../common/optional/docker.nix
@@ -134,6 +134,13 @@ in {
     efi.canTouchEfiVariables = true;
   };
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
+
+  boot.plymouth = {
+    theme = lib.mkForce "lone";
+    themePackages = [
+      (pkgs.adi1090x-plymouth-themes.override {selected_themes = ["lone"];})
+    ];
+  };
 
   boot.blacklistedKernelModules = ["nvidia" "nouveau"];
   boot.initrd.kernelModules = ["amdgpu"];

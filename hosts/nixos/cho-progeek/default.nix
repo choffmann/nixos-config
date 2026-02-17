@@ -2,6 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
+  pkgs,
   inputs,
   outputs,
   lib,
@@ -28,7 +29,7 @@
     ../../common/optional/audio.nix
     ../../common/optional/hyprland.nix
     ../../common/optional/desktop-apps.nix
-    # ../../common/optional/plymouth.nix
+    ../../common/optional/plymouth.nix
     ../../common/optional/wayland.nix
     ../../common/optional/yubikey.nix
     ../../common/optional/docker.nix
@@ -55,6 +56,11 @@
       canTouchEfiVariables = true;
       efiSysMountPoint = "/boot/efi";
     };
+  };
+
+  boot.plymouth = {
+    theme = lib.mkForce "progeek_loading";
+    themePackages = [pkgs.progeek-loading-plymouth-theme];
   };
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
