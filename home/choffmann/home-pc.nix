@@ -12,6 +12,39 @@
         looking-glass-client -f /dev/kvmfr0 -F
       '';
     };
+
+  sinkSpeaker = "alsa_output.usb-Generic_USB_Audio-00.HiFi__Speaker__sink";
+  sinkHeadset = "alsa_output.usb-RODE_Microphones_RODE_NT-USB-00.analog-stereo";
+
+  audioToggle = pkgs.writeShellApplication {
+    name = "audio-toggle";
+    runtimeInputs = with pkgs; [wireplumber libnotify gnugrep];
+    text = ''
+      get_sink_id() {
+        wpctl inspect @DEFAULT_AUDIO_SINK@ | grep -oP 'id \K\d+'
+      }
+
+      get_id_by_name() {
+        pw-cli list-objects Node 2>/dev/null \
+          | grep -B20 "node.name = \"$1\"" \
+          | grep "^[[:space:]]*id " \
+          | tail -1 \
+          | grep -oP 'id \K\d+'
+      }
+
+      speaker_id=$(get_id_by_name "${sinkSpeaker}")
+      headset_id=$(get_id_by_name "${sinkHeadset}")
+      current_id=$(get_sink_id)
+
+      if [ "$current_id" = "$speaker_id" ]; then
+        wpctl set-default "$headset_id"
+        notify-send -t 2000 "Audio" "RODE NT-USB"
+      else
+        wpctl set-default "$speaker_id"
+        notify-send -t 2000 "Audio" "USB Speakers"
+      fi
+    '';
+  };
 in {
   imports = [
     ./common/core
@@ -39,7 +72,7 @@ in {
 
     bind = [
       "$mod + SHIFT, W, togglespecialworkspace, windows"
+      "$mod + SHIFT, A, exec, ${audioToggle}/bin/audio-toggle"
     ];
   };
-
 }
