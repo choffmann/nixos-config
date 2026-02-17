@@ -7,8 +7,6 @@
       "https://cache.nixos.org"
       "https://nixpkgs-wayland.cachix.org"
       "https://nix-community.cachix.org"
-      # Nix-community
-      "https://nix-community.cachix.org"
       # green-ecolution
       "https://green-ecolution.cachix.org"
     ];

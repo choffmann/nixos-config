@@ -1,5 +1,6 @@
 # Core functionality for every nixos host
 {
+  config,
   lib,
   inputs,
   ...
@@ -23,7 +24,7 @@
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 20d --keep 20";
-    flake = "/home/user/nixos-config";
+    flake = config.hostSpec.flake;
   };
 
   i18n.defaultLocale = lib.mkDefault "de_DE.UTF-8";

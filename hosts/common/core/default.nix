@@ -16,6 +16,13 @@
     ./sops.nix
     ./cachix.nix
     ../users/choffmann
+
+    ../optional/services/bluetooth.nix
+    ../optional/services/mount.nix
+    ../optional/services/display-manager/greetd.nix
+    ../optional/services/openssh.nix
+    ../optional/services/printing.nix
+    ../optional/services/xserver.nix
   ];
 
   networking.hostName = config.hostSpec.hostName;

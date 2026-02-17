@@ -2,7 +2,6 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
-  pkgs,
   inputs,
   outputs,
   lib,
@@ -18,32 +17,22 @@
     inputs.nixos-hardware.nixosModules.common-pc-ssd
     ./hardware-configuration.nix
 
-    # misc
-    inputs.stylix.nixosModules.stylix
-
     # core
     ../../common/core
 
     # optional
+    ../../common/optional/stylix.nix
     ../../common/optional/vpn.nix
     ../../common/optional/office.nix
     ../../common/optional/android.nix
-    ../../common/optional/services/bluetooth.nix
-    ../../common/optional/services/mount.nix
-    ../../common/optional/services/display-manager/greetd.nix
-    ../../common/optional/services/openssh.nix
-    ../../common/optional/services/printing.nix
-    ../../common/optional/services/xserver.nix
     ../../common/optional/audio.nix
     ../../common/optional/hyprland.nix
-    ../../common/optional/obsidian.nix
+    ../../common/optional/desktop-apps.nix
     # ../../common/optional/plymouth.nix
     ../../common/optional/wayland.nix
-    ../../common/optional/vlc.nix
     ../../common/optional/yubikey.nix
     ../../common/optional/docker.nix
     ../../common/optional/spotify.nix
-    ../../common/optional/prusa.nix
   ];
 
   hostSpec = {
@@ -75,63 +64,7 @@
     tailor-gui.enable = true;
   };
 
-  nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = ["nix-command" "flakes"];
   system.stateVersion = "24.11"; # Did you read the comment?
 
-  stylix = {
-    enable = true;
-    base16Scheme = ../../../themes/terminal-aesthetic.yaml;
-
-    image = ../../../home/wallpaper/progeek/progeek-2.png;
-    imageScalingMode = "center";
-
-    cursor.package = pkgs.bibata-cursors;
-    cursor.name = "Bibata-Modern-Ice";
-    cursor.size = 25;
-
-    fonts = {
-      serif = {
-        package = pkgs.noto-fonts;
-        name = "Noto Serif";
-      };
-
-      sansSerif = {
-        package = pkgs.noto-fonts;
-        name = "Noto Sans";
-      };
-
-      monospace = {
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrainsMono Nerd Font";
-      };
-
-      emoji = {
-        package = pkgs.noto-fonts-color-emoji;
-        name = "Noto Color Emoji";
-      };
-    };
-
-    fonts.sizes = {
-      applications = 10;
-      desktop = 10;
-      terminal = 10;
-      popups = 10;
-    };
-
-    opacity = {
-      applications = 0.8;
-      terminal = 0.8;
-      desktop = 1.0;
-      popups = 0.8;
-    };
-
-    targets.nixvim = {
-      plugin = "base16-nvim";
-      transparentBackground.main = true;
-      transparentBackground.signColumn = true;
-    };
-
-    polarity = "dark";
-  };
+  stylix.image = ../../../home/wallpaper/progeek/progeek-2.png;
 }

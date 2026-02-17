@@ -3,11 +3,9 @@
   lib,
   ...
 }: let
-  tpp_ngrok = pkgs.writeShellScriptBin "tpp_ngrok" (builtins.readFile ./scripts/tpp_ngrok.sh);
-  tpp_ssh_startup = pkgs.writeShellScriptBin "tpp_ssh_startup" (builtins.readFile ./scripts/tpp_ssh_startup.sh);
+  tpp_ngrok = pkgs.writeShellScriptBin "tpp_ngrok" (builtins.readFile ../core/zsh/scripts/tpp_ngrok.sh);
+  tpp_ssh_startup = pkgs.writeShellScriptBin "tpp_ssh_startup" (builtins.readFile ../core/zsh/scripts/tpp_ssh_startup.sh);
 in {
-  # TODO: move to own module
-
   home.packages = with pkgs; [
     tmux
     yq-go

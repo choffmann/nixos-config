@@ -52,11 +52,12 @@ in {
     ./common/optional/k8s.nix
     ./common/optional/sops.nix
     ./common/optional/discord.nix
-    ./common/optional/brower
+    ./common/optional/browser
     ./common/optional/desktop/hyprland
-    ./common/optional/xdg.nix # file associations
+    ./common/optional/mime-associations.nix
     ./common/optional/thunderbird.nix
     ./common/optional/pdf-tools.nix
+    ./common/optional/tpp.nix
     ./common/optional/matrix.nix
     ./common/optional/synology-drive.nix
   ];
