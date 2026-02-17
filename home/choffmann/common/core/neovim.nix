@@ -37,6 +37,10 @@ in {
     marksman
     astro-language-server
 
+    # debugger
+    delve
+    lldb
+
     # formatter
     stylua
     prettierd

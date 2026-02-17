@@ -3,6 +3,8 @@
   lib,
   ...
 }: {
+  home.packages = [pkgs.difftastic];
+
   programs.lazygit = {
     enable = true;
     package = pkgs.unstable.lazygit;
@@ -11,6 +13,18 @@
         "git.progeek.de:2222" = "gitea:git.progeek.de";
       };
       git.overrideGpg = false;
+    };
+  };
+
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      navigate = true;
+      line-numbers = true;
+      syntax-theme = "base16";
+      dark = true;
+      hyperlinks = true;
     };
   };
 
@@ -30,6 +44,15 @@
       pull.rebase = "true";
       rebase.autostash = true;
       rebase.autosquash = true;
+      diff.algorithm = "histogram";
+      diff.tool = "difftastic";
+      difftool.prompt = false;
+      "difftool \"difftastic\"".cmd = "difft \"$LOCAL\" \"$REMOTE\"";
+      merge.conflictstyle = "zdiff3";
+      push.autoSetupRemote = true;
+      rerere.enabled = true;
+      fetch.prune = true;
+      branch.sort = "-committerdate";
       url = {
         # "ssh://git@github.com" = {
         #   insteadOf = "https://github.com";
@@ -46,6 +69,14 @@
       ".direnv"
       ".pre-commit-config.yaml"
     ];
+  };
+
+  programs.gh = {
+    enable = true;
+    settings = {
+      git_protocol = "ssh";
+      prompt = "enabled";
+    };
   };
 
   # https://joinemm.dev/blog/yubikey-nixos-guide

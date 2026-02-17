@@ -22,6 +22,9 @@
       open = "xdg-open";
       vi = "nvim";
       vim = "nvim";
+      lzd = "lazydocker";
+      gdt = "git difftool";
+      cc = "claude";
     };
     oh-my-zsh = {
       enable = true;

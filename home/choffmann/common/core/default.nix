@@ -65,6 +65,14 @@
     openssl
     wget
     tealdeer # tldr
+    tokei
+    hyperfine
+    doggo
+    procs
+    bandwhich
+    just
+    lazydocker
+    unstable.claude-code
   ];
 
   nix = {

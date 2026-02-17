@@ -6,6 +6,21 @@
   homeDir = config.home.homeDirectory;
   workspacesConf = "${homeDir}/.config/hypr/workspaces.conf";
   monitorsConf = "${homeDir}/.config/hypr/monitors.conf";
+
+  hyprFocusToggle = pkgs.writeShellApplication {
+    name = "hypr-focus-toggle";
+    runtimeInputs = with pkgs; [mako libnotify];
+    text = ''
+      if makoctl mode | grep -q "do-not-disturb"; then
+        makoctl mode -r do-not-disturb
+        notify-send -t 2000 "Focus" "OFF"
+      else
+        notify-send -t 1000 "Focus" "ON"
+        sleep 1
+        makoctl mode -a do-not-disturb
+      fi
+    '';
+  };
 in {
   imports = [
     ./rofi
@@ -205,6 +220,12 @@ in {
         # Steam
         "stayfocused, title:^()$,class:^(steam)$"
         "minsize 1 1, title:^()$,class:^(steam)$"
+
+        # Auto-assign apps to workspaces
+        "workspace 2 silent, class:^(zen-beta|firefox|chromium-browser)$"
+        "workspace 6 silent, class:^(vesktop|Element)$"
+        "workspace 7 silent, class:^(thunderbird)$"
+        "workspace 6 silent, class:^(Spotify)$"
       ];
       layerrule = [
         "xray 1, .*"
@@ -322,6 +343,9 @@ in {
           "$mod, c, exec, hyprshot -m window"
           "$mod SHIFT, c, exec, hyprshot -m region --clipboard-only"
           "$mod, a, exec, grim -g \"$(slurp)\" - | satty -f -"
+
+          # === Focus mode ===
+          "$mod SHIFT, d, exec, ${hyprFocusToggle}/bin/hypr-focus-toggle"
 
           # === Submaps (like vim modes) ===
           "$mod, z, submap, resize"

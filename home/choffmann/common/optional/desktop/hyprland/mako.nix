@@ -40,6 +40,10 @@ in {
         border-color = lib.mkForce colors.base08;
         default-timeout = lib.mkForce 0;
       };
+
+      "mode=do-not-disturb" = {
+        invisible = 1;
+      };
     };
   };
 }

@@ -7,6 +7,7 @@
     ./common/optional/discord.nix
     ./common/optional/browser
     ./common/optional/desktop/hyprland
+    ./common/optional/desktop/hyprland/kanshi.nix
     ./common/optional/mime-associations.nix
     ./common/optional/thunderbird.nix
     ./common/optional/pdf-tools.nix
