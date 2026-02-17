@@ -15,7 +15,7 @@ in {
       "kvm.ignore_msrs=1"
       "default_hugepagesz=2M"
       "hugepagesz=2M"
-      "hugepages=8192" # 16GB for VM
+      "hugepages=8256" # 16GB for VM + 128MB for Looking Glass
     ];
     extraModulePackages = [config.boot.kernelPackages.kvmfr];
     extraModprobeConfig = ''

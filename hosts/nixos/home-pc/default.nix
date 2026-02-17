@@ -77,6 +77,7 @@ in {
     ../../common/optional/steam.nix
     ../../common/optional/android.nix
     ../../common/optional/winbox.nix
+    ../../common/optional/vm-bridge.nix
   ];
 
   hostSpec = {
@@ -105,14 +106,12 @@ in {
   };
 
   networking = {
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+    };
     modemmanager.enable = false;
     enableIPv6 = false;
     firewall.enable = false;
-
-    interfaces = {
-      eno1.wakeOnLan.enable = true;
-    };
 
     hosts = {
       "192.168.122.192" = ["naboo" "naboo.local"];

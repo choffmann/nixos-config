@@ -4,20 +4,39 @@
   lib,
   ...
 }: {
-  networking = {
-    bridges.br0.interfaces = ["eno1"];
-
-    interfaces = {
-      eno1 = {
-        useDHCP = false;
-        wakeOnLan.enable = true;
+  networking.networkmanager.ensureProfiles.profiles = {
+    br0 = {
+      connection = {
+        id = "br0";
+        type = "bridge";
+        interface-name = "br0";
+        autoconnect = "true";
       };
-      br0.useDHCP = true;
+      ipv4 = {
+        method = "auto";
+      };
+      ipv6 = {
+        method = "disabled";
+      };
+      bridge = {
+        stp = "false";
+      };
+    };
+
+    br0-eno1 = {
+      connection = {
+        id = "br0-eno1";
+        type = "ethernet";
+        interface-name = "eno1";
+        master = "br0";
+        slave-type = "bridge";
+        autoconnect = "true";
+      };
+      ethernet = {
+        wake-on-lan = "64";
+      };
     };
   };
-
-  # Ensure bridge is up before libvirt
-  systemd.services."network-addresses-br0".before = ["libvirtd.service"];
 
   # libvirt bridge network
   systemd.services.libvirt-bridge-network = {
