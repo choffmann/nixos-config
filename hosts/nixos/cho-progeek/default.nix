@@ -52,6 +52,7 @@
         connection = {
           id = "PROGEEK-OFFICE";
           type = "wifi";
+          autoconnect = "false";
         };
         wifi = {
           ssid = "PROGEEK-OFFICE";
