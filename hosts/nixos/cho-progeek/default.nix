@@ -6,6 +6,7 @@
   inputs,
   outputs,
   lib,
+  config,
   ...
 }: {
   imports = [
@@ -42,8 +43,35 @@
     # useYubiKey = lib.mkForce true;
   };
 
+  sops.secrets."wifi/progeek-office" = {};
+
   networking = {
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      ensureProfiles.profiles.progeek-office = {
+        connection = {
+          id = "PROGEEK-OFFICE";
+          type = "wifi";
+        };
+        wifi = {
+          ssid = "PROGEEK-OFFICE";
+          mode = "infrastructure";
+        };
+        wifi-security = {
+          key-mgmt = "wpa-eap";
+        };
+        "802-1x" = {
+          eap = "ttls;";
+          phase2-auth = "pap";
+          identity = "choffmann";
+          password = "$WIFI_PROGEEK_OFFICE_PW";
+          password-flags = "0";
+        };
+      };
+      ensureProfiles.environmentFiles = [
+        config.sops.secrets."wifi/progeek-office".path
+      ];
+    };
     enableIPv6 = false;
     firewall.enable = false;
   };
