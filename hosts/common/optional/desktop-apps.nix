@@ -3,5 +3,6 @@
     obsidian
     vlc
     prusa-slicer
+    slack
   ];
 }
