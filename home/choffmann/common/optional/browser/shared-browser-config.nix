@@ -100,6 +100,8 @@ in {
     "browser.tabs.firefox-view" = true;
     "extensions.pocket.enabled" = false;
     "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+    "browser.newtabpage.activity-stream.improvesearch.handoffToAwesomebar" = false;
+    "zen.urlbar.behavior" = "float";
   };
 
   search = {

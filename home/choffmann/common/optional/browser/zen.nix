@@ -10,22 +10,6 @@ in {
     inputs.zen-browser.homeModules.beta
   ];
 
-  # Zen reads from ~/.zen/ instead of ~/.config/zen/ (where HM deploys)
-  home.file.".zen/profiles.ini" = {
-    force = true;
-    text = ''
-      [General]
-      StartWithLastProfile=1
-      Version=2
-
-      [Profile0]
-      Default=1
-      IsRelative=1
-      Name=Cedrik
-      Path=choffmann
-    '';
-  };
-
   stylix.targets.zen-browser.profileNames = ["choffmann"];
 
   programs.zen-browser = {
