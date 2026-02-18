@@ -373,6 +373,26 @@
         "type": "github"
       }
     },
+    "progeek-plymouth": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1771401331,
+        "narHash": "sha256-sAbtWnmDP2iglWKq2w13b6bQRYU5XgK4hU3wmOAfdlE=",
+        "owner": "choffmann",
+        "repo": "progeek-loading-plymouth-theme",
+        "rev": "c54f3d026878cbda0fc803db5c2fdc5053da49de",
+        "type": "github"
+      },
+      "original": {
+        "owner": "choffmann",
+        "repo": "progeek-loading-plymouth-theme",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "ags-bar": "ags-bar",
@@ -381,6 +401,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "progeek-plymouth": "progeek-plymouth",
         "solaar": "solaar",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
