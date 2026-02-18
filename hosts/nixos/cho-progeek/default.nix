@@ -60,7 +60,7 @@
 
   boot.plymouth = {
     theme = lib.mkForce "progeek_loading";
-    themePackages = [pkgs.progeek-loading-plymouth-theme];
+    themePackages = [inputs.progeek-plymouth.packages.${pkgs.stdenv.hostPlatform.system}.default];
   };
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];

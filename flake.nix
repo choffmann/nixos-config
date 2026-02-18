@@ -34,6 +34,9 @@
     # Logitech MX
     solaar.url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
     solaar.inputs.nixpkgs.follows = "nixpkgs";
+
+    progeek-plymouth.url = "github:choffmann/progeek-loading-plymouth-theme";
+    progeek-plymouth.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
