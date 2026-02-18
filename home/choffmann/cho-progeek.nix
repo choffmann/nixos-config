@@ -1,4 +1,4 @@
-{...}: {
+{lib, ...}: {
   imports = [
     ./common/core
 
@@ -16,6 +16,22 @@
 
   # services.yubikey-touch-detector.enable = true;
   # services.yubikey-touch-detector.notificationSound = true;
+
+  wayland.windowManager.hyprland.settings = {
+    source = lib.mkForce [];
+
+    workspace = [
+      "1, monitor:DP-1, default:true"
+      "2, monitor:DP-1"
+      "3, monitor:DP-1"
+      "4, monitor:DP-1"
+      "5, monitor:DP-1"
+      "6, monitor:HDMI-A-1, default:true"
+      "7, monitor:HDMI-A-1"
+      "8, monitor:HDMI-A-1"
+      "9, monitor:HDMI-A-1"
+    ];
+  };
 
   programs.git = {
     userEmail = "choffmann@progeek.de";
