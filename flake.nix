@@ -35,6 +35,9 @@
     solaar.url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
     solaar.inputs.nixpkgs.follows = "nixpkgs";
 
+    k8s-oidc-auth.url = "git+ssh://git@gitlab.progeek.de:2200/progeek/k8s-oidc-auth?ref=feature/nixos-allow-file-referencing";
+    k8s-oidc-auth.inputs.nixpkgs.follows = "nixpkgs";
+
     progeek-plymouth.url = "github:choffmann/progeek-loading-plymouth-theme";
     progeek-plymouth.inputs.nixpkgs.follows = "nixpkgs";
   };

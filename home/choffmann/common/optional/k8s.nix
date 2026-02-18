@@ -10,9 +10,9 @@
   kubeconfigs = [
     "${sopsDir}/k8s/config/green-ecolution"
     "${sopsDir}/k8s/config/k3s-cluster"
-    "${sopsDir}/k8s/config/progeek"
     "${sopsDir}/k8s/config/progeek-utility"
     "${sopsDir}/k8s/config/homelab"
+    "/var/lib/k8s-oidc-auth/kubeconfig"
   ];
   mergeScript = pkgs.writeShellScript "merge-kubeconfig" ''
     mkdir -p ${kubeDir}
@@ -23,7 +23,6 @@
 in {
   sops.secrets."k8s/config/green-ecolution" = {};
   sops.secrets."k8s/config/k3s-cluster" = {};
-  sops.secrets."k8s/config/progeek" = {};
   sops.secrets."k8s/config/progeek-utility" = {};
   sops.secrets."k8s/config/homelab" = {};
 
