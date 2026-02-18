@@ -119,6 +119,7 @@
     defaultCacheTtl = 60;
     maxCacheTtl = 120;
     pinentry.package = pkgs.pinentry-curses;
+    enableExtraSocket = true;
     extraConfig = ''
       ttyname $GPG_TTY
     '';
