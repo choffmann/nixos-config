@@ -8,6 +8,7 @@
     ./ghostty
     ./zsh
     ./neovim.nix
+    ./claude.nix
     ./cli-tools.nix
     ./fonts.nix
     ./git.nix
