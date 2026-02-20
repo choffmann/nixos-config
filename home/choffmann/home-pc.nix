@@ -58,6 +58,7 @@ in {
     ./common/optional/thunderbird.nix
     ./common/optional/pdf-tools.nix
     ./common/optional/tpp.nix
+    ./common/optional/ktt-rofi.nix
     ./common/optional/matrix.nix
     ./common/optional/synology-drive.nix
   ];

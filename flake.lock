@@ -363,6 +363,27 @@
         "url": "ssh://git@gitlab.progeek.de:2200/progeek/k8s-oidc-auth"
       }
     },
+    "ktt": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1771586003,
+        "narHash": "sha256-v7c9PkG0U2ytvxMQS473PSnPzfvMjqB5PoNXG3b+Ljk=",
+        "ref": "refs/heads/main",
+        "rev": "f048b8ec4f39347da94c08e7e3ef7ae066b85dc5",
+        "revCount": 16,
+        "type": "git",
+        "url": "ssh://git@gitlab.progeek.de:2200/choffmann/kimai-time-tracker.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@gitlab.progeek.de:2200/choffmann/kimai-time-tracker.git"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1771257191,
@@ -514,6 +535,7 @@
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
         "k8s-oidc-auth": "k8s-oidc-auth",
+        "ktt": "ktt",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
@@ -522,6 +544,27 @@
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "zen-browser": "zen-browser"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "ktt",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1771470520,
+        "narHash": "sha256-PvytHcaYN5cPUll7FB70mXv1rRsIBRmu47fFfq3haxA=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "a1d4cc1f264c45d3745af0d2ca5e59d460e58777",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "solaar": {
