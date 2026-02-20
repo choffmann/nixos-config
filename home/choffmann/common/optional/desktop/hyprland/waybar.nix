@@ -45,7 +45,7 @@ in {
 
         modules-left = ["custom/prompt" "custom/separator" "group/workspaces" "hyprland/submap" "custom/submap-hint"];
         modules-center = ["custom/cava" "custom/media"];
-        modules-right = ["cpu" "memory" "disk" "network" "wireplumber" "battery" "clock" "tray"];
+        modules-right = ["custom/ktt" "cpu" "memory" "disk" "network" "wireplumber" "battery" "clock" "tray"];
 
         "group/workspaces" = {
           orientation = "horizontal";
@@ -348,6 +348,15 @@ in {
       #custom-date {
         color: ${colors.base06};
         padding: 0 8px 0 4px;
+      }
+
+      #custom-ktt {
+        padding: 0 4px;
+        color: ${colors.base03};
+      }
+
+      #custom-ktt.running {
+        color: ${colors.base0B};
       }
 
       #cpu,
