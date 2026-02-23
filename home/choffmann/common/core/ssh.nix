@@ -24,13 +24,17 @@ in {
         controlMaster = "auto";
         controlPath = "~/.ssh/sockets/S.%r@%h:%p";
         controlPersist = "10m";
+        identityFile = [
+          "~/.ssh/id_choffmann"
+          "~/.ssh/id_yubikey"
+        ];
         extraOptions = {
           AddKeysToAgent = "yes";
           SetEnv = "TERM=xterm-256color";
         };
       };
       "git" = {
-        host = "gitlab.com github.com git.progeek.de gitlab.progeek.de gitlab.hs-flensburg.de";
+        host = "gitlab.com github.com git.progeek.de gitlab.progeek.de gitlab.hs-flensburg.de gitlab.crypto.tii.ae";
         user = "git";
         identityFile = [
           "~/.ssh/id_yubikey" # auto symlink to yubikey
