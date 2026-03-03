@@ -15,6 +15,9 @@
     - `builtin` funktioniert nur mit Shell-Builtins. NIEMALS `builtin pnpm`, `builtin go`, etc.
     - Kommentiere nur wenn noetig, in Englisch, kurz und knackig
     - Schreibe nicht deinen Namen in Commit-Messages
+
+    ## User Preferances
+    - No Co-Authored-By or author name in commit messages
   '';
 
   config.home.file.".claude/CLAUDE.md".text = config.claude.instructions;
