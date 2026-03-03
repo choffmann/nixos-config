@@ -39,6 +39,7 @@
 in {
   home.packages = [
     tmux-sessionizer
+    pkgs.awscli2
   ];
 
   programs.fzf = {

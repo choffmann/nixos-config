@@ -10,6 +10,8 @@
       # green-ecolution
       "https://green-ecolution.cachix.org"
     ];
+
+    trusted-substituters = ["https://s3.eu-central-3.ionoscloud.com/nix-chrondo-cache"];
     trusted-public-keys = [
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
@@ -20,6 +22,8 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       # green-ecolution
       "green-ecolution.cachix.org-1:te9SGbuElhDIRHbR4lsUARuqZdf5rkKy2l1Yh03mj6c="
+
+      "nix-chrondo-cache-1:gYbEduoAIymJslfX5IxJBANz6Yk+ZglvCS6OuMv9tAs="
     ];
   };
 }
