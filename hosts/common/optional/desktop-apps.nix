@@ -4,5 +4,6 @@
     vlc
     prusa-slicer
     slack
+    rpi-imager
   ];
 }
