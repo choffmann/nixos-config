@@ -1,4 +1,12 @@
-{config, ...}: {
+{
+  config,
+  inputs,
+  ...
+}: {
+  imports = [
+    inputs.k8s-oidc-auth.nixosModules.default
+  ];
+
   sops.secrets."k8s/oidc/progeek-staging-server" = {};
   sops.secrets."k8s/oidc/progeek-staging-auth-url" = {};
   sops.secrets."k8s/oidc/progeek-staging-ca" = {};

@@ -349,16 +349,15 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1773138651,
-        "narHash": "sha256-+dSVZPEnohJ+2azp68CuiVnjQcRRt7Zli4dSmPr6XDY=",
-        "ref": "feature/nixos-allow-file-referencing",
-        "rev": "84be4c3827b59cd38f091edbd37bf27dd5576b88",
+        "lastModified": 1773740367,
+        "narHash": "sha256-/zdbrZUx438lwqS6haj3IZjMHDFqdhM75RQi/r6vzUk=",
+        "ref": "refs/heads/main",
+        "rev": "9b25a1d5735638f1e22e3aaf07cfab4facee43e6",
         "revCount": 48,
         "type": "git",
         "url": "ssh://git@gitlab.progeek.de:2200/progeek/k8s-oidc-auth"
       },
       "original": {
-        "ref": "feature/nixos-allow-file-referencing",
         "type": "git",
         "url": "ssh://git@gitlab.progeek.de:2200/progeek/k8s-oidc-auth"
       }

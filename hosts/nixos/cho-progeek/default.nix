@@ -36,6 +36,7 @@
     ../../common/optional/docker.nix
     ../../common/optional/spotify.nix
     ../../common/optional/memory-management.nix
+    ../../common/optional/k8s.nix
   ];
 
   hostSpec = {
