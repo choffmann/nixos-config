@@ -542,6 +542,7 @@
         "solaar": "solaar",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
+        "yazi-plugins": "yazi-plugins",
         "zen-browser": "zen-browser"
       }
     },
@@ -783,6 +784,22 @@
         "owner": "gytis-ivaskevicius",
         "repo": "flake-utils-plus",
         "rev": "afcb15b845e74ac5e998358709b2b5fe42a948d1",
+        "type": "github"
+      }
+    },
+    "yazi-plugins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772159384,
+        "narHash": "sha256-pAkBlodci4Yf+CTjhGuNtgLOTMNquty7xP0/HSeoLzE=",
+        "owner": "yazi-rs",
+        "repo": "plugins",
+        "rev": "196281844b8cbcac658a59013e4805300c2d6126",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yazi-rs",
+        "repo": "plugins",
         "type": "github"
       }
     },

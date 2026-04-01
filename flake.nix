@@ -41,6 +41,9 @@
     progeek-plymouth.url = "github:choffmann/progeek-loading-plymouth-theme";
     progeek-plymouth.inputs.nixpkgs.follows = "nixpkgs";
 
+    yazi-plugins.url = "github:yazi-rs/plugins";
+    yazi-plugins.flake = false;
+
     ktt.url = "git+ssh://git@gitlab.progeek.de:2200/choffmann/kimai-time-tracker.git";
     ktt.inputs.nixpkgs.follows = "nixpkgs";
   };
