@@ -79,6 +79,15 @@
     firewall.enable = false;
   };
 
+  environment = {
+    systemPackages = with pkgs; [
+      qemu
+      quickemu
+    ];
+  };
+
+  systemd.tmpfiles.rules = ["L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware"];
+
   # Bootloader.
   boot.loader = {
     systemd-boot.enable = true;
