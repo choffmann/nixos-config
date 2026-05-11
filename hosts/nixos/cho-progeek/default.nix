@@ -37,6 +37,7 @@
     ../../common/optional/spotify.nix
     ../../common/optional/memory-management.nix
     ../../common/optional/k8s.nix
+    ../../common/optional/fonts.nix
   ];
 
   hostSpec = {

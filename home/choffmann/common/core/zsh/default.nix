@@ -24,7 +24,7 @@
       vim = "nvim";
       lzd = "lazydocker";
       gdt = "git difftool";
-      cc = "claude";
+      cc = "nix run github:sadjow/claude-code-nix --";
     };
     oh-my-zsh = {
       enable = true;

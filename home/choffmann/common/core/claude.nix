@@ -18,6 +18,26 @@
 
     ## User Preferances
     - No Co-Authored-By or author name in commit messages
+
+     ## Git Hygiene
+    - Never use `git add -A` or `git add .` - stage files explicitly to avoid committing unrelated changes
+    - Verify the target branch before committing (especially for hotfixes/license/main-branch changes)
+    - Split unrelated changes into separate commits
+
+    ## Planning First
+    Before creating Jira tickets, implementing features, or making non-trivial changes, always present a plan first and wait for approval. Do not jump straight to execution.
+
+    ## Refactoring section
+
+    ### Avoid Sed-Based Refactors
+    Do not use sed for multi-file code refactors (import rewrites, struct/function changes). Use Edit tool or AST-aware tooling instead - sed has repeatedly mangled struct fields, function definitions, and string literals.
+
+
+    ## Writing & Documentation section
+
+    ### No Fabricated Claims
+    When writing application/marketing/grant text, only state facts verifiable from the codebase or provided sources. If unsure about a technical claim (e.g., architecture properties, sustainability features), ask before writing it.
+
   '';
 
   config.home.file.".claude/CLAUDE.md".text = config.claude.instructions;

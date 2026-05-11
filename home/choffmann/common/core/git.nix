@@ -3,7 +3,7 @@
   lib,
   ...
 }: {
-  home.packages = [pkgs.difftastic];
+  home.packages = [pkgs.difftastic pkgs.glab];
 
   programs.lazygit = {
     enable = true;
@@ -68,6 +68,9 @@
     ignores = [
       ".direnv"
       ".pre-commit-config.yaml"
+      "CLAUDE.md"
+      ".claude"
+      "docs/superpowers/**"
     ];
   };
 
