@@ -21,6 +21,9 @@
       bridge = {
         stp = "false";
       };
+      ethernet = {
+        cloned-mac-address = "60:CF:84:AA:6C:3E";
+      };
     };
 
     br0-eno1 = {
