@@ -8,7 +8,8 @@
   vfioIds = ["10de:1b81" "10de:10f0"];
 in {
   boot = {
-    kernelModules = ["kvm-${platform}" "vfio_pci" "vfio_iommu_type1" "vfio"];
+    kernelModules = ["kvm-${platform}"];
+    initrd.kernelModules = ["vfio_pci" "vfio" "vfio_iommu_type1"];
     kernelParams = [
       "${platform}_iommu=on"
       "${platform}_iommu=pt"
@@ -20,6 +21,7 @@ in {
     extraModulePackages = [config.boot.kernelPackages.kvmfr];
     extraModprobeConfig = ''
       options vfio-pci ids=${builtins.concatStringsSep "," vfioIds}
+      softdep snd_hda_intel pre: vfio-pci
       options kvmfr static_size_mb=128
     '';
   };
