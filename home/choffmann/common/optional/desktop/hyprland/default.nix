@@ -47,7 +47,7 @@ in {
     playerctl
     swappy
     slurp
-    swww
+    awww
     wayshot
     wlsunset
     wl-clipboard
@@ -72,6 +72,7 @@ in {
 
   wayland.windowManager.hyprland = {
     enable = true;
+    configType = "hyprlang";
     systemd.variables = ["--all"];
 
     settings = {
@@ -156,12 +157,10 @@ in {
       };
 
       dwindle = {
-        pseudotile = true;
         preserve_split = true;
       };
 
       misc = {
-        vfr = 1;
         vrr = 1;
         # layers_hog_mouse_focus = true;
         focus_on_activate = true;
@@ -172,7 +171,11 @@ in {
 
         disable_hyprland_logo = true;
         force_default_wallpaper = 0;
-        new_window_takes_over_fullscreen = 2;
+      };
+
+      # vfr moved from misc to debug in Hyprland 0.55
+      debug = {
+        vfr = true;
       };
 
       # monitor = [
@@ -185,67 +188,67 @@ in {
         "special:terminal, on-created-empty:$terminal"
       ];
 
+      # windowrulev2 merged into windowrule in Hyprland 0.55; new match:/effect syntax
       windowrule = [
         # Dialogs
-        "float, title:^(Open File)(.*)$"
-        "float, title:^(Select a File)(.*)$"
-        "float, title:^(Choose wallpaper)(.*)$"
-        "float, title:^(Open Folder)(.*)$"
-        "float, title:^(Save As)(.*)$"
-        "float, title:^(Library)(.*)$"
-        "float, title:^(Accounts)(.*)$"
-      ];
-      windowrulev2 = [
-        "float, class:^(galculator)$"
-        "float, class:^(waypaper)$"
-        "float, class:^(keymapp)$"
+        "match:title ^(Open File)(.*)$, float on"
+        "match:title ^(Select a File)(.*)$, float on"
+        "match:title ^(Choose wallpaper)(.*)$, float on"
+        "match:title ^(Open Folder)(.*)$, float on"
+        "match:title ^(Save As)(.*)$, float on"
+        "match:title ^(Library)(.*)$, float on"
+        "match:title ^(Accounts)(.*)$, float on"
+
+        "match:class ^(galculator)$, float on"
+        "match:class ^(waypaper)$, float on"
+        "match:class ^(keymapp)$, float on"
 
         #
         # ========== Always opaque ==========
         #
-        "opaque, class:^([Gg]imp)$"
-        "opaque, class:^([Ff]lameshot)$"
-        "opaque, class:^([Ii]nkscape)$"
-        "opaque, class:^([Bb]lender)$"
-        "opaque, class:^([Oo][Bb][Ss])$"
-        "opaque, class:^([Ss]team)$"
-        "opaque, class:^([Ss]team_app_*)$"
-        "opaque, class:^([Vv]lc)$"
+        "match:class ^([Gg]imp)$, opaque on"
+        "match:class ^([Ff]lameshot)$, opaque on"
+        "match:class ^([Ii]nkscape)$, opaque on"
+        "match:class ^([Bb]lender)$, opaque on"
+        "match:class ^([Oo][Bb][Ss])$, opaque on"
+        "match:class ^([Ss]team)$, opaque on"
+        "match:class ^([Ss]team_app_*)$, opaque on"
+        "match:class ^([Vv]lc)$, opaque on"
 
         # Remove transparency from video
-        "opaque, title:^(Netflix)(.*)$"
-        "opaque, title:^(.*YouTube.*)$"
-        "opaque, title:^(Picture-in-Picture)$"
+        "match:title ^(Netflix)(.*)$, opaque on"
+        "match:title ^(.*YouTube.*)$, opaque on"
+        "match:title ^(Picture-in-Picture)$, opaque on"
 
         # Steam
-        "stayfocused, title:^()$,class:^(steam)$"
-        "minsize 1 1, title:^()$,class:^(steam)$"
+        "match:title ^()$, match:class ^(steam)$, stay_focused on"
+        "match:title ^()$, match:class ^(steam)$, min_size 1 1"
 
         # Auto-assign apps to workspaces
-        "workspace 2 silent, class:^(zen-beta|firefox|chromium-browser)$"
-        "workspace 6 silent, class:^(vesktop|Element)$"
-        "workspace 7 silent, class:^(thunderbird)$"
-        "workspace 6 silent, class:^(Spotify)$"
+        "match:class ^(zen-beta|firefox|chromium-browser)$, workspace 2 silent"
+        "match:class ^(vesktop|Element)$, workspace 6 silent"
+        "match:class ^(thunderbird)$, workspace 7 silent"
+        "match:class ^(Spotify)$, workspace 6 silent"
       ];
       layerrule = [
-        "xray 1, .*"
-        "noanim, selection"
-        "noanim, overview"
-        "noanim, anyrun"
-        "blur, swaylock"
-        "blur, eww"
-        "ignorealpha 0.8, eww"
-        "noanim, noanim"
-        "blur, noanim"
-        "blur, gtk-layer-shell"
-        "ignorezero, gtk-layer-shell"
-        "blur, launcher"
-        "ignorealpha 0.5, launcher"
-        "blur, notifications"
-        "ignorealpha 0.69, notifications"
-        "blur, session"
-        "noanim, sideright"
-        "noanim, sideleft"
+        "match:namespace .*, xray on"
+        "match:namespace selection, animation none"
+        "match:namespace overview, animation none"
+        "match:namespace anyrun, animation none"
+        "match:namespace swaylock, blur on"
+        "match:namespace eww, blur on"
+        "match:namespace eww, ignore_alpha 0.8"
+        "match:namespace noanim, animation none"
+        "match:namespace noanim, blur on"
+        "match:namespace gtk-layer-shell, blur on"
+        "match:namespace gtk-layer-shell, ignore_alpha 0"
+        "match:namespace launcher, blur on"
+        "match:namespace launcher, ignore_alpha 0.5"
+        "match:namespace notifications, blur on"
+        "match:namespace notifications, ignore_alpha 0.69"
+        "match:namespace session, blur on"
+        "match:namespace sideright, animation none"
+        "match:namespace sideleft, animation none"
       ];
 
       bindm = [
@@ -255,10 +258,10 @@ in {
       ];
 
       binde = [
-        "$mod, Minus, splitratio, -0.1"
-        "$mod, Equal, splitratio, 0.1"
-        "$mod, Semicolon, splitratio, -0.1"
-        "$mod, Apostrophe, splitratio, 0.1"
+        "$mod, Minus, layoutmsg, splitratio -0.1"
+        "$mod, Equal, layoutmsg, splitratio 0.1"
+        "$mod, Semicolon, layoutmsg, splitratio -0.1"
+        "$mod, Apostrophe, layoutmsg, splitratio 0.1"
       ];
       bindle = [
         ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
@@ -315,7 +318,7 @@ in {
           "$mod, f, fullscreen, 1"
           "$mod SHIFT, f, fullscreen, 0"
           "$mod, v, togglefloating,"
-          "$mod, s, togglesplit"
+          "$mod, s, layoutmsg, togglesplit"
           "$mod, p, pseudo"
 
           # === Tabs / Cycle ===
