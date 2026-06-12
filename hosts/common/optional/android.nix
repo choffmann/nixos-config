@@ -1,9 +1,8 @@
 {pkgs, ...}: {
-  environment.systemPackages = [pkgs.unstable.android-studio pkgs.unstable.cargo-ndk pkgs.libusb1];
+  environment.systemPackages = [pkgs.unstable.android-studio pkgs.unstable.cargo-ndk pkgs.libusb1 pkgs.android-tools];
 
-  programs.adb.enable = true;
   users.groups.plugdev = {};
-  users.users.choffmann.extraGroups = ["adbusers" "plugdev"];
+  users.users.choffmann.extraGroups = ["plugdev"];
 
   services.udev.extraRules = ''
     # Samsung (Galaxy S21 Ultra)

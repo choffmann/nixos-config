@@ -68,6 +68,7 @@ in {
     ../../common/optional/android.nix
     ../../common/optional/winbox.nix
     ../../common/optional/vm-bridge.nix
+    ../../common/optional/fonts.nix
   ];
 
   hostSpec = {
@@ -128,7 +129,8 @@ in {
     timeout = 1;
     systemd-boot = {
       enable = true;
-      configurationLimit = 10;
+      # 511M ESP can't hold 10 generations once initrds grow (kernel 6.18.x).
+      configurationLimit = 5;
       editor = false;
     };
     efi.canTouchEfiVariables = true;

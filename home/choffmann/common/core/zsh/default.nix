@@ -1,8 +1,9 @@
-{...}: {
+{config, ...}: {
   home.sessionVariables.EDITOR = "nvim";
 
   programs.zsh = {
     enable = true;
+    dotDir = config.home.homeDirectory;
     enableCompletion = true;
     autosuggestion.enable = true;
     autocd = true;

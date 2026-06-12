@@ -15,8 +15,6 @@
       dina-font
       proggyfonts
       roboto
-
-      manrope
     ]
     ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 }

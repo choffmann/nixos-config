@@ -1,7 +1,26 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
+  # Required for Steam Input virtual gamepad emulation (Steam Link, Remote Play).
+  # Installs udev rules for /dev/uinput so Steam can expose remote controller
+  # input (e.g. from Apple TV Steam Link) as a virtual XInput/DualSense device.
+  hardware.steam-hardware.enable = true;
+
+  # Ensure uinput is available at boot for Steam Input
+  boot.kernelModules = ["uinput"];
+
+  # Grant the primary user access to /dev/uinput via the input group
+  users.users.${config.hostSpec.username}.extraGroups = ["input"];
+
   programs = {
     steam = {
       enable = true;
+      # Open ports 27031-27036 for Steam Remote Play / Steam Link discovery
+      remotePlay.openFirewall = true;
+      # Open ports for transferring installed games between LAN PCs
+      localNetworkGameTransfers.openFirewall = true;
       protontricks = {
         enable = true;
         package = pkgs.protontricks;
@@ -9,20 +28,16 @@
       package = pkgs.steam.override {
         extraPkgs = pkgs: (builtins.attrValues {
           inherit
-            (pkgs.xorg)
-            libXcursor
-            libXi
-            libXinerama
-            libXScrnSaver
-            ;
-
-          inherit
             (pkgs.stdenv.cc.cc)
             lib
             ;
 
           inherit
             (pkgs)
+            libxcursor
+            libxi
+            libxinerama
+            libxscrnsaver
             libpng
             libpulseaudio
             libvorbis

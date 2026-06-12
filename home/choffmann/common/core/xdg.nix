@@ -4,6 +4,7 @@
     userDirs = {
       enable = true;
       createDirectories = true;
+      setSessionVariables = true;
       desktop = "${config.home.homeDirectory}/.desktop";
       documents = "${config.home.homeDirectory}/doc";
       download = "${config.home.homeDirectory}/downloads";
@@ -15,8 +16,8 @@
 
       extraConfig = {
         # publicshare and templates defined as null here instead of as options because
-        XDG_PUBLICSHARE_DIR = "/var/empty";
-        XDG_TEMPLATES_DIR = "/var/empty";
+        PUBLICSHARE = "/var/empty";
+        TEMPLATES = "/var/empty";
       };
     };
   };

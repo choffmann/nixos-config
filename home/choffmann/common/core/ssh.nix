@@ -19,62 +19,45 @@ in {
     enable = true;
     enableDefaultConfig = false;
 
-    matchBlocks = {
+    settings = {
       "*" = {
-        controlMaster = "auto";
-        controlPath = "~/.ssh/sockets/S.%r@%h:%p";
-        controlPersist = "10m";
-        identityFile = [
+        ControlMaster = "auto";
+        ControlPath = "~/.ssh/sockets/S.%r@%h:%p";
+        ControlPersist = "10m";
+        IdentityFile = [
           "~/.ssh/id_choffmann"
           "~/.ssh/id_yubikey"
         ];
-        extraOptions = {
-          AddKeysToAgent = "yes";
-          SetEnv = "TERM=xterm-256color";
-        };
+        AddKeysToAgent = "yes";
+        SetEnv = {TERM = "xterm-256color";};
       };
-      "git" = {
-        host = "gitlab.com github.com git.progeek.de gitlab.progeek.de gitlab.hs-flensburg.de gitlab.crypto.tii.ae";
-        user = "git";
-        identityFile = [
+      "gitlab.com github.com git.progeek.de gitlab.progeek.de gitlab.hs-flensburg.de gitlab.crypto.tii.ae" = {
+        User = "git";
+        IdentityFile = [
           "~/.ssh/id_yubikey" # auto symlink to yubikey
           "~/.ssh/id_choffmann"
         ];
       };
-      "git@hs-flensburg" = {
-        host = "gitlab.hs-flensburg.de";
-        user = "git";
-        port = 22006;
-        identityFile = [
+      "gitlab.hs-flensburg.de" = {
+        User = "git";
+        Port = 22006;
+        IdentityFile = [
           "~/.ssh/id_yubikey" # auto symlink to yubikey
           "~/.ssh/id_choffmann"
         ];
       };
-      "progeek" = {
-        host = "gitlab-runner-1";
-        identityFile = [
-          "~/.ssh/id_choffmann"
-        ];
-      };
-      "homebin.dev" = {
-        host = "*.homebin.dev";
-        user = "root";
-        identityFile = [
-          "~/.ssh/id_choffmann"
-        ];
+      "gitlab-runner-1".IdentityFile = "~/.ssh/id_choffmann";
+      "*.homebin.dev" = {
+        User = "root";
+        IdentityFile = "~/.ssh/id_choffmann";
       };
       "mail.green-ecolution.de" = {
-        host = "mail.green-ecolution.de";
-        user = "root";
-        identityFile = [
-          "~/.ssh/id_mail_green_ecolution"
-        ];
+        User = "root";
+        IdentityFile = "~/.ssh/id_mail_green_ecolution";
       };
       "home-pc" = {
-        user = "choffmann";
-        identityFile = [
-          "~/.ssh/id_choffmann"
-        ];
+        User = "choffmann";
+        IdentityFile = "~/.ssh/id_choffmann";
       };
     };
   };

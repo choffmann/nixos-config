@@ -207,6 +207,7 @@ in {
   programs.yazi = {
     enable = true;
     package = pkgs.unstable.yazi;
+    shellWrapperName = "yy";
     enableZshIntegration = true;
     keymap = {
       mgr.prepend_keymap = [

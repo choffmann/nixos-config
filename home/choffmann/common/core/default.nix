@@ -46,7 +46,7 @@
     fzf # fuzzy search
     jq # JSON pretty printer and manipulator
     nix-tree # nix package tree viewer
-    neofetch # fancier system info than pfetch
+    fastfetch # fancier system info than pfetch
     ncdu # TUI disk usage
     pciutils
     pfetch # system info

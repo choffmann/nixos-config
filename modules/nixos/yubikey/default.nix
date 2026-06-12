@@ -123,7 +123,7 @@ in {
       #  ACTION=="add",\
       #  ENV{HID_NAME}=="Yubico YubiKey FIDO",\
       #  RUN+="${pkgs.systemd}/bin/loginctl activate 1"
-      #  #RUN+="${lib.getBin pkgs.xorg.xset}/bin/xset dpms force on"
+      #  #RUN+="${lib.getBin pkgs.xset}/bin/xset dpms force on"
     '';
 
     # Yubikey required services and config. See Dr. Duh NixOS config for reference
@@ -135,7 +135,6 @@ in {
 
     # yubikey login / sudo
     security.pam = lib.optionalAttrs pkgs.stdenv.isLinux {
-      sshAgentAuth.enable = true;
       u2f = {
         enable = true;
         settings = {
@@ -147,7 +146,6 @@ in {
         login.u2fAuth = true;
         sudo = {
           u2fAuth = true;
-          sshAgentAuth = true; # Use SSH_AUTH_SOCK for sudo
         };
       };
     };
