@@ -90,5 +90,10 @@ in {
       "$mod + SHIFT, W, togglespecialworkspace, windows"
       "$mod + SHIFT, A, exec, ${audioToggle}/bin/audio-toggle"
     ];
+
+    device = {
+      name = "wacom-intuos-m-pen";
+      output = "DP-1";
+    };
   };
 }
