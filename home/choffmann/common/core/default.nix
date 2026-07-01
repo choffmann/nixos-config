@@ -11,6 +11,8 @@
     ./neovim.nix
     ./claude.nix
     ./cli-tools.nix
+    ./yazi.nix
+    ./tmux.nix
     ./fonts.nix
     ./git.nix
     ./ssh.nix
