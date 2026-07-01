@@ -20,7 +20,7 @@
   home = {
     username = lib.mkDefault config.hostSpec.username;
     homeDirectory = lib.mkDefault config.hostSpec.home;
-    stateVersion = "23.05";
+    stateVersion = "23.05"; # pinned: bumping changes home-manager module defaults
     sessionPath = [
       "/home/choffmann/.local/bin"
     ];
