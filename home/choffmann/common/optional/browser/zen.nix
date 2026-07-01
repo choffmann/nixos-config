@@ -16,7 +16,7 @@ in
 
   programs.zen-browser = {
     enable = true;
-    policies = shared.policies;
+    inherit (shared) policies;
     profiles.choffmann = {
       id = 0;
       name = "Cedrik";

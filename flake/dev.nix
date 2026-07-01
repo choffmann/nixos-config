@@ -1,5 +1,5 @@
 # Developer tooling: formatter (nixfmt via treefmt), pre-commit hooks, dev shell.
-{ ... }: {
+_: {
   perSystem =
     {
       config,

@@ -7,7 +7,7 @@
   ...
 }:
 let
-  hostSpec = config.hostSpec;
+  inherit (config) hostSpec;
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
   githubPubKeys = pkgs.fetchurl {
     url = "https://github.com/choffmann.keys";
@@ -63,7 +63,7 @@ in
   home-manager = {
     extraSpecialArgs = {
       inherit inputs outputs;
-      hostSpec = config.hostSpec;
+      inherit (config) hostSpec;
     };
     users.${hostSpec.username} = import (
       lib.custom.relativeToRoot "home/${hostSpec.username}/${hostSpec.hostName}.nix"

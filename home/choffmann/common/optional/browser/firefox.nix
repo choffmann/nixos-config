@@ -14,7 +14,7 @@ in
       "de"
       "en"
     ];
-    policies = shared.policies;
+    inherit (shared) policies;
     profiles.choffmann = {
       id = 0;
       name = "Cedrik";

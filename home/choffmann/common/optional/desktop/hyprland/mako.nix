@@ -5,10 +5,7 @@
 }:
 let
   colors = config.lib.stylix.colors.withHashtag;
-  c = config.lib.stylix.colors;
   font = config.stylix.fonts.monospace.name;
-  rgba =
-    color: alpha: "rgba(${c."${color}-rgb-r"}, ${c."${color}-rgb-g"}, ${c."${color}-rgb-b"}, ${alpha})";
 in
 {
   services.mako = {

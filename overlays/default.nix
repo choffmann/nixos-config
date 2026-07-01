@@ -6,8 +6,8 @@
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
-  modifications = final: prev: {
-    synology-drive-client = prev.synology-drive-client.overrideAttrs (oldAttrs: rec {
+  modifications = _final: prev: {
+    synology-drive-client = prev.synology-drive-client.overrideAttrs (_oldAttrs: rec {
       version = "4.0.1-17885";
       src = prev.fetchurl {
         url = "https://global.synologydownload.com/download/Utility/SynologyDriveClient/${version}/Ubuntu/Installer/synology-drive-client-17885.x86_64.deb";

@@ -1,0 +1,3 @@
+# repeated_keys fights idiomatic NixOS dotted-key style (foo.a = ...; foo.b = ...)
+# and generated hardware-configuration.nix; disabled intentionally.
+disabled = ["repeated_keys"]

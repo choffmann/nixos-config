@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  config,
   ...
 }:
 let
@@ -25,7 +24,7 @@ in
     };
   };
 
-  security.pam.services.sudo = { config, ... }: {
+  security.pam.services.sudo = _: {
     rules.auth.rssh = {
       order = 10500;
       control = "sufficient";
