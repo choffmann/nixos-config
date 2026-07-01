@@ -7,7 +7,5 @@
 
   perSystem = {pkgs, ...}: {
     packages = import ../pkgs pkgs;
-    # Temporary: keep alejandra until the DX-tooling task wires treefmt/nixfmt as the formatter.
-    formatter = pkgs.alejandra;
   };
 }
