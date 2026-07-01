@@ -1,7 +1,10 @@
 {
-  description = "Your new nix config";
+  description = "Cedrik Hoffmanns NixOS/home-manager Flake (cho-progeek, home-pc)";
 
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
+
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     # You can access packages and modules from different nixpkgs revs
@@ -48,61 +51,12 @@
     ktt.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
-    # Supported systems for your flake packages, shell, etc.
-    systems = [
-      "aarch64-linux"
-      "i686-linux"
-      "x86_64-linux"
-      "aarch64-darwin"
-      "x86_64-darwin"
-    ];
-    # This is a function that generates an attribute by calling a function you
-    # pass to it, with each system as an argument
-    forAllSystems = nixpkgs.lib.genAttrs systems;
-  in {
-    # Your custom packages
-    # Accessible through 'nix build', 'nix shell', etc
-    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-    # Formatter for your nix files, available through 'nix fmt'
-    # Other options beside 'alejandra' include 'nixpkgs-fmt'
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
-
-    # Your custom packages and modifications, exported as overlays
-    overlays = import ./overlays {inherit inputs;};
-    # Reusable nixos modules you might want to export
-    # These are usually stuff you would upstream into nixpkgs
-    nixosModules = import ./modules/nixos;
-
-    # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
-    nixosConfigurations = {
-      cho-progeek = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs outputs;
-          lib = nixpkgs.lib.extend (self: super: {custom = import ./lib {inherit (nixpkgs) lib;};});
-        };
-        modules = [
-          # > Our main nixos configuration file <
-          ./hosts/nixos/cho-progeek
-        ];
-      };
-
-      home-pc = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs outputs;
-          lib = nixpkgs.lib.extend (self: super: {custom = import ./lib {inherit (nixpkgs) lib;};});
-        };
-        modules = [
-          # > Our main nixos configuration file <
-          ./hosts/nixos/home-pc
-        ];
-      };
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = ["x86_64-linux"];
+      imports = [
+        ./flake/hosts.nix
+        ./flake/outputs.nix
+      ];
     };
-  };
 }
