@@ -1,5 +1,4 @@
-# Custom packages, that can be defined similarly to ones from nixpkgs
-# You can build them using 'nix build .#example'
+# Custom packages, buildable via `nix build .#<name>`. Currently none —
+# the plymouth theme now comes from the progeek-plymouth flake input.
 pkgs: {
-  # example = pkgs.callPackage ./example { };
 }
