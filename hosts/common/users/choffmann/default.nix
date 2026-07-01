@@ -43,7 +43,7 @@ in
     ];
   };
 
-  # Create ssh sockets directory for controlpaths when homemanager not loaded (i.e. isMinimal)
+  # Create ssh sockets directory for controlpaths
   systemd.tmpfiles.rules =
     let
       user = config.users.users.choffmann.name;
@@ -65,21 +65,8 @@ in
       inherit inputs outputs;
       hostSpec = config.hostSpec;
     };
-    users.${hostSpec.username}.imports = lib.flatten (
-      lib.optional (!hostSpec.isMinimal) [
-        (
-          { config, ... }:
-          import (lib.custom.relativeToRoot "home/${hostSpec.username}/${hostSpec.hostName}.nix") {
-            inherit
-              pkgs
-              inputs
-              config
-              lib
-              hostSpec
-              ;
-          }
-        )
-      ]
+    users.${hostSpec.username} = import (
+      lib.custom.relativeToRoot "home/${hostSpec.username}/${hostSpec.hostName}.nix"
     );
   };
 
