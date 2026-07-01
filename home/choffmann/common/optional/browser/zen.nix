@@ -3,14 +3,16 @@
   config,
   inputs,
   ...
-}: let
-  shared = import ./shared-browser-config.nix {inherit pkgs config inputs;};
-in {
+}:
+let
+  shared = import ./shared-browser-config.nix { inherit pkgs config inputs; };
+in
+{
   imports = [
     inputs.zen-browser.homeModules.beta
   ];
 
-  stylix.targets.zen-browser.profileNames = ["choffmann"];
+  stylix.targets.zen-browser.profileNames = [ "choffmann" ];
 
   programs.zen-browser = {
     enable = true;

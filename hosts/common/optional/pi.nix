@@ -1,3 +1,3 @@
-{pkgs, ...}: {
-  environment.systemPackages = [pkgs.unstable.rpi-imager];
+{ pkgs, ... }: {
+  environment.systemPackages = [ pkgs.unstable.rpi-imager ];
 }

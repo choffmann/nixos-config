@@ -7,11 +7,19 @@
   outputs,
   lib,
   ...
-}: let
+}:
+let
   tuneEno1 = pkgs.writeShellScript "tune-eno1" ''
     set -euo pipefail
 
-    PATH=${lib.makeBinPath [pkgs.coreutils pkgs.ethtool pkgs.util-linux pkgs.pciutils]}
+    PATH=${
+      lib.makeBinPath [
+        pkgs.coreutils
+        pkgs.ethtool
+        pkgs.util-linux
+        pkgs.pciutils
+      ]
+    }
 
     if [ -d /sys/class/net/eno1 ]; then
       # Keep device active (no runtime PM) - critical for stability
@@ -35,7 +43,8 @@
       logger -t tune-eno1 "Applied I226-V tuning: Power management disabled, EEE off, WoL enabled"
     fi
   '';
-in {
+in
+{
   imports = [
     outputs.nixosModules.yubikey
 
@@ -87,13 +96,23 @@ in {
   fileSystems."/storage/hdd" = {
     device = "/dev/disk/by-uuid/1e8c6e42-ff5d-4e65-ae84-e32966009035";
     fsType = "ext4";
-    options = ["defaults" "nofail" "exec" "x-gvfs-show"];
+    options = [
+      "defaults"
+      "nofail"
+      "exec"
+      "x-gvfs-show"
+    ];
   };
 
   fileSystems."/storage/ssd" = {
     device = "/dev/disk/by-uuid/bc11b81d-5a1b-42b4-bcd7-fbf80dd6635e";
     fsType = "ext4";
-    options = ["defaults" "nofail" "exec" "x-gvfs-show"];
+    options = [
+      "defaults"
+      "nofail"
+      "exec"
+      "x-gvfs-show"
+    ];
   };
 
   networking = {
@@ -105,7 +124,10 @@ in {
     firewall.enable = false;
 
     hosts = {
-      "192.168.122.192" = ["naboo" "naboo.local"];
+      "192.168.122.192" = [
+        "naboo"
+        "naboo.local"
+      ];
     };
   };
 
@@ -135,19 +157,25 @@ in {
     };
     efi.canTouchEfiVariables = true;
   };
-  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   boot.plymouth = {
     theme = lib.mkForce "lone";
     themePackages = [
-      (pkgs.adi1090x-plymouth-themes.override {selected_themes = ["lone"];})
+      (pkgs.adi1090x-plymouth-themes.override { selected_themes = [ "lone" ]; })
     ];
   };
 
-  boot.blacklistedKernelModules = ["nvidia" "nouveau"];
-  boot.initrd.kernelModules = ["amdgpu"];
-  boot.kernelModules = ["hid-logitech-dj" "hid-logitech-hidpp"];
-  services.xserver.videoDrivers = ["amdgpu"];
+  boot.blacklistedKernelModules = [
+    "nvidia"
+    "nouveau"
+  ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelModules = [
+    "hid-logitech-dj"
+    "hid-logitech-hidpp"
+  ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   boot.kernelParams = [
     "video=DP-1:3440x1440@59.97300"
@@ -164,14 +192,14 @@ in {
 
   systemd.services.tune-eno1 = {
     description = "Apply Intel I226-V link stability tweaks";
-    wantedBy = ["multi-user.target"];
-    requires = ["sys-subsystem-net-devices-eno1.device"];
-    after = ["sys-subsystem-net-devices-eno1.device"];
+    wantedBy = [ "multi-user.target" ];
+    requires = [ "sys-subsystem-net-devices-eno1.device" ];
+    after = [ "sys-subsystem-net-devices-eno1.device" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
     };
-    script = ''${tuneEno1}'';
+    script = "${tuneEno1}";
   };
 
   services.udev.extraRules = ''
@@ -184,7 +212,7 @@ in {
     # Disable defective USB port 1-11 to prevent 60s boot delay
     ACTION=="add", SUBSYSTEM=="usb", DEVPATH=="*/usb1/1-11", ATTR{authorized}="0"
   '';
-  services.udev.packages = [pkgs.usbutils];
+  services.udev.packages = [ pkgs.usbutils ];
 
   virtualisation.vmVariant = {
     # following configuration is added only when building VM with build-vm

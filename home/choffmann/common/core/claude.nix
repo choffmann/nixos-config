@@ -2,7 +2,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   options.claude.instructions = lib.mkOption {
     type = lib.types.lines;
     default = "";

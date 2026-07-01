@@ -2,12 +2,16 @@
   pkgs,
   inputs,
   ...
-}: let
+}:
+let
   ktt = inputs.ktt.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   kttWaybar = pkgs.writeShellApplication {
     name = "ktt-waybar";
-    runtimeInputs = [ktt pkgs.jq];
+    runtimeInputs = [
+      ktt
+      pkgs.jq
+    ];
     text = ''
       status=$(ktt --json status 2>/dev/null) || {
         echo '{"text": "", "class": "stopped"}'
@@ -38,7 +42,12 @@
 
   kttRofi = pkgs.writeShellApplication {
     name = "ktt-rofi";
-    runtimeInputs = [ktt pkgs.rofi pkgs.jq pkgs.libnotify];
+    runtimeInputs = [
+      ktt
+      pkgs.rofi
+      pkgs.jq
+      pkgs.libnotify
+    ];
     text = ''
       get_status() {
         ktt --json status 2>/dev/null
@@ -185,8 +194,9 @@
       esac
     '';
   };
-in {
-  home.packages = [ktt];
+in
+{
+  home.packages = [ ktt ];
 
   wayland.windowManager.hyprland.settings.bind = [
     "$mod SHIFT, p, exec, ${kttRofi}/bin/ktt-rofi"

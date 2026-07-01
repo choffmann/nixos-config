@@ -3,20 +3,25 @@
   inputs,
   self,
   ...
-}: let
+}:
+let
   inherit (inputs) nixpkgs;
-  mkHost = hostName:
+  mkHost =
+    hostName:
     nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
         outputs = self; # keeps outputs.overlays.* / outputs.nixosModules.* working
-        lib = nixpkgs.lib.extend (_: _: {
-          custom = import ../lib {inherit (nixpkgs) lib;};
-        });
+        lib = nixpkgs.lib.extend (
+          _: _: {
+            custom = import ../lib { inherit (nixpkgs) lib; };
+          }
+        );
       };
-      modules = [../hosts/nixos/${hostName}];
+      modules = [ ../hosts/nixos/${hostName} ];
     };
-in {
+in
+{
   flake.nixosConfigurations = {
     cho-progeek = mkHost "cho-progeek";
     home-pc = mkHost "home-pc";

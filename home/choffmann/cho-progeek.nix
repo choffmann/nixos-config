@@ -1,4 +1,4 @@
-{lib, ...}: {
+{ lib, ... }: {
   imports = [
     ./common/core
 
@@ -19,7 +19,7 @@
   # services.yubikey-touch-detector.notificationSound = true;
 
   wayland.windowManager.hyprland.settings = {
-    source = lib.mkForce [];
+    source = lib.mkForce [ ];
 
     workspace = [
       "1, monitor:DP-1, default:true"

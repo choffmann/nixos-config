@@ -1,8 +1,10 @@
-{pkgs, ...}: {
-  environment.pathsToLink = ["/libexec"];
+{ pkgs, ... }: {
+  environment.pathsToLink = [ "/libexec" ];
   services.xserver = {
     enable = true;
-    desktopManager = {xterm.enable = false;};
+    desktopManager = {
+      xterm.enable = false;
+    };
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [

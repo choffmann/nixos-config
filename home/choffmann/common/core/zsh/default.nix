@@ -1,4 +1,4 @@
-{config, ...}: {
+{ config, ... }: {
   home.sessionVariables.EDITOR = "nvim";
 
   programs.zsh = {
@@ -7,11 +7,10 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     autocd = true;
-    initContent =
-      ''
-        [[ "$TERM" == "xterm-ghostty" ]] && ! infocmp xterm-ghostty &>/dev/null && export TERM=xterm-256color
-      ''
-      + builtins.readFile ./scripts/git_clone_with_fzf.sh;
+    initContent = ''
+      [[ "$TERM" == "xterm-ghostty" ]] && ! infocmp xterm-ghostty &>/dev/null && export TERM=xterm-256color
+    ''
+    + builtins.readFile ./scripts/git_clone_with_fzf.sh;
     syntaxHighlighting.enable = true;
     shellAliases = {
       ll = "ls -l";

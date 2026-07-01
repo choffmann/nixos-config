@@ -2,19 +2,21 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   pathToKeys = lib.custom.relativeToRoot "hosts/common/users/choffmann/keys";
   yubikeys =
     lib.lists.forEach (builtins.attrNames (builtins.readDir pathToKeys))
-    # Remove the .pub suffix
-    (key: lib.substring 0 (lib.stringLength key - lib.stringLength ".pub") key);
+      # Remove the .pub suffix
+      (key: lib.substring 0 (lib.stringLength key - lib.stringLength ".pub") key);
   yubikeyPublicKeyEntries = lib.attrsets.mergeAttrsList (
     lib.lists.map
-    # list of dicts
-    (key: {".ssh/${key}.pub".source = "${pathToKeys}/${key}.pub";})
-    yubikeys
+      # list of dicts
+      (key: { ".ssh/${key}.pub".source = "${pathToKeys}/${key}.pub"; })
+      yubikeys
   );
-in {
+in
+{
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
@@ -29,15 +31,18 @@ in {
           "~/.ssh/id_yubikey"
         ];
         AddKeysToAgent = "yes";
-        SetEnv = {TERM = "xterm-256color";};
+        SetEnv = {
+          TERM = "xterm-256color";
+        };
       };
-      "gitlab.com github.com git.progeek.de gitlab.progeek.de gitlab.hs-flensburg.de gitlab.crypto.tii.ae" = {
-        User = "git";
-        IdentityFile = [
-          "~/.ssh/id_yubikey" # auto symlink to yubikey
-          "~/.ssh/id_choffmann"
-        ];
-      };
+      "gitlab.com github.com git.progeek.de gitlab.progeek.de gitlab.hs-flensburg.de gitlab.crypto.tii.ae" =
+        {
+          User = "git";
+          IdentityFile = [
+            "~/.ssh/id_yubikey" # auto symlink to yubikey
+            "~/.ssh/id_choffmann"
+          ];
+        };
       "gitlab.hs-flensburg.de" = {
         User = "git";
         Port = 22006;
@@ -66,12 +71,11 @@ in {
     lemonade
   ];
 
-  home.file =
-    {
-      ".ssh/sockets/.keep".text = "# Managed by Home Manager";
-      ".config/lemonade.toml".text = ''
-        allow = '0.0.0.0/0'
-      '';
-    }
-    // yubikeyPublicKeyEntries;
+  home.file = {
+    ".ssh/sockets/.keep".text = "# Managed by Home Manager";
+    ".config/lemonade.toml".text = ''
+      allow = '0.0.0.0/0'
+    '';
+  }
+  // yubikeyPublicKeyEntries;
 }

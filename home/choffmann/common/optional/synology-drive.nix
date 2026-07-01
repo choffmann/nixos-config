@@ -3,12 +3,13 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   home.packages = with pkgs; [
     synology-drive-client
   ];
 
-  home.activation.synologyDriveSetup = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.synologyDriveSetup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     $DRY_RUN_CMD mkdir -p /storage/hdd/SynologyDrive
     $DRY_RUN_CMD chmod 755 /storage/hdd/SynologyDrive
 

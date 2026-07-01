@@ -1,10 +1,11 @@
-{pkgs, ...}: let
-  browser = ["zen-beta.desktop"];
-  editor = ["nvim.desktop"];
-  media = ["vlc.desktop"];
-  writer = ["libreoffice-writer.desktop"];
-  spreadsheet = ["libreoffice-calc.desktop"];
-  slidedeck = ["libreoffice-impress.desktop"];
+{ pkgs, ... }:
+let
+  browser = [ "zen-beta.desktop" ];
+  editor = [ "nvim.desktop" ];
+  media = [ "vlc.desktop" ];
+  writer = [ "libreoffice-writer.desktop" ];
+  spreadsheet = [ "libreoffice-calc.desktop" ];
+  slidedeck = [ "libreoffice-impress.desktop" ];
   # Extensive list of associations here:
   # https://github.com/iggut/GamiNiX/blob/8070528de419703e13b4d234ef39f05966a7fafb/system/desktop/home-main.nix#L77
   associations = {
@@ -64,8 +65,8 @@
     #
     # Drawio
     #
-    "application/vnd.jgraph.mxfile" = ["drawio.desktop"];
-    "application/vnd.jgraph.mxfile.realtime" = ["drawio.desktop"];
+    "application/vnd.jgraph.mxfile" = [ "drawio.desktop" ];
+    "application/vnd.jgraph.mxfile.realtime" = [ "drawio.desktop" ];
 
     #
     # Office Stuff
@@ -74,10 +75,10 @@
     "application/vnd.ms-excel" = spreadsheet;
     "application/vnd.ms-powerpoint" = slidedeck;
     "application/vnd.ms-word" = writer;
-    "application/vnd.oasis.opendocument.database" = ["libreoffice-base.desktop"];
-    "application/vnd.oasis.opendocument.formula" = ["libreoffice-math.desktop"];
-    "application/vnd.oasis.opendocument.graphics" = ["libreoffice-draw.desktop"];
-    "application/vnd.oasis.opendocument.graphics-template" = ["libreoffice-draw.desktop"];
+    "application/vnd.oasis.opendocument.database" = [ "libreoffice-base.desktop" ];
+    "application/vnd.oasis.opendocument.formula" = [ "libreoffice-math.desktop" ];
+    "application/vnd.oasis.opendocument.graphics" = [ "libreoffice-draw.desktop" ];
+    "application/vnd.oasis.opendocument.graphics-template" = [ "libreoffice-draw.desktop" ];
     "application/vnd.oasis.opendocument.presentation" = slidedeck;
     "application/vnd.oasis.opendocument.presentation-template" = slidedeck;
     "application/vnd.oasis.opendocument.spreadsheet" = spreadsheet;
@@ -93,18 +94,18 @@
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = writer;
     "application/vnd.openxmlformats-officedocument.wordprocessingml.template" = writer;
     "application/vnd.stardivision.calc" = spreadsheet;
-    "application/vnd.stardivision.draw" = ["libreoffice-draw.desktop"];
+    "application/vnd.stardivision.draw" = [ "libreoffice-draw.desktop" ];
     "application/vnd.stardivision.impress" = slidedeck;
-    "application/vnd.stardivision.math" = ["libreoffice-math.desktop"];
+    "application/vnd.stardivision.math" = [ "libreoffice-math.desktop" ];
     "application/vnd.stardivision.writer" = writer;
-    "application/vnd.sun.xml.base" = ["libreoffice-base.desktop"];
+    "application/vnd.sun.xml.base" = [ "libreoffice-base.desktop" ];
     "application/vnd.sun.xml.calc" = spreadsheet;
     "application/vnd.sun.xml.calc.template" = spreadsheet;
-    "application/vnd.sun.xml.draw" = ["libreoffice-draw.desktop"];
-    "application/vnd.sun.xml.draw.template" = ["libreoffice-draw.desktop"];
+    "application/vnd.sun.xml.draw" = [ "libreoffice-draw.desktop" ];
+    "application/vnd.sun.xml.draw.template" = [ "libreoffice-draw.desktop" ];
     "application/vnd.sun.xml.impress" = slidedeck;
     "application/vnd.sun.xml.impress.template" = slidedeck;
-    "application/vnd.sun.xml.math" = ["libreoffice-math.desktop"];
+    "application/vnd.sun.xml.math" = [ "libreoffice-math.desktop" ];
     "application/vnd.sun.xml.writer" = writer;
     "application/vnd.sun.xml.writer.global" = writer;
     "application/vnd.sun.xml.writer.template" = writer;
@@ -118,7 +119,8 @@
       "calibre-gui.desktop"
     ];
   };
-in {
+in
+{
   xdg.mime.enable = true;
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = associations;
@@ -126,8 +128,7 @@ in {
   xdg.mimeApps.associations.added = associations;
 
   home.packages = builtins.attrValues {
-    inherit
-      (pkgs)
+    inherit (pkgs)
       handlr-regex # better xdg-open for desktop apps
       ;
   };

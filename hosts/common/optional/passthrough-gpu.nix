@@ -2,14 +2,23 @@
   pkgs,
   config,
   ...
-}: let
+}:
+let
   user = "choffmann";
   platform = "amd";
-  vfioIds = ["10de:1b81" "10de:10f0"];
-in {
+  vfioIds = [
+    "10de:1b81"
+    "10de:10f0"
+  ];
+in
+{
   boot = {
-    kernelModules = ["kvm-${platform}"];
-    initrd.kernelModules = ["vfio_pci" "vfio" "vfio_iommu_type1"];
+    kernelModules = [ "kvm-${platform}" ];
+    initrd.kernelModules = [
+      "vfio_pci"
+      "vfio"
+      "vfio_iommu_type1"
+    ];
     kernelParams = [
       "${platform}_iommu=on"
       "${platform}_iommu=pt"
@@ -18,7 +27,7 @@ in {
       "hugepagesz=2M"
       "hugepages=8256" # 16GB for VM + 128MB for Looking Glass
     ];
-    extraModulePackages = [config.boot.kernelPackages.kvmfr];
+    extraModulePackages = [ config.boot.kernelPackages.kvmfr ];
     extraModprobeConfig = ''
       options vfio-pci ids=${builtins.concatStringsSep "," vfioIds}
       softdep snd_hda_intel pre: vfio-pci
@@ -29,8 +38,8 @@ in {
   # Load kvmfr via systemd (after udev is ready)
   systemd.services.kvmfr-load = {
     description = "Load kvmfr module";
-    wantedBy = ["multi-user.target"];
-    after = ["systemd-udev-settle.service"];
+    wantedBy = [ "multi-user.target" ];
+    after = [ "systemd-udev-settle.service" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -69,7 +78,7 @@ in {
 
       qemu = {
         package = pkgs.qemu_kvm;
-        vhostUserPackages = [pkgs.virtiofsd];
+        vhostUserPackages = [ pkgs.virtiofsd ];
         swtpm.enable = true;
         verbatimConfig = ''
           cgroup_device_acl = [
@@ -88,9 +97,13 @@ in {
   };
   services.spice-vdagentd.enable = true;
 
-  systemd.services.libvirtd.wantedBy = pkgs.lib.mkForce [];
+  systemd.services.libvirtd.wantedBy = pkgs.lib.mkForce [ ];
 
-  users.users.${user}.extraGroups = ["qemu-libvirtd" "libvirtd" "disk"];
+  users.users.${user}.extraGroups = [
+    "qemu-libvirtd"
+    "libvirtd"
+    "disk"
+  ];
 
   # Hugepages for VM memory
   systemd.mounts = [
@@ -99,7 +112,7 @@ in {
       what = "hugetlbfs";
       type = "hugetlbfs";
       options = "mode=0775,gid=libvirtd";
-      wantedBy = ["multi-user.target"];
+      wantedBy = [ "multi-user.target" ];
     }
   ];
 }

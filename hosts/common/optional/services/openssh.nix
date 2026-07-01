@@ -3,15 +3,17 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   sshPort = 22;
   yubikeyPubKey = lib.custom.relativeToRoot "hosts/common/users/choffmann/keys/id_yubi.pub";
-in {
+in
+{
   services.openssh = {
     enable = true;
     startWhenNeeded = true;
 
-    ports = [sshPort];
+    ports = [ sshPort ];
     settings = {
       # Harden
       PasswordAuthentication = false;
@@ -23,7 +25,7 @@ in {
     };
   };
 
-  security.pam.services.sudo = {config, ...}: {
+  security.pam.services.sudo = { config, ... }: {
     rules.auth.rssh = {
       order = 10500;
       control = "sufficient";
@@ -34,5 +36,5 @@ in {
     };
   };
 
-  networking.firewall.allowedTCPPorts = [sshPort];
+  networking.firewall.allowedTCPPorts = [ sshPort ];
 }

@@ -4,7 +4,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   options.hostSpec = {
     username = lib.mkOption {
       type = lib.types.str;
@@ -21,18 +22,20 @@
     flake = lib.mkOption {
       type = lib.types.str;
       description = "Location of flake";
-      default = let
-        home = config.hostSpec.home;
-      in "${home}/nixos-config";
+      default =
+        let
+          home = config.hostSpec.home;
+        in
+        "${home}/nixos-config";
     };
     # FIXME: Set an assert to make sure this is set if isWork is true
     work = lib.mkOption {
-      default = {};
+      default = { };
       type = lib.types.attrsOf lib.types.anything;
       description = "An attribute set of work-related information if isWork is true";
     };
     networking = lib.mkOption {
-      default = {};
+      default = { };
       type = lib.types.attrsOf lib.types.anything;
       description = "An attribute set of networking information";
     };
@@ -51,12 +54,11 @@
     home = lib.mkOption {
       type = lib.types.str;
       description = "The home directory of the user";
-      default = let
-        user = config.hostSpec.username;
-      in
-        if pkgs.stdenv.isLinux
-        then "/home/${user}"
-        else "/Users/${user}";
+      default =
+        let
+          user = config.hostSpec.username;
+        in
+        if pkgs.stdenv.isLinux then "/home/${user}" else "/Users/${user}";
     };
     # FIXME: This should probably just switch to an impermenance option?
     persistFolder = lib.mkOption {

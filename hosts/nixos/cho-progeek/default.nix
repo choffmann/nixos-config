@@ -8,7 +8,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     outputs.nixosModules.yubikey
@@ -46,7 +47,7 @@
     # useYubiKey = lib.mkForce true;
   };
 
-  sops.secrets."wifi/progeek-office" = {};
+  sops.secrets."wifi/progeek-office" = { };
 
   networking = {
     networkmanager = {
@@ -87,7 +88,7 @@
     ];
   };
 
-  systemd.tmpfiles.rules = ["L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware"];
+  systemd.tmpfiles.rules = [ "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware" ];
 
   # Bootloader.
   boot.loader = {
@@ -101,10 +102,10 @@
 
   boot.plymouth = {
     theme = lib.mkForce "progeek_loading";
-    themePackages = [inputs.progeek-plymouth.packages.${pkgs.stdenv.hostPlatform.system}.default];
+    themePackages = [ inputs.progeek-plymouth.packages.${pkgs.stdenv.hostPlatform.system}.default ];
   };
 
-  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   hardware.tuxedo-rs = {
     enable = true;

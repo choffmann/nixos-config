@@ -1,7 +1,9 @@
-{pkgs, ...}: let
-  virtLookingGlassHandler = let
-    vmName = "win11";
-  in
+{ pkgs, ... }:
+let
+  virtLookingGlassHandler =
+    let
+      vmName = "win11";
+    in
     pkgs.writeShellApplication {
       name = "virt-hyprland-handler";
       text = ''
@@ -18,7 +20,11 @@
 
   audioToggle = pkgs.writeShellApplication {
     name = "audio-toggle";
-    runtimeInputs = with pkgs; [wireplumber libnotify gnugrep];
+    runtimeInputs = with pkgs; [
+      wireplumber
+      libnotify
+      gnugrep
+    ];
     text = ''
       get_sink_id() {
         wpctl inspect @DEFAULT_AUDIO_SINK@ | grep -oP 'id \K\d+'
@@ -45,7 +51,8 @@
       fi
     '';
   };
-in {
+in
+{
   imports = [
     ./common/core
 

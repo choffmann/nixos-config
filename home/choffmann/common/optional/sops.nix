@@ -4,9 +4,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   homeDir = config.home.homeDirectory;
-in {
+in
+{
   imports = [
     inputs.sops-nix.homeManagerModules.sops
   ];

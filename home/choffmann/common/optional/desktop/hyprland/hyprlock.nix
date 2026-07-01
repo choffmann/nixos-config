@@ -2,11 +2,14 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   c = config.lib.stylix.colors;
   font = config.stylix.fonts.monospace.name;
-  rgba = color: alpha: "rgba(${c."${color}-rgb-r"}, ${c."${color}-rgb-g"}, ${c."${color}-rgb-b"}, ${alpha})";
-in {
+  rgba =
+    color: alpha: "rgba(${c."${color}-rgb-r"}, ${c."${color}-rgb-g"}, ${c."${color}-rgb-b"}, ${alpha})";
+in
+{
   programs.hyprlock = {
     enable = true;
     settings = {

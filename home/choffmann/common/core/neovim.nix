@@ -3,10 +3,12 @@
   config,
   hostSpec,
   ...
-}: let
+}:
+let
   nvimConfig = "${hostSpec.flake}/home/neovim";
   colors = config.lib.stylix.colors;
-in {
+in
+{
   home.packages = with pkgs; [
     unstable.neovim # for latest version
 

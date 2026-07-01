@@ -4,7 +4,8 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   yaziPlugins = inputs.yazi-plugins;
   colors = config.lib.stylix.colors.withHashtag;
   tmux-sessionizer = pkgs.writeShellApplication {
@@ -38,7 +39,8 @@
       tmux switch-client -t "$selected_name"
     '';
   };
-in {
+in
+{
   home.packages = [
     tmux-sessionizer
     pkgs.awscli2
@@ -164,8 +166,7 @@ in {
       style = "numbers,changes,header";
     };
     extraPackages = builtins.attrValues {
-      inherit
-        (pkgs.bat-extras)
+      inherit (pkgs.bat-extras)
         batgrep
         batdiff
         ;
@@ -212,99 +213,117 @@ in {
     keymap = {
       mgr.prepend_keymap = [
         {
-          on = ["!"];
+          on = [ "!" ];
           run = "shell \"$SHELL\" --block --confirm";
           desc = "Open shell here";
         }
         {
-          on = ["<Esc>"];
+          on = [ "<Esc>" ];
           run = "close";
           desc = "Cancel input";
         }
         # Tabs
         {
-          on = ["t"];
+          on = [ "t" ];
           run = "tab_create --current";
           desc = "New tab in current dir";
         }
         {
-          on = ["T"];
+          on = [ "T" ];
           run = "tab_close 0";
           desc = "Close current tab";
         }
         {
-          on = ["1"];
+          on = [ "1" ];
           run = "tab_switch 0";
           desc = "Switch to tab 1";
         }
         {
-          on = ["2"];
+          on = [ "2" ];
           run = "tab_switch 1";
           desc = "Switch to tab 2";
         }
         {
-          on = ["3"];
+          on = [ "3" ];
           run = "tab_switch 2";
           desc = "Switch to tab 3";
         }
         {
-          on = ["4"];
+          on = [ "4" ];
           run = "tab_switch 3";
           desc = "Switch to tab 4";
         }
         # Navigation
         {
-          on = ["g" "p"];
+          on = [
+            "g"
+            "p"
+          ];
           run = "cd ~/projects";
           desc = "Go to projects";
         }
         {
-          on = ["g" "d"];
+          on = [
+            "g"
+            "d"
+          ];
           run = "cd ~/downloads";
           desc = "Go to Downloads";
         }
         {
-          on = ["g" "c"];
+          on = [
+            "g"
+            "c"
+          ];
           run = "cd ~/.config";
           desc = "Go to .config";
         }
         {
-          on = ["g" "n"];
+          on = [
+            "g"
+            "n"
+          ];
           run = "cd ~/nixos-config";
           desc = "Go to nixos-config";
         }
         # Zoxide jump
         {
-          on = ["z"];
+          on = [ "z" ];
           run = ''shell 'result="$(zoxide query -i)" && ya emit cd "$result"' --block'';
           desc = "Zoxide jump";
         }
         # Smart filter
         {
-          on = ["f"];
+          on = [ "f" ];
           run = "plugin smart-filter";
           desc = "Smart filter";
         }
         # Smart enter
         {
-          on = ["l"];
+          on = [ "l" ];
           run = "plugin smart-enter";
           desc = "Enter dir or open file";
         }
         {
-          on = ["<Enter>"];
+          on = [ "<Enter>" ];
           run = "plugin smart-enter";
           desc = "Enter dir or open file";
         }
         # Toggle preview pane
         {
-          on = ["b" "b"];
+          on = [
+            "b"
+            "b"
+          ];
           run = "plugin toggle-pane min-preview";
           desc = "Toggle preview pane";
         }
         # Git diff
         {
-          on = ["g" "i"];
+          on = [
+            "g"
+            "i"
+          ];
           run = "plugin diff";
           desc = "Diff selected file with previous version";
         }
@@ -329,7 +348,11 @@ in {
         sort_dir_first = true;
         sort_sensitive = false;
         linemode = "size";
-        ratio = [1 3 4];
+        ratio = [
+          1
+          3
+          4
+        ];
       };
       preview = {
         max_width = 1000;
@@ -367,7 +390,7 @@ in {
   programs.atuin = {
     enable = true;
     enableZshIntegration = true;
-    flags = ["--disable-up-arrow"];
+    flags = [ "--disable-up-arrow" ];
     settings = {
       auto_sync = true;
       sync_frequency = "5m";
@@ -449,9 +472,9 @@ in {
     '';
 
     plugins = with pkgs.tmuxPlugins; [
-      {plugin = vim-tmux-navigator;}
-      {plugin = sensible;}
-      {plugin = tmux-fzf;}
+      { plugin = vim-tmux-navigator; }
+      { plugin = sensible; }
+      { plugin = tmux-fzf; }
     ];
   };
 }

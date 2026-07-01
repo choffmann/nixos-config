@@ -3,13 +3,19 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   colors = config.lib.stylix.colors.withHashtag;
   c = config.lib.stylix.colors; # for rgba components
   font = config.stylix.fonts.monospace.name;
-  rgba = color: alpha: "rgba(${c."${color}-rgb-r"}, ${c."${color}-rgb-g"}, ${c."${color}-rgb-b"}, ${alpha})";
-in {
-  home.packages = [pkgs.socat pkgs.cava];
+  rgba =
+    color: alpha: "rgba(${c."${color}-rgb-r"}, ${c."${color}-rgb-g"}, ${c."${color}-rgb-b"}, ${alpha})";
+in
+{
+  home.packages = [
+    pkgs.socat
+    pkgs.cava
+  ];
 
   xdg.configFile."cava/config-waybar".text = ''
     [general]
@@ -41,15 +47,41 @@ in {
         position = "top";
         height = 22;
         spacing = 0;
-        output = ["DP-1" "eDP-1" "HDMI-A-1"];
+        output = [
+          "DP-1"
+          "eDP-1"
+          "HDMI-A-1"
+        ];
 
-        modules-left = ["custom/prompt" "custom/separator" "group/workspaces" "hyprland/submap" "custom/submap-hint"];
-        modules-center = ["custom/cava" "custom/media"];
-        modules-right = ["custom/ktt" "cpu" "memory" "disk" "network" "wireplumber" "battery" "clock" "tray"];
+        modules-left = [
+          "custom/prompt"
+          "custom/separator"
+          "group/workspaces"
+          "hyprland/submap"
+          "custom/submap-hint"
+        ];
+        modules-center = [
+          "custom/cava"
+          "custom/media"
+        ];
+        modules-right = [
+          "custom/ktt"
+          "cpu"
+          "memory"
+          "disk"
+          "network"
+          "wireplumber"
+          "battery"
+          "clock"
+          "tray"
+        ];
 
         "group/workspaces" = {
           orientation = "horizontal";
-          modules = ["hyprland/workspaces" "hyprland/window"];
+          modules = [
+            "hyprland/workspaces"
+            "hyprland/window"
+          ];
         };
 
         "hyprland/workspaces" = {
@@ -181,11 +213,20 @@ in {
         position = "top";
         height = 22;
         spacing = 0;
-        output = ["DP-2"];
+        output = [ "DP-2" ];
 
-        modules-left = ["custom/prompt" "custom/separator" "hyprland/workspaces" "hyprland/window"];
-        modules-center = [];
-        modules-right = ["custom/updates" "custom/uptime" "custom/date"];
+        modules-left = [
+          "custom/prompt"
+          "custom/separator"
+          "hyprland/workspaces"
+          "hyprland/window"
+        ];
+        modules-center = [ ];
+        modules-right = [
+          "custom/updates"
+          "custom/uptime"
+          "custom/date"
+        ];
 
         "hyprland/workspaces" = {
           format = "{name}";

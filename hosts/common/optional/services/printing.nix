@@ -1,8 +1,11 @@
 # Reminder that CUPS cpanel defaults to localhost:631
-{pkgs, ...}: {
+{ pkgs, ... }: {
   services.printing = {
     enable = true;
-    drivers = [pkgs.brgenml1lpr pkgs.brgenml1cupswrapper]; # TODO: find drivers
+    drivers = [
+      pkgs.brgenml1lpr
+      pkgs.brgenml1cupswrapper
+    ]; # TODO: find drivers
     #logging = "debug";
   };
 

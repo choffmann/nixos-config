@@ -2,10 +2,16 @@
   pkgs,
   lib,
   ...
-}: let
-  tpp_ngrok = pkgs.writeShellScriptBin "tpp_ngrok" (builtins.readFile ../core/zsh/scripts/tpp_ngrok.sh);
-  tpp_ssh_startup = pkgs.writeShellScriptBin "tpp_ssh_startup" (builtins.readFile ../core/zsh/scripts/tpp_ssh_startup.sh);
-in {
+}:
+let
+  tpp_ngrok = pkgs.writeShellScriptBin "tpp_ngrok" (
+    builtins.readFile ../core/zsh/scripts/tpp_ngrok.sh
+  );
+  tpp_ssh_startup = pkgs.writeShellScriptBin "tpp_ssh_startup" (
+    builtins.readFile ../core/zsh/scripts/tpp_ssh_startup.sh
+  );
+in
+{
   home.packages = with pkgs; [
     tmux
     yq-go

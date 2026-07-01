@@ -5,7 +5,8 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   hostSpec = config.hostSpec;
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
   githubPubKeys = pkgs.fetchurl {
@@ -18,7 +19,8 @@
     command="export NAME='fpetersen' && zsh -il" sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKP9gP8CiPE4akTr0pS3HIdZ2WJhAffoIp0D1tt+UbIgAAAABHNzaDo=
     command="export NAME='fpetersen' && zsh -il" sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIHn89LV7UCzQCcgtjzfjmKYAhoHLlnHzJvTTzcoSJh0rAAAABHNzaDo=
   '';
-in {
+in
+{
   users.users.choffmann = {
     initialPassword = "geheim";
     description = "Cedrik Hoffmann";
@@ -29,22 +31,25 @@ in {
       ++ lib.lists.forEach pubKeys (key: builtins.readFile key)
       ++ pkgs.lib.splitString "\n" tpp_keys;
 
-    extraGroups =
-      ["wheel"]
-      ++ ifTheyExist [
-        "docker"
-        "git"
-        "networkmanager"
-        "gamemode"
-        "kvm"
-      ];
+    extraGroups = [
+      "wheel"
+    ]
+    ++ ifTheyExist [
+      "docker"
+      "git"
+      "networkmanager"
+      "gamemode"
+      "kvm"
+    ];
   };
 
   # Create ssh sockets directory for controlpaths when homemanager not loaded (i.e. isMinimal)
-  systemd.tmpfiles.rules = let
-    user = config.users.users.choffmann.name;
-    group = config.users.users.choffmann.group;
-  in ["d /home/choffmann/.ssh/sockets 0750 ${user} ${group} -"];
+  systemd.tmpfiles.rules =
+    let
+      user = config.users.users.choffmann.name;
+      group = config.users.users.choffmann.group;
+    in
+    [ "d /home/choffmann/.ssh/sockets 0750 ${user} ${group} -" ];
 
   users.users.root = {
     initialPassword = "geheim";
@@ -63,16 +68,16 @@ in {
     users.${hostSpec.username}.imports = lib.flatten (
       lib.optional (!hostSpec.isMinimal) [
         (
-          {config, ...}:
-            import (lib.custom.relativeToRoot "home/${hostSpec.username}/${hostSpec.hostName}.nix") {
-              inherit
-                pkgs
-                inputs
-                config
-                lib
-                hostSpec
-                ;
-            }
+          { config, ... }:
+          import (lib.custom.relativeToRoot "home/${hostSpec.username}/${hostSpec.hostName}.nix") {
+            inherit
+              pkgs
+              inputs
+              config
+              lib
+              hostSpec
+              ;
+          }
         )
       ]
     );

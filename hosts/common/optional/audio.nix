@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -15,8 +15,7 @@
   };
 
   environment.systemPackages = builtins.attrValues {
-    inherit
-      (pkgs)
+    inherit (pkgs)
       pavucontrol
       playerctl # cli utility and lib for controlling media players
       # pamixer # cli pulseaudio sound mixer

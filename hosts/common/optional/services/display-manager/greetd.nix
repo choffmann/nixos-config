@@ -3,9 +3,11 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.autoLogin;
-in {
+in
+{
   options.autoLogin = {
     enable = lib.mkEnableOption "Enable automatic login";
 
@@ -17,7 +19,7 @@ in {
   };
 
   config = {
-    boot.kernelParams = ["console=tty1"];
+    boot.kernelParams = [ "console=tty1" ];
     services.greetd = {
       enable = true;
       restart = true;

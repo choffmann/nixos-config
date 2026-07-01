@@ -2,8 +2,12 @@
   pkgs,
   lib,
   ...
-}: {
-  home.packages = [pkgs.difftastic pkgs.glab];
+}:
+{
+  home.packages = [
+    pkgs.difftastic
+    pkgs.glab
+  ];
 
   programs.lazygit = {
     enable = true;

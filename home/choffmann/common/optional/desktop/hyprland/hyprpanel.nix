@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     adwaita-icon-theme
     nerd-fonts.jetbrains-mono

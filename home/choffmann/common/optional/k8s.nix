@@ -2,7 +2,8 @@
   pkgs,
   config,
   ...
-}: let
+}:
+let
   homeDir = config.home.homeDirectory;
   sopsDir = "${homeDir}/.config/sops-nix/secrets";
   kubeDir = "${homeDir}/.kube";
@@ -20,24 +21,25 @@
     ${pkgs.kubectl}/bin/kubectl config view --flatten > ${kubeConfig}
     chmod 600 ${kubeConfig}
   '';
-in {
-  sops.secrets."k8s/config/green-ecolution" = {};
-  sops.secrets."k8s/config/k3s-cluster" = {};
-  sops.secrets."k8s/config/progeek-utility" = {};
-  sops.secrets."k8s/config/homelab" = {};
+in
+{
+  sops.secrets."k8s/config/green-ecolution" = { };
+  sops.secrets."k8s/config/k3s-cluster" = { };
+  sops.secrets."k8s/config/progeek-utility" = { };
+  sops.secrets."k8s/config/homelab" = { };
 
   home.sessionVariables.KUBECONFIG = kubeConfig;
 
   systemd.user.services.merge-kubeconfig = {
     Unit = {
       Description = "Merge kubeconfig from sops secrets";
-      After = ["sops-nix.service"];
+      After = [ "sops-nix.service" ];
     };
     Service = {
       Type = "oneshot";
       ExecStart = "${mergeScript}";
     };
-    Install.WantedBy = ["default.target"];
+    Install.WantedBy = [ "default.target" ];
   };
 
   home.packages = with pkgs; [

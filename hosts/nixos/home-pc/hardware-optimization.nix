@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   # AMD Ryzen 7000 + RX 7600 Hardware Optimizations
 
   boot.kernelParams = [
@@ -29,8 +30,14 @@
   };
 
   fileSystems = {
-    "/".options = ["noatime" "nodiratime"];
-    "/boot".options = ["noatime" "nodiratime"];
+    "/".options = [
+      "noatime"
+      "nodiratime"
+    ];
+    "/boot".options = [
+      "noatime"
+      "nodiratime"
+    ];
   };
 
   boot.kernel.sysctl = {

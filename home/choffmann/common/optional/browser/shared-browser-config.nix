@@ -3,7 +3,8 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   homeDir = config.home.homeDirectory;
 
   extension = shortId: uuid: {
@@ -13,7 +14,8 @@
       installation_mode = "normal_installed";
     };
   };
-in {
+in
+{
   policies = {
     AppAutoUpdate = true;
     StartPage = "previous-session";
@@ -56,12 +58,19 @@ in {
     settings = [
       {
         name = "NixOS home-manager";
-        tags = ["search" "nix" "home-manager"];
+        tags = [
+          "search"
+          "nix"
+          "home-manager"
+        ];
         url = "https://nix-community.github.io/home-manager/options.xhtml";
       }
       {
         name = "NixOS Wiki";
-        tags = ["wiki" "nix"];
+        tags = [
+          "wiki"
+          "nix"
+        ];
         url = "https://wiki.nixos.org/";
       }
       {
@@ -69,7 +78,7 @@ in {
         bookmarks = [
           {
             name = "GitHub";
-            tags = ["dev"];
+            tags = [ "dev" ];
             keyword = "github";
             url = "https://github.com";
           }
@@ -83,7 +92,10 @@ in {
           }
           {
             name = "NixOS Search";
-            tags = ["search" "nix"];
+            tags = [
+              "search"
+              "nix"
+            ];
             url = "https://search.nixos.org/packages";
           }
         ];
@@ -126,7 +138,7 @@ in {
           }
         ];
         icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-        definedAliases = ["@np"];
+        definedAliases = [ "@np" ];
       };
 
       github = {
@@ -143,14 +155,14 @@ in {
           }
         ];
         icon = "https://github.githubassets.com/favicons/favicon.svg";
-        definedAliases = ["@gh"];
+        definedAliases = [ "@gh" ];
       };
 
       nixos-wiki = {
         name = "NixOS Wiki";
-        urls = [{template = "https://wiki.nixos.org/w/index.php?search={searchTerms}";}];
+        urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
         iconMapObj."16" = "https://wiki.nixos.org/favicon.ico";
-        definedAliases = ["@nw"];
+        definedAliases = [ "@nw" ];
       };
 
       bing.metaData.hidden = true;

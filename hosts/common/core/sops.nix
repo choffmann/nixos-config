@@ -3,12 +3,13 @@
   inputs,
   config,
   ...
-}: {
+}:
+{
   sops = {
     defaultSopsFile = ../../../secrets/secrets.yaml;
     validateSopsFiles = false;
     age = {
-      sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     };
 
     secrets = {
@@ -30,12 +31,14 @@
     };
   };
 
-  system.activationScripts.sopsSetAgeKeyOwnership = let
-    ageFolder = "/home/choffmann/.config/sops/age";
-    user = config.users.users.choffmann.name;
-    group = config.users.users.choffmann.group;
-  in ''
-    mkdir -p ${ageFolder} || true
-    chown -R ${user}:${group} /home/choffmann/.config
-  '';
+  system.activationScripts.sopsSetAgeKeyOwnership =
+    let
+      ageFolder = "/home/choffmann/.config/sops/age";
+      user = config.users.users.choffmann.name;
+      group = config.users.users.choffmann.group;
+    in
+    ''
+      mkdir -p ${ageFolder} || true
+      chown -R ${user}:${group} /home/choffmann/.config
+    '';
 }

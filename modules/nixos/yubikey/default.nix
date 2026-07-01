@@ -3,16 +3,18 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   homeDirectory = "/home/choffmann";
-  yubikey-up = let
-    yubikeyIds = lib.concatStringsSep " " (
-      lib.mapAttrsToList (name: id: "[${name}]=\"${builtins.toString id}\"") config.yubikey.identifiers
-    );
-  in
+  yubikey-up =
+    let
+      yubikeyIds = lib.concatStringsSep " " (
+        lib.mapAttrsToList (name: id: "[${name}]=\"${builtins.toString id}\"") config.yubikey.identifiers
+      );
+    in
     pkgs.writeShellApplication {
       name = "yubikey-up";
-      runtimeInputs = builtins.attrValues {inherit (pkgs) gawk yubikey-manager;};
+      runtimeInputs = builtins.attrValues { inherit (pkgs) gawk yubikey-manager; };
       text = ''
         #!/usr/bin/env bash
         set -euo pipefail
@@ -51,12 +53,13 @@
       rm ${homeDirectory}/.ssh/id_yubikey.pub
     '';
   };
-in {
+in
+{
   options = {
     yubikey = {
       enable = lib.mkEnableOption "Enable yubikey support";
       identifiers = lib.mkOption {
-        default = {};
+        default = { };
         type = lib.types.attrsOf lib.types.int;
         description = "Attrset of Yubikey serial numbers. NOTE: Yubico's 'Security Key' products do not use unique serial number therefore, the scripts in this module are unable to distinguish between multiple 'Security Key' devices and instead will detect a Security Key serial number as the string \"[FIDO]\". This means you can only use a single Security Key but can still mix it with YubiKey 4 and 5 devices.";
         example = lib.literalExample ''
@@ -73,8 +76,7 @@ in {
   config = lib.mkIf config.yubikey.enable {
     environment.systemPackages = lib.flatten [
       (builtins.attrValues {
-        inherit
-          (pkgs)
+        inherit (pkgs)
           yubioath-flutter
           yubikey-manager
           pam_u2f # for yubikey with sudo
@@ -128,7 +130,7 @@ in {
 
     # Yubikey required services and config. See Dr. Duh NixOS config for reference
     services.pcscd.enable = true; # smartcard service
-    services.udev.packages = [pkgs.yubikey-personalization];
+    services.udev.packages = [ pkgs.yubikey-personalization ];
 
     # FIXME(yubikey): Check if this exists on darwin
     services.yubikey-agent.enable = true;

@@ -1,8 +1,10 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   notify = profile: "${pkgs.libnotify}/bin/notify-send -t 3000 'Monitor' '${profile}'";
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
   restartWaybar = "systemctl --user restart waybar.service";
-in {
+in
+{
   services.kanshi = {
     enable = true;
     settings = [

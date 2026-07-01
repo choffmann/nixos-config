@@ -2,17 +2,18 @@
   pkgs,
   config,
   ...
-}: {
+}:
+{
   # Required for Steam Input virtual gamepad emulation (Steam Link, Remote Play).
   # Installs udev rules for /dev/uinput so Steam can expose remote controller
   # input (e.g. from Apple TV Steam Link) as a virtual XInput/DualSense device.
   hardware.steam-hardware.enable = true;
 
   # Ensure uinput is available at boot for Steam Input
-  boot.kernelModules = ["uinput"];
+  boot.kernelModules = [ "uinput" ];
 
   # Grant the primary user access to /dev/uinput via the input group
-  users.users.${config.hostSpec.username}.extraGroups = ["input"];
+  users.users.${config.hostSpec.username}.extraGroups = [ "input" ];
 
   programs = {
     steam = {
@@ -26,28 +27,28 @@
         package = pkgs.protontricks;
       };
       package = pkgs.steam.override {
-        extraPkgs = pkgs: (builtins.attrValues {
-          inherit
-            (pkgs.stdenv.cc.cc)
-            lib
-            ;
+        extraPkgs =
+          pkgs:
+          (builtins.attrValues {
+            inherit (pkgs.stdenv.cc.cc)
+              lib
+              ;
 
-          inherit
-            (pkgs)
-            libxcursor
-            libxi
-            libxinerama
-            libxscrnsaver
-            libpng
-            libpulseaudio
-            libvorbis
-            libkrb5
-            keyutils
-            gperftools
-            ;
-        });
+            inherit (pkgs)
+              libxcursor
+              libxi
+              libxinerama
+              libxscrnsaver
+              libpng
+              libpulseaudio
+              libvorbis
+              libkrb5
+              keyutils
+              gperftools
+              ;
+          });
       };
-      extraCompatPackages = [pkgs.unstable.proton-ge-bin];
+      extraCompatPackages = [ pkgs.unstable.proton-ge-bin ];
     };
     #gamescope launch args set dynamically in home/<user>/common/optional/gaming
     gamescope = {

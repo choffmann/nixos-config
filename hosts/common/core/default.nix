@@ -5,7 +5,8 @@
   outputs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     inputs.home-manager.nixosModules.default
     inputs.sops-nix.nixosModules.sops
@@ -30,11 +31,12 @@
   home-manager.backupFileExtension = "bk";
 
   # list of all packages with their versions
-  environment.etc."current-system-packages".text = let
-    packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
-    sortedUnique = builtins.sort builtins.lessThan (pkgs.lib.lists.unique packages);
-    formatted = builtins.concatStringsSep "\n" sortedUnique;
-  in
+  environment.etc."current-system-packages".text =
+    let
+      packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
+      sortedUnique = builtins.sort builtins.lessThan (pkgs.lib.lists.unique packages);
+      formatted = builtins.concatStringsSep "\n" sortedUnique;
+    in
     formatted;
 
   nixpkgs = {
@@ -63,7 +65,7 @@
   nix = {
     # This will add each flake input as a registry
     # To make nix3 commands consistent with your flake
-    registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
+    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
 
     # This will add your inputs to the system's legacy channels
     # Making legacy nix commands consistent as well, awesome!
@@ -76,7 +78,7 @@
       min-free = 128000000; # 128MB
       max-free = 1000000000; # 1GB
 
-      trusted-users = ["@wheel"];
+      trusted-users = [ "@wheel" ];
       # Deduplicate and optimize nix store
       auto-optimise-store = true;
       warn-dirty = false;

@@ -2,14 +2,18 @@
   pkgs,
   config,
   ...
-}: let
+}:
+let
   homeDir = config.home.homeDirectory;
   workspacesConf = "${homeDir}/.config/hypr/workspaces.conf";
   monitorsConf = "${homeDir}/.config/hypr/monitors.conf";
 
   hyprFocusToggle = pkgs.writeShellApplication {
     name = "hypr-focus-toggle";
-    runtimeInputs = with pkgs; [mako libnotify];
+    runtimeInputs = with pkgs; [
+      mako
+      libnotify
+    ];
     text = ''
       if makoctl mode | grep -q "do-not-disturb"; then
         makoctl mode -r do-not-disturb
@@ -21,7 +25,8 @@
       fi
     '';
   };
-in {
+in
+{
   imports = [
     ./rofi
     ./hyprlock.nix
@@ -73,7 +78,7 @@ in {
   wayland.windowManager.hyprland = {
     enable = true;
     configType = "hyprlang";
-    systemd.variables = ["--all"];
+    systemd.variables = [ "--all" ];
 
     settings = {
       "$mod" = "ALT";
@@ -283,94 +288,96 @@ in {
         ", XF86AudioPrev, exec,  playerctl previous"
       ];
 
-      bind =
-        [
-          # === Core ===
-          "$mod, Return, exec, $terminal"
-          "$mod, W, exec, $terminal"
-          "$mod, Q, killactive,"
-          "$mod, E, exec, $fileManager"
-          "$mod, SPACE, exec, $menu"
-          "$mod, y, exec, $lock"
-          "$mod SHIFT, Q, exit,"
+      bind = [
+        # === Core ===
+        "$mod, Return, exec, $terminal"
+        "$mod, W, exec, $terminal"
+        "$mod, Q, killactive,"
+        "$mod, E, exec, $fileManager"
+        "$mod, SPACE, exec, $menu"
+        "$mod, y, exec, $lock"
+        "$mod SHIFT, Q, exit,"
 
-          # === Rofi Modi ===
-          "$mod, d, exec, rofi -show drun"
-          "$mod, period, exec, rofi -show emoji"
-          "$mod, equal, exec, rofi -show calc -no-show-match -no-sort"
-          "$mod, o, exec, rofi -show ssh"
-          "$mod, b, exec, rofi-rbw"
-          "$mod, i, exec, cliphist list | rofi -dmenu -p 'Clipboard' | cliphist decode | wl-copy"
+        # === Rofi Modi ===
+        "$mod, d, exec, rofi -show drun"
+        "$mod, period, exec, rofi -show emoji"
+        "$mod, equal, exec, rofi -show calc -no-show-match -no-sort"
+        "$mod, o, exec, rofi -show ssh"
+        "$mod, b, exec, rofi-rbw"
+        "$mod, i, exec, cliphist list | rofi -dmenu -p 'Clipboard' | cliphist decode | wl-copy"
 
-          # === Navigation ===
-          "$mod, h, movefocus, l"
-          "$mod, l, movefocus, r"
-          "$mod, j, movefocus, d"
-          "$mod, k, movefocus, u"
+        # === Navigation ===
+        "$mod, h, movefocus, l"
+        "$mod, l, movefocus, r"
+        "$mod, j, movefocus, d"
+        "$mod, k, movefocus, u"
 
-          # === Move windows ===
-          "$mod SHIFT, h, movewindow, l"
-          "$mod SHIFT, l, movewindow, r"
-          "$mod SHIFT, j, movewindow, d"
-          "$mod SHIFT, k, movewindow, u"
+        # === Move windows ===
+        "$mod SHIFT, h, movewindow, l"
+        "$mod SHIFT, l, movewindow, r"
+        "$mod SHIFT, j, movewindow, d"
+        "$mod SHIFT, k, movewindow, u"
 
-          # === Window state ===
-          "$mod, f, fullscreen, 1"
-          "$mod SHIFT, f, fullscreen, 0"
-          "$mod, v, togglefloating,"
-          "$mod, s, layoutmsg, togglesplit"
-          "$mod, p, pseudo"
+        # === Window state ===
+        "$mod, f, fullscreen, 1"
+        "$mod SHIFT, f, fullscreen, 0"
+        "$mod, v, togglefloating,"
+        "$mod, s, layoutmsg, togglesplit"
+        "$mod, p, pseudo"
 
-          # === Tabs / Cycle ===
-          "$mod, Tab, cyclenext,"
-          "$mod SHIFT, Tab, cyclenext, prev"
-          "$mod, grave, focuscurrentorlast"
+        # === Tabs / Cycle ===
+        "$mod, Tab, cyclenext,"
+        "$mod SHIFT, Tab, cyclenext, prev"
+        "$mod, grave, focuscurrentorlast"
 
-          # === Workspace navigation ===
-          "$mod, n, workspace, e+1"
-          "$mod SHIFT, n, workspace, e-1"
-          "$mod, bracketright, workspace, e+1"
-          "$mod, bracketleft, workspace, e-1"
+        # === Workspace navigation ===
+        "$mod, n, workspace, e+1"
+        "$mod SHIFT, n, workspace, e-1"
+        "$mod, bracketright, workspace, e+1"
+        "$mod, bracketleft, workspace, e-1"
 
-          # === Special workspaces (like vim marks) ===
-          "$mod, r, togglespecialworkspace, magic"
-          "$mod SHIFT, r, movetoworkspace, special:magic"
-          "$mod, t, togglespecialworkspace, teams"
-          "$mod SHIFT, t, movetoworkspace, special:teams"
-          "$mod, g, togglespecialworkspace, terminal"
-          "$mod SHIFT, g, movetoworkspace, special:terminal"
+        # === Special workspaces (like vim marks) ===
+        "$mod, r, togglespecialworkspace, magic"
+        "$mod SHIFT, r, movetoworkspace, special:magic"
+        "$mod, t, togglespecialworkspace, teams"
+        "$mod SHIFT, t, movetoworkspace, special:teams"
+        "$mod, g, togglespecialworkspace, terminal"
+        "$mod SHIFT, g, movetoworkspace, special:terminal"
 
-          # === Screenshots ===
-          "$mod SHIFT, s, exec, hyprshot -m region"
-          "$mod CTRL, s, exec, hyprshot -m output"
-          "$mod, c, exec, hyprshot -m window"
-          "$mod SHIFT, c, exec, hyprshot -m region --clipboard-only"
-          "$mod, a, exec, grim -g \"$(slurp)\" - | satty -f -"
+        # === Screenshots ===
+        "$mod SHIFT, s, exec, hyprshot -m region"
+        "$mod CTRL, s, exec, hyprshot -m output"
+        "$mod, c, exec, hyprshot -m window"
+        "$mod SHIFT, c, exec, hyprshot -m region --clipboard-only"
+        "$mod, a, exec, grim -g \"$(slurp)\" - | satty -f -"
 
-          # === Focus mode ===
-          "$mod SHIFT, d, exec, ${hyprFocusToggle}/bin/hypr-focus-toggle"
+        # === Focus mode ===
+        "$mod SHIFT, d, exec, ${hyprFocusToggle}/bin/hypr-focus-toggle"
 
-          # === Submaps (like vim modes) ===
-          "$mod, z, submap, resize"
-          "$mod, m, submap, move"
-          "$mod, x, submap, power"
+        # === Submaps (like vim modes) ===
+        "$mod, z, submap, resize"
+        "$mod, m, submap, move"
+        "$mod, x, submap, power"
 
-          # === Mouse ===
-          "$mod, mouse_down, workspace, e+1"
-          "$mod, mouse_up, workspace, e-1"
-        ]
-        ++ (
-          # workspaces 1-9
-          builtins.concatLists (builtins.genList (
-              i: let
-                ws = i + 1;
-              in [
-                "$mod, code:1${toString i}, workspace, ${toString ws}"
-                "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-              ]
-            )
-            9)
-        );
+        # === Mouse ===
+        "$mod, mouse_down, workspace, e+1"
+        "$mod, mouse_up, workspace, e-1"
+      ]
+      ++ (
+        # workspaces 1-9
+        builtins.concatLists (
+          builtins.genList (
+            i:
+            let
+              ws = i + 1;
+            in
+            [
+              "$mod, code:1${toString i}, workspace, ${toString ws}"
+              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+            ]
+          ) 9
+        )
+      );
     };
 
     extraConfig = ''

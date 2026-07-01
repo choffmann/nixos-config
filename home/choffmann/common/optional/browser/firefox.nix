@@ -3,12 +3,17 @@
   config,
   inputs,
   ...
-}: let
-  shared = import ./shared-browser-config.nix {inherit pkgs config inputs;};
-in {
+}:
+let
+  shared = import ./shared-browser-config.nix { inherit pkgs config inputs; };
+in
+{
   programs.firefox = {
     enable = true;
-    languagePacks = ["de" "en"];
+    languagePacks = [
+      "de"
+      "en"
+    ];
     policies = shared.policies;
     profiles.choffmann = {
       id = 0;

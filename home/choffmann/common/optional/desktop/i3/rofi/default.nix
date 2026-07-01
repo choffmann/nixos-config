@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   home.file.".local/share/rofi/themes" = {
     source = ./themes;
     recursive = true;
