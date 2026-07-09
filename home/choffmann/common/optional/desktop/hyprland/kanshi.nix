@@ -29,19 +29,13 @@ in {
             criteria = "eDP-1";
             status = "enable";
             mode = "1920x1080@60";
-            position = "-1920,0";
+            position = "3440,0";
           }
           {
             criteria = "DP-1";
             status = "enable";
             mode = "3440x1440@59.97";
             position = "0,0";
-          }
-          {
-            criteria = "HDMI-A-1";
-            status = "enable";
-            mode = "1920x1080@60";
-            position = "3440,180";
           }
         ];
         profile.exec = [
