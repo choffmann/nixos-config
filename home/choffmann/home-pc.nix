@@ -50,6 +50,7 @@ in {
     ./common/core
 
     ./common/optional/k8s.nix
+    ./common/optional/iac.nix
     ./common/optional/sops.nix
     ./common/optional/discord.nix
     ./common/optional/browser
