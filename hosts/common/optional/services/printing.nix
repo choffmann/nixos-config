@@ -1,9 +1,20 @@
 # Reminder that CUPS cpanel defaults to localhost:631
-{pkgs, ...}: {
-  services.printing = {
-    enable = true;
-    drivers = [pkgs.brgenml1lpr pkgs.brgenml1cupswrapper]; # TODO: find drivers
-    #logging = "debug";
+# Printer lives in another subnet (10.8.11.x), so mDNS discovery can't reach
+# it — the queue is declared statically via its fixed IP instead.
+{...}: {
+  services.printing.enable = true;
+
+  hardware.printers = {
+    ensurePrinters = [
+      {
+        name = "Epson-EcoTank";
+        deviceUri = "ipp://10.8.11.161/ipp/print";
+        # "everywhere" queries the printer for its PPD at activation time;
+        # ensure-printers fails (harmlessly) if the printer is unreachable
+        model = "everywhere";
+      }
+    ];
+    ensureDefaultPrinter = "Epson-EcoTank";
   };
 
   # Mitigate cups and avahi security issue as described here: https://discourse.nixos.org/t/cups-cups-filters-and-libppd-security-issues/52780/2
