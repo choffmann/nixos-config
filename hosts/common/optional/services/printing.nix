@@ -8,17 +8,12 @@
   hardware.printers = {
     ensurePrinters = [
       {
-        name = "Epson-EcoTank";
-        deviceUri = "ipp://10.8.11.161/ipp/print";
-        # "everywhere" queries the printer for its PPD at activation time;
-        # ensure-printers fails (harmlessly) if the printer is unreachable
-        model = "everywhere";
-      }
-      {
-        # Native ESC/P-R queue: the IPP-everywhere path caps rastering at
-        # 600x300dpi, too coarse for fine dot patterns (tiptoi OID codes).
+        # Native ESC/P-R rather than model = "everywhere": IPP Everywhere caps
+        # rastering at 600x300dpi (too coarse for tiptoi OID dot patterns) and
+        # makes lpadmin query the printer at activation time, which breaks
+        # ensure-printers whenever we're outside the office network.
         # ET-4856 belongs to the ET-4850 series.
-        name = "Epson-EcoTank-native";
+        name = "Epson-EcoTank";
         deviceUri = "socket://10.8.11.161:9100";
         model = "epson-inkjet-printer-escpr2/Epson-ET-4850_Series-epson-escpr2-en.ppd";
       }
