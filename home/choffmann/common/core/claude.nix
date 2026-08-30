@@ -83,6 +83,7 @@
         - Never use `git add -A` or `git add .` - stage files explicitly to avoid committing unrelated changes
         - Verify the target branch before committing (especially for hotfixes/license/main-branch changes)
         - Split unrelated changes into separate commits
+        - Commit messages are always written in English and follow Conventional Commits (`type(scope): summary`), unless the project already prescribes a different convention - then follow the project's convention
 
         ## Planning First
         Before creating Jira tickets, implementing features, or making non-trivial changes, always present a plan first and wait for approval. Do not jump straight to execution.
