@@ -69,6 +69,7 @@ in {
     ../../common/optional/winbox.nix
     ../../common/optional/vm-bridge.nix
     ../../common/optional/fonts.nix
+    ../../common/optional/postgresql.nix
   ];
 
   hostSpec = {
