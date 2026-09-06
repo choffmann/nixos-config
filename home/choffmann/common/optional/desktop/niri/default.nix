@@ -6,7 +6,6 @@
 }:
 let
   cfg = config.desktop.niri;
-  colors = config.lib.stylix.colors.withHashtag;
 in
 {
   imports = [
@@ -62,8 +61,6 @@ in
     xdg.configFile."niri/config.kdl".text = import ./config.kdl.nix {
       inherit lib;
       terminal = "ghostty";
-      borderActiveColor = colors.base0D;
-      borderInactiveColor = colors.base02;
       # niri's wayland-session enables security.polkit but ships no auth agent.
       polkitAgent = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
       inherit (cfg) extraConfig extraBinds extraInput;

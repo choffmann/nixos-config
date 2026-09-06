@@ -75,19 +75,10 @@ in
   # services.yubikey-touch-detector.notificationSound = true;
 
   # niri overrides
+  #
+  # Monitors live in DMS' dms/outputs.kdl, not here: niri resolves outputs by
+  # first match, so a block here would shadow whatever DMS writes.
   desktop.niri.extraConfig = ''
-    output "DP-1" {
-        mode "3440x1440@59.973"
-        scale 1.0
-        position x=0 y=0
-    }
-
-    output "DP-2" {
-        mode "1920x1080@60.000"
-        scale 1.0
-        position x=3440 y=180
-    }
-
     spawn-at-startup "${pkgs.synology-drive-client}/bin/synology-drive"
 
     window-rule {

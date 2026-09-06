@@ -4,8 +4,6 @@
   extraConfig,
   extraBinds,
   extraInput,
-  borderActiveColor,
-  borderInactiveColor,
   polkitAgent,
 }:
 let
@@ -61,8 +59,6 @@ in
 
       border {
           width 1
-          active-color "${borderActiveColor}"
-          inactive-color "${borderInactiveColor}"
       }
   }
 
@@ -226,4 +222,22 @@ in
   }
 
   ${extraConfig}
+
+  // DMS writes these from its settings UI. Its own "Setup" button cannot add
+  // the includes here because it rewrites the whole config.kdl, which is a
+  // read-only store symlink. binds.kdl and input.kdl stay out on purpose:
+  // those come from this file, and DMS' versions would override them.
+  //
+  // Ordering matters differently per section: `layout` merges field by field
+  // with the last writer winning, so the gaps and widths from dms/layout.kdl
+  // beat the ones above, while `focus-ring off` survives because niri ORs the
+  // off flag. Outputs are looked up first-match instead, so hosts must not
+  // declare a monitor that DMS also manages.
+  include "dms/colors.kdl" optional=true
+  include "dms/layout.kdl" optional=true
+  include "dms/alttab.kdl" optional=true
+  include "dms/outputs.kdl" optional=true
+  include "dms/windowrules.kdl" optional=true
+  include "dms/cursor.kdl" optional=true
+  include "dms/wpblur.kdl" optional=true
 ''
