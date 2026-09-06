@@ -76,9 +76,9 @@ in
       lldb
 
       # formatters / linters
-      alejandra
       markdown-toc
       markdownlint-cli2
+      nixfmt
       prettierd
       stylua
       typstyle
