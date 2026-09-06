@@ -4,7 +4,14 @@
   ...
 }:
 let
-  colors = config.lib.stylix.colors.withHashtag;
+  dmsColors = "${config.xdg.configHome}/tmux/dms-colors.conf";
+
+  # matugen post_hook. source-file does not spawn a server, so with no tmux
+  # running its failure is the normal case, not an error worth surfacing.
+  reload-dms-colors = pkgs.writeShellScript "tmux-reload-dms-colors" ''
+    ${config.programs.tmux.package}/bin/tmux source-file ${dmsColors} 2>/dev/null || true
+  '';
+
   tmux-sessionizer = pkgs.writeShellApplication {
     name = "tmux-sessionizer";
     # runtimeInputs = builtins.attrValues {inherit (pkgs) find fzf tmux;};
@@ -41,6 +48,16 @@ in
   home.packages = [
     tmux-sessionizer
   ];
+
+  # DMS merges every toml here into its generated matugen config verbatim,
+  # without the SHELL_DIR/CONFIG_DIR substitution its own configs get, so
+  # these paths have to be absolute.
+  xdg.configFile."matugen/dms/configs/tmux.toml".text = ''
+    [templates.tmux]
+    input_path = '${./dms-colors.conf}'
+    output_path = '${dmsColors}'
+    post_hook = '${reload-dms-colors}'
+  '';
 
   programs.tmux = {
     enable = true;
@@ -86,27 +103,13 @@ in
       set -ga update-environment TERM
       set -ga update-environment TERM_PROGRAM
 
-      # Terminal Aesthetic Theme
-      set -g status-style "bg=${colors.base02},fg=${colors.base05}"
-      set -g status-left "#[fg=${colors.base0B}]λ #[fg=${colors.base09}]❯ #[fg=${colors.base0D}]#S #[fg=${colors.base05}]│ "
       set -g status-left-length 30
-      set -g status-right "#[fg=${colors.base05}]│ #[fg=${colors.base06}]%H:%M #[fg=${colors.base05}]│ #[fg=${colors.base06}]%d.%m"
       set -g status-right-length 30
-
-      # Window status
-      set -g window-status-format "#[fg=${colors.base05}][#I:#W]"
-      set -g window-status-current-format "#[fg=${colors.base0B}][#I:#W]"
       set -g window-status-separator " "
 
-      # Pane borders
-      set -g pane-border-style "fg=${colors.base02}"
-      set -g pane-active-border-style "fg=${colors.base0B}"
-
-      # Message style
-      set -g message-style "bg=${colors.base01},fg=${colors.base05}"
-
-      # Mode style (copy mode)
-      set -g mode-style "bg=${colors.base02},fg=${colors.base05}"
+      # Colours come from DMS, which regenerates them from the wallpaper via
+      # matugen. The file is absent until its first run.
+      source -q ${dmsColors}
     '';
 
     plugins = with pkgs.tmuxPlugins; [

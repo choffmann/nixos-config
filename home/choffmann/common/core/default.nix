@@ -12,7 +12,7 @@
     ./claude.nix
     ./cli-tools.nix
     ./yazi.nix
-    ./tmux.nix
+    ./tmux
     ./fonts.nix
     ./stylix.nix
     ./git.nix
