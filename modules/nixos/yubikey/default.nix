@@ -49,8 +49,10 @@ let
       #!/usr/bin/env bash
       set -euo pipefail
 
-      rm ${homeDirectory}/.ssh/id_yubikey
-      rm ${homeDirectory}/.ssh/id_yubikey.pub
+      # The key exposes two HID interfaces, so udev fires remove twice and the
+      # second run finds nothing left to unlink.
+      rm -f ${homeDirectory}/.ssh/id_yubikey
+      rm -f ${homeDirectory}/.ssh/id_yubikey.pub
     '';
   };
 in
