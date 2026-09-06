@@ -66,6 +66,12 @@ in
       }
   }
 
+  // niri fills the whole window area with the border colour behind the client,
+  // so translucent windows blend against the border instead of the wallpaper.
+  window-rule {
+      draw-border-with-background false
+  }
+
   prefer-no-csd
   screenshot-path "~/Pictures/Screenshots/screenshot-%Y-%m-%d-%H%M%S.png"
 
