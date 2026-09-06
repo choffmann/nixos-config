@@ -1,8 +1,13 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }:
+let
+  claudeSigningKey = "${config.home.homeDirectory}/.ssh/id_claude_signing";
+  claudeSigningPubKey = lib.custom.relativeToRoot "hosts/common/users/choffmann/keys/id_claude_signing.pub";
+in
 {
   home.packages = [
     pkgs.difftastic
@@ -42,9 +47,14 @@
       };
       alias = {
         fixup = "!git log --oneline --no-decorate --no-merges | fzf -0 --preview 'git show --color=always --format=oneline {1}' | awk '{print $1}' | xargs -r git commit --fixup";
+        # Claude Code commits through this instead of `git commit`, so its work
+        # stays signed while the yubikey is pulled. Plain `git commit` keeps
+        # going through the card.
+        agent-commit = "!git -c gpg.format=ssh -c user.signingkey=${claudeSigningKey} -c commit.gpgsign=true commit";
       };
       commit.gpgsign = true;
       tag.gpgsign = true;
+      gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/.ssh/allowed_signers";
       pull.rebase = "true";
       rebase.autostash = true;
       rebase.autosquash = true;
@@ -77,6 +87,12 @@
       "docs/superpowers/**"
     ];
   };
+
+  # Lets `git log --show-signature` verify the agent's commits locally. Only
+  # ssh-format signatures are looked up here; the yubikey ones stay with gpg.
+  home.file.".ssh/allowed_signers".text = ''
+    dev@choffmann.io,choffmann@progeek.de,cedrik.hoffmann@hs-flensburg.de namespaces="git" ${lib.removeSuffix "\n" (builtins.readFile claudeSigningPubKey)}
+  '';
 
   programs.gh = {
     enable = true;

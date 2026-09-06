@@ -33,6 +33,11 @@ in
       "ssh_keys/mail.green-ecolution.de" = {
         path = "${homeDir}/.ssh/id_mail_green_ecolution";
       };
+      # Signs commits Claude Code makes on its own. Passphrase-less on purpose:
+      # the yubikey is out while it works, so nothing can answer a pinentry.
+      "ssh_keys/claude-signing" = {
+        path = "${homeDir}/.ssh/id_claude_signing";
+      };
     };
   };
 }

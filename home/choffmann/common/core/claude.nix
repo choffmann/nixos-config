@@ -85,6 +85,7 @@
         - Verify the target branch before committing (especially for hotfixes/license/main-branch changes)
         - Split unrelated changes into separate commits
         - Commit messages are always written in English and follow Conventional Commits (`type(scope): summary`), unless the project already prescribes a different convention - then follow the project's convention
+        - Commit with `git agent-commit` instead of `git commit`. It signs with a dedicated ssh key, so your commits stay signed while the yubikey (which holds the gpg key) is unplugged. `git agent-commit` takes the same arguments as `git commit`.
 
         ## Planning First
         Before creating Jira tickets, implementing features, or making non-trivial changes, always present a plan first and wait for approval. Do not jump straight to execution.
