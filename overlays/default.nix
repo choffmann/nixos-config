@@ -20,6 +20,21 @@
     });
   };
 
+  # nixpkgs' dms-shell module hardcodes pkgs.dgop/matugen/cava/quickshell, so
+  # the newer builds can only be injected here, not through module options.
+  # dsearch and dcal are not listed: their home-manager modules default to the
+  # package from their own flake.
+  dank-packages =
+    final: _prev:
+    let
+      inherit (final.stdenv.hostPlatform) system;
+    in
+    {
+      inherit (inputs.dms.packages.${system}) dms-shell;
+      inherit (inputs.dgop.packages.${system}) dgop;
+      inherit (final.unstable) quickshell matugen cava;
+    };
+
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
   unstable-packages = final: _prev: {

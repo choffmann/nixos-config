@@ -53,9 +53,20 @@
     ktt.url = "git+ssh://git@gitlab.progeek.de:2200/choffmann/kimai-time-tracker.git";
     ktt.inputs.nixpkgs.follows = "nixpkgs";
 
-    # dcal is not packaged in nixpkgs; the upstream flake ships the HM module.
+    # The DankLinux stack releases on its own cadence and reaches nixpkgs much
+    # later (1.6.0 upstream vs 1.5.3/0.2.3 in unstable). All of these flakes
+    # build against nixos-unstable, so they follow that, not our stable nixpkgs.
+    dms.url = "github:AvengeMedia/DankMaterialShell/stable";
+    dms.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    dgop.url = "github:AvengeMedia/dgop";
+    dgop.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    danksearch.url = "github:AvengeMedia/danksearch";
+    danksearch.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
     dankcalendar.url = "github:AvengeMedia/dankcalendar";
-    dankcalendar.inputs.nixpkgs.follows = "nixpkgs";
+    dankcalendar.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs =
