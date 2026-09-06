@@ -48,7 +48,9 @@ in
     run ${lib.getExe pkgs.jq} -n \
       --arg wallpaperPath "${config.stylix.image}" \
       '$ARGS.named' > "$state/session.json.new"
-    if [ -f "$state/session.json" ]; then
+    # A malformed session.json must not abort activation: DMS itself tolerates
+    # that case (falls back to defaults), so treat it the same as absent.
+    if [ -f "$state/session.json" ] && ${lib.getExe pkgs.jq} -e . "$state/session.json" >/dev/null 2>&1; then
       run ${lib.getExe pkgs.jq} -s '.[0] * .[1]' \
         "$state/session.json" "$state/session.json.new" > "$state/session.json.merged"
       run mv "$state/session.json.merged" "$state/session.json"
