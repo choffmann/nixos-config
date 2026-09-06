@@ -22,8 +22,13 @@ in
     # The auth keys are the exception to that: they stay Nix-owned, so the
     # copy greetd takes at boot can't drift from the PAM stacks declared
     # next to them. Overrides whatever the settings dialog last wrote.
+    # In "or" mode the lock screen only starts the key from its button or this
+    # shortcut, and the combo has to carry Ctrl - the password field matches it
+    # inside its ControlModifier branch, so a bare key would never fire.
     if ${jq} -e . "$cfg/settings.json" >/dev/null 2>&1; then
-      run ${jq} '.enableU2f = true | .u2fMode = "or" | .greeterEnableU2f = true' \
+      run ${jq} '.enableU2f = true | .u2fMode = "or" | .greeterEnableU2f = true
+        | .lockScreenSecurityKeyShortcutEnabled = true
+        | .lockScreenSecurityKeyShortcut = "Ctrl+Q"' \
         "$cfg/settings.json" > "$cfg/settings.json.new"
       run mv "$cfg/settings.json.new" "$cfg/settings.json"
     fi

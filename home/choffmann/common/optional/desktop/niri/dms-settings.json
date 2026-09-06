@@ -359,6 +359,8 @@
   "maxFprintTries": 15,
   "enableU2f": true,
   "u2fMode": "or",
+  "lockScreenSecurityKeyShortcutEnabled": true,
+  "lockScreenSecurityKeyShortcut": "Ctrl+Q",
   "lockScreenActiveMonitor": "all",
   "lockScreenInactiveColor": "#000000",
   "lockScreenNotificationMode": 0,
