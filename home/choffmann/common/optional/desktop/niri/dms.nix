@@ -19,6 +19,14 @@ in
     if [ ! -e "$cfg/settings.json" ]; then
       run install -m 0644 ${./dms-settings.json} "$cfg/settings.json"
     fi
+    # The auth keys are the exception to that: they stay Nix-owned, so the
+    # copy greetd takes at boot can't drift from the PAM stacks declared
+    # next to them. Overrides whatever the settings dialog last wrote.
+    if ${jq} -e . "$cfg/settings.json" >/dev/null 2>&1; then
+      run ${jq} '.enableU2f = true | .u2fMode = "or" | .greeterEnableU2f = true' \
+        "$cfg/settings.json" > "$cfg/settings.json.new"
+      run mv "$cfg/settings.json.new" "$cfg/settings.json"
+    fi
   '';
 
   home.activation.dmsWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

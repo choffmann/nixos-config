@@ -1,4 +1,5 @@
-_: {
+{ config, pkgs, ... }:
+{
   programs.dms-shell = {
     enable = true;
 
@@ -15,6 +16,14 @@ _: {
     # graphical-session.target, so a niri restart takes DMS with it.
     systemd.target = "niri.service";
   };
+
+  # The lock screen looks the security-key stack up by this exact filename;
+  # without it DMS falls back to one bundled in its own store path, which
+  # never reaches the key. Auth only — the password stack stays separate.
+  security.pam.services."dankshell-u2f".text = ''
+    auth    required ${pkgs.pam_u2f}/lib/security/pam_u2f.so cue
+    account required ${config.security.pam.package}/lib/security/pam_permit.so
+  '';
 
   # DMS keeps qt5ct.conf/qt6ct.conf pointed at its matugen palette, but only
   # the qtct platform theme makes Qt applications read them. stylix set this
