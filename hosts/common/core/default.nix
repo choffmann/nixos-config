@@ -20,7 +20,7 @@
 
     ../optional/services/bluetooth.nix
     ../optional/services/mount.nix
-    ../optional/services/display-manager/greetd.nix
+    ../optional/services/display-manager/dms-greeter.nix
     ../optional/services/openssh.nix
     ../optional/services/printing.nix
     ../optional/services/xserver.nix

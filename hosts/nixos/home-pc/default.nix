@@ -86,12 +86,6 @@ in
     # useYubiKey = lib.mkForce true;
   };
 
-  # greetd options
-  autoLogin = {
-    enable = true;
-    username = "choffmann";
-  };
-
   # Storage drives
   fileSystems."/storage/hdd" = {
     device = "/dev/disk/by-uuid/1e8c6e42-ff5d-4e65-ae84-e32966009035";
