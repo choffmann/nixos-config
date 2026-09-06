@@ -7,6 +7,9 @@ in
 {
   services.kanshi = {
     enable = true;
+    # Bind to Hyprland's own target, not the shared graphical-session.target
+    # that niri's niri.service also activates.
+    systemdTarget = "hyprland-session.target";
     settings = [
       {
         profile.name = "undocked";

@@ -1,6 +1,9 @@
 _: {
   services.hypridle = {
     enable = true;
+    # Bind to Hyprland's own target, not the shared graphical-session.target
+    # that niri's niri.service also activates.
+    systemdTarget = "hyprland-session.target";
     settings = {
       general = {
         before_sleep_cmd = "loginctl lock-session ";

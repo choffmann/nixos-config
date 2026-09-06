@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   config,
   ...
 }:
@@ -28,6 +29,7 @@ let
 in
 {
   imports = [
+    ../wayland-env.nix
     ./rofi
     ./hyprlock.nix
     ./hypridle.nix
@@ -61,19 +63,10 @@ in
     satty
   ];
 
-  home.sessionVariables = {
-    GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
-    NIXOS_OZONE_WL = "1";
-    MOZ_ENABLE_WAYLAND = "1";
-    SDL_VIDEODRIVER = "wayland";
-    _JAVA_AWT_WM_NONREPARENTING = "1";
-    CLUTTER_BACKEND = "wayland";
-    WLR_RENDERER = "vulkan";
-    XDG_CURRENT_DESKTOP = "Hyprland";
-    XDG_SESSION_DESKTOP = "Hyprland";
-    GTK_USE_PORTAL = "1";
-    NIXOS_XDG_OPEN_USE_PORTAL = "1";
-  };
+  # stylix.targets.hyprpaper enables this outside our control; its default
+  # Install.WantedBy tracks graphical-session.target, which niri's niri.service
+  # also binds to, so re-point it at Hyprland's own target.
+  systemd.user.services.hyprpaper.Install.WantedBy = lib.mkForce [ "hyprland-session.target" ];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -118,6 +111,7 @@ in
       env = [
         "XDG_SESSION_TYPE,wayland"
         "WLR_NO_HARDWARE_CURSOR, 1"
+        "WLR_RENDERER,vulkan"
       ];
 
       general = {

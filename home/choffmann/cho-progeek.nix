@@ -8,6 +8,7 @@
     ./common/optional/discord.nix
     ./common/optional/browser
     ./common/optional/desktop/hyprland
+    ./common/optional/desktop/niri
     ./common/optional/desktop/hyprland/kanshi.nix
     ./common/optional/mime-associations.nix
     ./common/optional/thunderbird.nix
@@ -39,4 +40,13 @@
     userEmail = "choffmann@progeek.de";
     userName = "Cedrik Hoffmann";
   };
+
+  # niri overrides
+  desktop.niri.extraConfig = ''
+    output "eDP-1" {
+        mode "1920x1080@60.000"
+        scale 1.0
+        position x=0 y=0
+    }
+  '';
 }

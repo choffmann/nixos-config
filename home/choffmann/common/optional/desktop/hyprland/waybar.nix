@@ -17,6 +17,10 @@ in
     pkgs.cava
   ];
 
+  # Home-manager's default WantedBy mixes in tray.target and graphical-session.target,
+  # the latter of which niri's niri.service also binds to; keep waybar Hyprland-only.
+  systemd.user.services.waybar.Install.WantedBy = lib.mkForce [ "hyprland-session.target" ];
+
   xdg.configFile."cava/config-waybar".text = ''
     [general]
     bars = 8

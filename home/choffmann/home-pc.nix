@@ -5,7 +5,7 @@ let
       vmName = "win11";
     in
     pkgs.writeShellApplication {
-      name = "virt-hyprland-handler";
+      name = "virt-looking-glass";
       text = ''
         if [ "$(virsh --connect qemu:///system domstate ${vmName})" != "running" ]; then
           virsh --connect qemu:///system start ${vmName}
@@ -62,6 +62,7 @@ in
     ./common/optional/discord.nix
     ./common/optional/browser
     ./common/optional/desktop/hyprland
+    ./common/optional/desktop/niri
     ./common/optional/mime-associations.nix
     ./common/optional/thunderbird.nix
     ./common/optional/pdf-tools.nix
@@ -91,7 +92,7 @@ in
       "7, monitor:DP-2"
       "8, monitor:DP-2"
       "9, monitor:DP-2"
-      "special:windows, on-created-empty:${virtLookingGlassHandler}/bin/virt-hyprland-handler"
+      "special:windows, on-created-empty:${virtLookingGlassHandler}/bin/virt-looking-glass"
     ];
 
     bind = [
@@ -104,4 +105,41 @@ in
       output = "DP-1";
     };
   };
+
+  # niri overrides
+  desktop.niri.workspaceOutputs = {
+    "6" = "DP-2";
+    "7" = "DP-2";
+    "8" = "DP-2";
+    "9" = "DP-2";
+  };
+
+  desktop.niri.extraConfig = ''
+    output "DP-1" {
+        mode "3440x1440@59.973"
+        scale 1.0
+        position x=0 y=0
+    }
+
+    output "DP-2" {
+        mode "1920x1080@60.000"
+        scale 1.0
+        position x=3440 y=180
+    }
+
+    workspace "windows" {
+        open-on-output "DP-1"
+    }
+
+    window-rule {
+        match app-id=r#"^looking-glass-client$"#
+        open-on-workspace "windows"
+    }
+  '';
+
+  # niri only allows a single top-level `binds` node, so this merges into
+  # the shared one from config.kdl.nix rather than appending a second one.
+  desktop.niri.extraBinds = ''
+    Alt+Shift+W { spawn "${virtLookingGlassHandler}/bin/virt-looking-glass"; }
+  '';
 }
