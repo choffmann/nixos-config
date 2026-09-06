@@ -61,6 +61,7 @@ in
     ../../common/optional/services/logitech-mx.nix
     ../../common/optional/audio.nix
     ../../common/optional/hyprland.nix
+    ../../common/optional/niri.nix
     ../../common/optional/desktop-apps.nix
     ../../common/optional/office.nix
     ../../common/optional/pi.nix

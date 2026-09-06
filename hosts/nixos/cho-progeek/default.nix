@@ -27,6 +27,7 @@
     ../../common/optional/android.nix
     ../../common/optional/audio.nix
     ../../common/optional/hyprland.nix
+    ../../common/optional/niri.nix
     ../../common/optional/desktop-apps.nix
     ../../common/optional/plymouth.nix
     ../../common/optional/wayland.nix
