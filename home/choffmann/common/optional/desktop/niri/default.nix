@@ -21,12 +21,6 @@ in
       description = "Host-specific KDL appended to the shared niri config";
     };
 
-    workspaceOutputs = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
-      default = { };
-      description = "Maps a numbered workspace (1-9) to the output it should open on";
-    };
-
     extraBinds = lib.mkOption {
       type = lib.types.lines;
       default = "";
@@ -60,7 +54,7 @@ in
       terminal = "ghostty";
       borderActiveColor = colors.base0D;
       borderInactiveColor = colors.base02;
-      inherit (cfg) extraConfig extraBinds workspaceOutputs;
+      inherit (cfg) extraConfig extraBinds;
     };
   };
 }
