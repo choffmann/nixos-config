@@ -8,8 +8,8 @@ _: {
     enableAudioWavelength = true;
     enableCalendarEvents = true;
 
-    # stylix owns the palette; matugen would fight it for control of the colours.
-    enableDynamicTheming = false;
+    # Pulls in matugen, which derives the shell palette from the wallpaper.
+    enableDynamicTheming = true;
 
     # Default graphical-session.target would also start DMS under Hyprland,
     # where it fights hyprpanel for the notification bus name.

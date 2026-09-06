@@ -29,6 +29,10 @@ in
 
       // Keeps niri's upstream Mod+... bindings while Mod stays under the thumb.
       mod-key "Alt"
+
+      // 0% restricts this to fully visible windows, so hovering never scrolls
+      // the view to pull a half-visible column into focus.
+      focus-follows-mouse max-scroll-amount="0%"
   }
 
   layout {
