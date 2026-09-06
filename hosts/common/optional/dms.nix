@@ -15,4 +15,12 @@ _: {
     # graphical-session.target, so a niri restart takes DMS with it.
     systemd.target = "niri.service";
   };
+
+  # DMS keeps qt5ct.conf/qt6ct.conf pointed at its matugen palette, but only
+  # the qtct platform theme makes Qt applications read them. stylix set this
+  # before its targets were turned off.
+  qt = {
+    enable = true;
+    platformTheme = "qt5ct"; # nixpkgs' name for qtct; covers qt6ct as well
+  };
 }

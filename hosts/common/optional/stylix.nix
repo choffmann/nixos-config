@@ -11,7 +11,18 @@
   stylix = {
     enable = true;
     base16Scheme = ../../../themes/terminal-aesthetic.yaml;
-    imageScalingMode = "center";
+
+    # Application theming belongs to DMS, which regenerates it from the
+    # wallpaper via matugen at runtime. Its GTK and Qt helpers skip any file
+    # they cannot write, so a stylix-managed store symlink silently disables
+    # them. This propagates to home-manager through stylix's followSystem.
+    autoEnable = false;
+
+    targets = {
+      console.enable = true;
+      font-packages.enable = true;
+      fontconfig.enable = true;
+    };
 
     cursor.package = pkgs.bibata-cursors;
     cursor.name = "Bibata-Modern-Ice";
@@ -37,26 +48,6 @@
         package = pkgs.noto-fonts-color-emoji;
         name = "Noto Color Emoji";
       };
-    };
-
-    fonts.sizes = {
-      applications = 10;
-      desktop = 10;
-      terminal = 10;
-      popups = 10;
-    };
-
-    opacity = {
-      applications = 0.8;
-      terminal = 0.8;
-      desktop = 1.0;
-      popups = 0.8;
-    };
-
-    targets.nixvim = {
-      plugin = "base16-nvim";
-      transparentBackground.main = true;
-      transparentBackground.signColumn = true;
     };
 
     polarity = "dark";

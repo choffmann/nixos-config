@@ -4,5 +4,6 @@ window-padding-color = extend-always
 window-theme = ghostty
 window-decoration = false
 
-background = 181825
+# DMS regenerates this theme from the wallpaper via matugen.
+theme = dankcolors
 background-opacity = 0.8

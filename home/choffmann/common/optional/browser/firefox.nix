@@ -32,6 +32,9 @@ in
       inherit (shared) containers;
 
       userChrome = ''
+        /* DMS regenerates this from the wallpaper via matugen. */
+        @import url("file://${config.home.homeDirectory}/.config/DankMaterialShell/firefox.css");
+
                 @-moz-document url(chrome://browser/content/browser.xhtml) {
         	/* tabs on bottom of window */
         	/* requires that you set

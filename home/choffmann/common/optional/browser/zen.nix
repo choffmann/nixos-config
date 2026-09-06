@@ -12,8 +12,6 @@ in
     inputs.zen-browser.homeModules.beta
   ];
 
-  stylix.targets.zen-browser.profileNames = [ "choffmann" ];
-
   programs.zen-browser = {
     enable = true;
     inherit (shared) policies;
@@ -23,6 +21,11 @@ in
       isDefault = true;
 
       extensions.packages = shared.extensions;
+
+      # DMS regenerates this from the wallpaper via matugen.
+      userChrome = ''
+        @import url("file://${config.home.homeDirectory}/.config/DankMaterialShell/zen.css");
+      '';
 
       inherit (shared) bookmarks settings search;
 

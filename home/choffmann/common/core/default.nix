@@ -14,6 +14,7 @@
     ./yazi.nix
     ./tmux.nix
     ./fonts.nix
+    ./stylix.nix
     ./git.nix
     ./ssh.nix
     ./xdg.nix
