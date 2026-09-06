@@ -5,54 +5,91 @@
   ...
 }:
 let
+  # Plain Lua config lives in the repo and is symlinked to ~/.config/nvim,
+  # so it stays editable without a rebuild.
   nvimConfig = "${hostSpec.flake}/home/neovim";
   colors = config.lib.stylix.colors;
 in
 {
-  home.packages = with pkgs; [
-    unstable.neovim # for latest version
+  # colors are wired up manually via stylix-colors.lua below;
+  # the stylix target would inject a second mini.nvim as pack plugin
+  stylix.targets.neovim.enable = false;
 
-    gcc
-    gnumake
-    neovim-node-client
-    tree-sitter
-    manix
-    wl-clipboard
-    lua51Packages.lua
-    luarocks
-    nodejs
+  programs.neovim = {
+    enable = true;
+    package = pkgs.unstable.neovim-unwrapped;
+    viAlias = true;
+    vimAlias = true;
+    withNodeJs = true;
+    withPython3 = false;
+    withRuby = false;
+    # load generated config (providers etc.) via wrapper args instead of
+    # writing ~/.config/nvim/init.lua, which would clash with the symlink
+    sideloadInitLua = true;
 
-    # lsp
-    lua-language-server
-    gopls
-    typescript
-    typescript-language-server
-    tailwindcss-language-server
-    vscode-langservers-extracted # jsonls, html, css
-    yaml-language-server
-    rust-analyzer
-    rustc
-    cargo
-    nixd
-    zls
-    markdownlint-cli2
-    marksman
-    astro-language-server
+    # lua libraries on nvim's package.path (jsregexp for luasnip)
+    extraLuaPackages = ps: [ ps.jsregexp ];
 
-    # debugger
-    delve
-    lldb
+    # Everything the Lua config expects at runtime is provided here.
+    # These end up on nvim's wrapper PATH only, not in the user profile.
+    extraPackages = with pkgs; [
+      # build deps for lazy.nvim, treesitter parsers and luasnip
+      gcc
+      gnumake
+      tree-sitter
+      lua51Packages.lua
+      luarocks
 
-    # formatter
-    stylua
-    prettierd
-    alejandra
-    vimPlugins.vim-markdown-toc
-  ];
+      # integrations
+      wl-clipboard
+      manix
+
+      # language servers
+      astro-language-server
+      gopls
+      kotlin-language-server
+      lua-language-server
+      marksman
+      nixd
+      rust-analyzer
+      tailwindcss-language-server
+      tinymist
+      typescript # provides tsserver for typescript-language-server
+      typescript-language-server
+      vscode-langservers-extracted # jsonls, html, css
+      yaml-language-server
+      zls
+
+      # language toolchains used by the servers above
+      go # also provides gofmt for conform
+      rustc
+      cargo
+
+      # go tools for gopher.nvim
+      gomodifytags
+      gotests
+      impl
+      iferr
+
+      # debuggers
+      delve
+      lldb
+
+      # formatters / linters
+      alejandra
+      markdown-toc
+      markdownlint-cli2
+      prettierd
+      stylua
+      typstyle
+    ];
+  };
 
   xdg.configFile.nvim.source = config.lib.file.mkOutOfStoreSymlink nvimConfig;
 
-  xdg.dataFile."nvim/lua/stylix-colors.lua".text = ''
+  # Stylix base16 palette for the colorscheme, loaded via
+  # `require("stylix-colors")` — stdpath("data")/site is on the runtimepath.
+  xdg.dataFile."nvim/site/lua/stylix-colors.lua".text = ''
     return {
       base00 = "#${colors.base00}",
       base01 = "#${colors.base01}",

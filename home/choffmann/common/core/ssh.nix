@@ -52,9 +52,26 @@ in
         ];
       };
       "gitlab-runner-1".IdentityFile = "~/.ssh/id_choffmann";
-      "*.homebin.dev" = {
-        User = "root";
-        IdentityFile = "~/.ssh/id_choffmann";
+      "root@217.160.216.81" = {
+        host = "217.72.203.64";
+        user = "root";
+        port = 22;
+        identityFile = [
+          "~/.ssh/id_ionos-ibaf"
+        ];
+      };
+      "progeek" = {
+        host = "gitlab-runner-1";
+        identityFile = [
+          "~/.ssh/id_choffmann"
+        ];
+      };
+      "homebin.dev" = {
+        host = "*.homebin.dev";
+        user = "root";
+        identityFile = [
+          "~/.ssh/id_choffmann"
+        ];
       };
       "mail.green-ecolution.de" = {
         User = "root";

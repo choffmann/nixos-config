@@ -34,7 +34,8 @@
     firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    zen-browser.inputs.nixpkgs.follows = "nixpkgs";
+    # upstream builds against unstable; stable 26.05 lacks ffmpeg_9
+    zen-browser.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     # Logitech MX
     solaar.url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";

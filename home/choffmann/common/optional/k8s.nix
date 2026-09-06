@@ -49,6 +49,8 @@ in
     minikube
     argocd
     kubernetes-helm
+    kubelogin
+    kubelogin-oidc
   ];
 
   programs.k9s.enable = true;
