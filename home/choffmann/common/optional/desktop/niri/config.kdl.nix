@@ -1,0 +1,135 @@
+{
+  lib,
+  terminal,
+  startupCommands,
+  extraConfig,
+}:
+let
+  spawnLine = argv: "spawn-at-startup ${lib.concatMapStringsSep " " (a: ''"${a}"'') argv}";
+  startup = lib.concatMapStringsSep "\n" spawnLine startupCommands;
+
+  # ALT mirrors the Hyprland $mod; niri's own "Mod" would be Super.
+  workspaceBinds = lib.concatMapStringsSep "\n" (n: ''
+    Alt+${toString n} { focus-workspace ${toString n}; }
+    Alt+Shift+${toString n} { move-column-to-workspace ${toString n}; }'') (lib.range 1 9);
+in
+''
+  input {
+      keyboard {
+          xkb {
+              layout "us"
+              variant "altgr-intl"
+              options "caps:escape"
+          }
+      }
+
+      touchpad {
+          tap
+          natural-scroll
+      }
+
+      mouse {
+      }
+  }
+
+  layout {
+      gaps 0
+      center-focused-column "never"
+
+      preset-column-widths {
+          proportion 0.33333
+          proportion 0.5
+          proportion 0.66667
+      }
+
+      default-column-width { proportion 0.5; }
+
+      focus-ring {
+          off
+      }
+
+      border {
+          width 1
+      }
+  }
+
+  prefer-no-csd
+  screenshot-path "~/Pictures/Screenshots/screenshot-%Y-%m-%d-%H%M%S.png"
+
+  hotkey-overlay {
+      skip-at-startup
+  }
+
+  environment {
+      DISPLAY ":0"
+  }
+
+  spawn-at-startup "xwayland-satellite"
+  ${startup}
+
+  window-rule {
+      match app-id=r#"^(zen-beta|firefox|chromium-browser)$"#
+      open-on-workspace "2"
+  }
+
+  window-rule {
+      match app-id=r#"^(vesktop|Element|Spotify)$"#
+      open-on-workspace "6"
+  }
+
+  window-rule {
+      match app-id=r#"^thunderbird$"#
+      open-on-workspace "7"
+  }
+
+  binds {
+      Alt+Return { spawn "${terminal}"; }
+      Alt+W { spawn "${terminal}"; }
+      Alt+E { spawn "${terminal}" "-e" "yazi"; }
+      Alt+Q { close-window; }
+      Alt+Shift+Q { quit; }
+
+      Alt+H { focus-column-left; }
+      Alt+L { focus-column-right; }
+      Alt+J { focus-window-down; }
+      Alt+K { focus-window-up; }
+
+      Alt+Shift+H { move-column-left; }
+      Alt+Shift+L { move-column-right; }
+      Alt+Shift+J { move-window-down; }
+      Alt+Shift+K { move-window-up; }
+
+      Alt+F { maximize-column; }
+      Alt+Shift+F { fullscreen-window; }
+      Alt+V { toggle-window-floating; }
+      Alt+Tab { focus-workspace-previous; }
+
+      Alt+N { focus-workspace-down; }
+      Alt+Shift+N { focus-workspace-up; }
+      Alt+BracketLeft { focus-workspace-up; }
+      Alt+BracketRight { focus-workspace-down; }
+
+      Alt+Minus { set-column-width "-10%"; }
+      Alt+Equal { set-column-width "+10%"; }
+      Alt+Semicolon { set-window-height "-10%"; }
+      Alt+Apostrophe { set-window-height "+10%"; }
+
+      Alt+Shift+S { screenshot; }
+      Alt+Ctrl+S { screenshot-screen; }
+      Alt+C { screenshot-window; }
+
+      XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%+"; }
+      XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
+      XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+      XF86AudioPlay        allow-when-locked=true { spawn "playerctl" "play-pause"; }
+      XF86AudioPause       allow-when-locked=true { spawn "playerctl" "play-pause"; }
+      XF86AudioNext        allow-when-locked=true { spawn "playerctl" "next"; }
+      XF86AudioPrev        allow-when-locked=true { spawn "playerctl" "previous"; }
+      XF86MonBrightnessUp   { spawn "brightnessctl" "set" "5%+"; }
+      XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
+
+  ${workspaceBinds}
+  }
+
+  ${extraConfig}
+''

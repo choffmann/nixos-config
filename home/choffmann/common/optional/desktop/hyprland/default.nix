@@ -63,10 +63,8 @@ in
   ];
 
   home.sessionVariables = {
-    # wlroots-specific; niri must not inherit these
+    # wlroots-specific; niri must not inherit this
     WLR_RENDERER = "vulkan";
-    XDG_CURRENT_DESKTOP = "Hyprland";
-    XDG_SESSION_DESKTOP = "Hyprland";
   };
 
   wayland.windowManager.hyprland = {

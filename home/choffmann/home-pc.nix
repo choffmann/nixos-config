@@ -62,6 +62,7 @@ in
     ./common/optional/discord.nix
     ./common/optional/browser
     ./common/optional/desktop/hyprland
+    ./common/optional/desktop/niri
     ./common/optional/mime-associations.nix
     ./common/optional/thunderbird.nix
     ./common/optional/pdf-tools.nix
