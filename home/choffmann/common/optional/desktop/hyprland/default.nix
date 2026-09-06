@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   config,
   ...
 }:
@@ -62,10 +63,10 @@ in
     satty
   ];
 
-  home.sessionVariables = {
-    # wlroots-specific; niri must not inherit this
-    WLR_RENDERER = "vulkan";
-  };
+  # stylix.targets.hyprpaper enables this outside our control; its default
+  # Install.WantedBy tracks graphical-session.target, which niri's niri.service
+  # also binds to, so re-point it at Hyprland's own target.
+  systemd.user.services.hyprpaper.Install.WantedBy = lib.mkForce [ "hyprland-session.target" ];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -110,6 +111,7 @@ in
       env = [
         "XDG_SESSION_TYPE,wayland"
         "WLR_NO_HARDWARE_CURSOR, 1"
+        "WLR_RENDERER,vulkan"
       ];
 
       general = {

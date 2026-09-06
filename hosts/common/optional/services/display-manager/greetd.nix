@@ -33,7 +33,7 @@ in
       restart = true;
       settings = {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --asterisks --time --time-format '[%H:%M] [%a %d.%m]' --greeting 'λ ❯ login' --sessions ${sessionDirs} --remember --remember-session --cmd start-hyprland";
+          command = "${pkgs.tuigreet}/bin/tuigreet --asterisks --time --time-format '[%H:%M] [%a %d.%m]' --greeting 'λ ❯ login' --sessions ${sessionDirs} --remember --cmd start-hyprland";
         };
 
         initial_session = lib.mkIf cfg.enable {
