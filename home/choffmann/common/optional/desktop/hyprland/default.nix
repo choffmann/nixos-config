@@ -28,6 +28,7 @@ let
 in
 {
   imports = [
+    ../wayland-env.nix
     ./rofi
     ./hyprlock.nix
     ./hypridle.nix
@@ -62,17 +63,10 @@ in
   ];
 
   home.sessionVariables = {
-    GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
-    NIXOS_OZONE_WL = "1";
-    MOZ_ENABLE_WAYLAND = "1";
-    SDL_VIDEODRIVER = "wayland";
-    _JAVA_AWT_WM_NONREPARENTING = "1";
-    CLUTTER_BACKEND = "wayland";
+    # wlroots-specific; niri must not inherit these
     WLR_RENDERER = "vulkan";
     XDG_CURRENT_DESKTOP = "Hyprland";
     XDG_SESSION_DESKTOP = "Hyprland";
-    GTK_USE_PORTAL = "1";
-    NIXOS_XDG_OPEN_USE_PORTAL = "1";
   };
 
   wayland.windowManager.hyprland = {
