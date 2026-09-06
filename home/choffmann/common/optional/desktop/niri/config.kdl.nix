@@ -81,6 +81,7 @@ in
 
   spawn-at-startup "xwayland-satellite" ":0"
   spawn-at-startup "${polkitAgent}"
+  spawn-at-startup "kdeconnectd"
 
   binds {
       Mod+Shift+Slash { show-hotkey-overlay; }

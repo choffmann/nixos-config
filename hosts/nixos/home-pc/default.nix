@@ -73,6 +73,7 @@ in
     ../../common/optional/passthrough-gpu.nix
     ../../common/optional/steam.nix
     ../../common/optional/android.nix
+    ../../common/optional/kdeconnect.nix
     ../../common/optional/winbox.nix
     ../../common/optional/vm-bridge.nix
     ../../common/optional/fonts.nix

@@ -25,6 +25,7 @@
     ../../common/optional/vpn.nix
     ../../common/optional/office.nix
     ../../common/optional/android.nix
+    ../../common/optional/kdeconnect.nix
     ../../common/optional/audio.nix
     ../../common/optional/niri.nix
     ../../common/optional/dms.nix
