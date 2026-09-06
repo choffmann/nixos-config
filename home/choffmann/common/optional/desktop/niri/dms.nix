@@ -1,6 +1,6 @@
 {
   pkgs,
-  config,
+  osConfig,
   lib,
   ...
 }:
@@ -11,7 +11,8 @@ in
   # Both files stay writable: DMS persists UI changes into them, and a store
   # symlink would leave its settings dialog permanently unable to save.
   # settings.json is seeded once and then belongs to the user; session.json
-  # only gets its wallpaper key refreshed so stylix stays the source for it.
+  # only gets its wallpaper key refreshed so desktop.wallpaper stays the
+  # source for it.
   home.activation.dmsSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     cfg="$HOME/.config/DankMaterialShell"
     run mkdir -p "$cfg"
@@ -24,7 +25,7 @@ in
     state="$HOME/.local/state/DankMaterialShell"
     run mkdir -p "$state"
     run ${jq} -n \
-      --arg wallpaperPath "${config.stylix.image}" \
+      --arg wallpaperPath "${osConfig.desktop.wallpaper}" \
       '$ARGS.named' > "$state/session.json.new"
     # A malformed session.json must not abort activation: DMS itself tolerates
     # that case (falls back to defaults), so treat it the same as absent.

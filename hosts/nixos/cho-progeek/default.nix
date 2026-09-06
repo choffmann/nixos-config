@@ -114,4 +114,5 @@
   system.stateVersion = "24.11"; # Did you read the comment?
 
   stylix.image = ../../../home/wallpaper/progeek/progeek-2.png;
+  desktop.wallpaper = ../../../home/wallpaper/progeek/progeek-2.png;
 }

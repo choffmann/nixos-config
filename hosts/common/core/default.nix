@@ -12,6 +12,7 @@
     inputs.sops-nix.nixosModules.sops
 
     ../../../modules/nixos/common/host-spec.nix
+    ../../../modules/nixos/common/wallpaper.nix
 
     ./nixos.nix
     ./sops.nix
