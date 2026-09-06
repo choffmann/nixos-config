@@ -107,6 +107,13 @@ in
   };
 
   # niri overrides
+  desktop.niri.workspaceOutputs = {
+    "6" = "DP-2";
+    "7" = "DP-2";
+    "8" = "DP-2";
+    "9" = "DP-2";
+  };
+
   desktop.niri.extraConfig = ''
     output "DP-1" {
         mode "3440x1440@59.973"
@@ -120,30 +127,13 @@ in
         position x=3440 y=180
     }
 
-    workspace "1"
-    workspace "2"
-    workspace "3"
-    workspace "4"
-    workspace "5"
-
-    workspace "6" {
-        open-on-output "DP-2"
-    }
-
-    workspace "7" {
-        open-on-output "DP-2"
-    }
-
-    workspace "8" {
-        open-on-output "DP-2"
-    }
-
-    workspace "9" {
-        open-on-output "DP-2"
-    }
-
     workspace "windows" {
         open-on-output "DP-1"
+    }
+
+    window-rule {
+        match app-id=r#"^looking-glass-client$"#
+        open-on-workspace "windows"
     }
   '';
 

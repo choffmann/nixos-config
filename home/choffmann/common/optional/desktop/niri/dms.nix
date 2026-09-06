@@ -14,7 +14,9 @@ let
       name = "Stylix";
       primary = withHashtag.base0D;
       primaryText = withHashtag.base00;
-      primaryContainer = withHashtag.base0C;
+      # Must stay dark: DMS falls primaryContainerText back to surfaceText,
+      # so a light container here makes spotlight chips unreadable.
+      primaryContainer = withHashtag.base02;
       secondary = withHashtag.base0E;
       surface = withHashtag.base01;
       surfaceText = withHashtag.base05;

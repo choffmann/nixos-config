@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.desktop.niri;
+  colors = config.lib.stylix.colors.withHashtag;
 in
 {
   imports = [
@@ -20,10 +21,10 @@ in
       description = "Host-specific KDL appended to the shared niri config";
     };
 
-    startupCommands = lib.mkOption {
-      type = lib.types.listOf (lib.types.listOf lib.types.str);
-      default = [ ];
-      description = "Each inner list becomes one spawn-at-startup argv";
+    workspaceOutputs = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = { };
+      description = "Maps a numbered workspace (1-9) to the output it should open on";
     };
 
     extraBinds = lib.mkOption {
@@ -38,7 +39,6 @@ in
   config = {
     home.packages = with pkgs; [
       networkmanagerapplet
-      polkit_gnome
       nautilus
 
       brightnessctl
@@ -58,7 +58,9 @@ in
     xdg.configFile."niri/config.kdl".text = import ./config.kdl.nix {
       inherit lib;
       terminal = "ghostty";
-      inherit (cfg) startupCommands extraConfig extraBinds;
+      borderActiveColor = colors.base0D;
+      borderInactiveColor = colors.base02;
+      inherit (cfg) extraConfig extraBinds workspaceOutputs;
     };
   };
 }

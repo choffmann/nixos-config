@@ -1,18 +1,37 @@
 {
   lib,
   terminal,
-  startupCommands,
   extraConfig,
   extraBinds,
+  workspaceOutputs,
+  borderActiveColor,
+  borderInactiveColor,
 }:
 let
-  spawnLine = argv: "spawn-at-startup ${lib.concatMapStringsSep " " (a: ''"${a}"'') argv}";
-  startup = lib.concatMapStringsSep "\n" spawnLine startupCommands;
-
   # ALT mirrors the Hyprland $mod; niri's own "Mod" would be Super.
+  # Workspace references are quoted: a bare integer is an INDEX in niri, but
+  # these workspaces are declared by NAME (below), so binds must match by name.
   workspaceBinds = lib.concatMapStringsSep "\n" (n: ''
-    Alt+${toString n} { focus-workspace ${toString n}; }
-    Alt+Shift+${toString n} { move-column-to-workspace ${toString n}; }'') (lib.range 1 9);
+    Alt+${toString n} { focus-workspace "${toString n}"; }
+    Alt+Shift+${toString n} { move-column-to-workspace "${toString n}"; }'') (lib.range 1 9);
+
+  # Numbered workspaces 1-9, shared by both hosts; a host pins one to a
+  # specific output via workspaceOutputs (niri rejects a workspace name
+  # declared more than once, so this can't be done via a second declaration).
+  numberedWorkspaces = lib.concatMapStringsSep "\n" (
+    n:
+    let
+      name = toString n;
+      output = workspaceOutputs.${name} or null;
+    in
+    if output == null then
+      ''workspace "${name}"''
+    else
+      ''
+        workspace "${name}" {
+            open-on-output "${output}"
+        }''
+  ) (lib.range 1 9);
 in
 ''
   input {
@@ -51,6 +70,8 @@ in
 
       border {
           width 1
+          active-color "${borderActiveColor}"
+          inactive-color "${borderInactiveColor}"
       }
   }
 
@@ -65,12 +86,13 @@ in
       DISPLAY ":0"
   }
 
-  spawn-at-startup "xwayland-satellite"
-  ${startup}
+  spawn-at-startup "xwayland-satellite" ":0"
 
   workspace "magic"
   workspace "teams"
   workspace "terminal"
+
+  ${numberedWorkspaces}
 
   window-rule {
       match app-id=r#"^(zen-beta|firefox|chromium-browser)$"#
