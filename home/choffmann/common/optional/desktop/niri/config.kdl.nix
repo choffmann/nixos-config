@@ -36,6 +36,10 @@ in
   }
 
   layout {
+      // niri paints an opaque solid colour behind windows by default, so
+      // translucent clients blend against that instead of the wallpaper.
+      background-color "transparent"
+
       gaps 0
       center-focused-column "never"
 
