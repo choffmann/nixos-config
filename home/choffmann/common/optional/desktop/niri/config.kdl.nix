@@ -89,6 +89,13 @@ in
       Alt+Q { close-window; }
       Alt+Shift+Q { quit; }
 
+      Alt+Space { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+      Alt+D     { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+      Alt+I     { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
+      Alt+Y     { spawn "dms" "ipc" "call" "lock" "lock"; }
+      Alt+X     { spawn "dms" "ipc" "call" "powermenu" "toggle"; }
+      Alt+U     { spawn "dms" "ipc" "call" "notifications" "toggle"; }
+
       Alt+H { focus-column-left; }
       Alt+L { focus-column-right; }
       Alt+J { focus-window-down; }

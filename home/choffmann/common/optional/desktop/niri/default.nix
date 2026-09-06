@@ -8,7 +8,10 @@ let
   cfg = config.desktop.niri;
 in
 {
-  imports = [ ../wayland-env.nix ];
+  imports = [
+    ../wayland-env.nix
+    ./dms.nix
+  ];
 
   options.desktop.niri = {
     extraConfig = lib.mkOption {
