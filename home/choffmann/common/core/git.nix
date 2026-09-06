@@ -7,6 +7,22 @@
 let
   claudeSigningKey = "${config.home.homeDirectory}/.ssh/id_claude_signing";
   claudeSigningPubKey = lib.custom.relativeToRoot "hosts/common/users/choffmann/keys/id_claude_signing.pub";
+
+  # A curses pinentry fights the agent's caller for the tty, which wedges any
+  # non-interactive signing (a commit from a tool call, a hook). pinentry-qt
+  # ships both binaries.
+  pinentryAuto = pkgs.writeShellScriptBin "pinentry" ''
+    if [ -n "''${WAYLAND_DISPLAY:-}" ] || [ -n "''${DISPLAY:-}" ]; then
+      # pinentry-qt adopts the *style's* standard palette and ignores the
+      # platform theme, so qt6ct and its matugen colours never reach it.
+      # Picking a dark style is the only lever; carry its plugin along so
+      # this does not depend on adwaita-qt6 being in the system profile.
+      export QT_PLUGIN_PATH="${pkgs.adwaita-qt6}/lib/qt-6/plugins''${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
+      export QT_STYLE_OVERRIDE=adwaita-dark
+      exec ${pkgs.pinentry-qt}/bin/pinentry-qt "$@"
+    fi
+    exec ${pkgs.pinentry-qt}/bin/pinentry-curses "$@"
+  '';
 in
 {
   home.packages = [
@@ -140,12 +156,14 @@ in
     enableSshSupport = true;
 
     # https://github.com/drduh/config/blob/master/gpg-agent.conf
-    defaultCacheTtl = 60;
-    maxCacheTtl = 120;
-    pinentry.package = pkgs.pinentry-curses;
+    # drduh's 60s is tuned for an offline master key; one work session is
+    # enough here, and the yubikey still gates every use behind a touch.
+    defaultCacheTtl = 3600;
+    maxCacheTtl = 28800;
+    pinentry.package = pinentryAuto;
     enableExtraSocket = true;
-    extraConfig = ''
-      ttyname $GPG_TTY
-    '';
+
+    # No `ttyname $GPG_TTY`: it pins the agent to the caller's terminal, which
+    # beats the graphical pinentry even when one is configured.
   };
 }

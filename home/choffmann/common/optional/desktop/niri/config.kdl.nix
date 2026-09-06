@@ -22,10 +22,10 @@ in
           }
       }
 
-      touchpad {
-          tap
-          natural-scroll
-      }
+      // No mouse/touchpad here: dms/input.kdl owns them. Declaring them in
+      // both would pin the flag-style options (tap, natural-scroll) on, and
+      // niri has no way to spell "off" for those, so DMS could never turn
+      // one back off again.
 
       // Keeps niri's upstream Mod+... bindings while Mod stays under the thumb.
       mod-key "Alt"
@@ -66,6 +66,14 @@ in
   // so translucent windows blend against the border instead of the wallpaper.
   window-rule {
       draw-border-with-background false
+  }
+
+  // Qt already marks the pin prompt as a dialog, so niri floats and centres
+  // it on its own. What it does not do is keep the PIN out of a screencast.
+  window-rule {
+      match app-id="^org\\.gnupg\\.pinentry-qt$"
+      open-focused true
+      block-out-from "screencast"
   }
 
   prefer-no-csd
@@ -226,8 +234,8 @@ in
 
   // DMS writes these from its settings UI. Its own "Setup" button cannot add
   // the includes here because it rewrites the whole config.kdl, which is a
-  // read-only store symlink. binds.kdl and input.kdl stay out on purpose:
-  // those come from this file, and DMS' versions would override them.
+  // read-only store symlink. binds.kdl stays out on purpose: those come from
+  // this file, and DMS' version would override them.
   //
   // Ordering matters differently per section: `layout` merges field by field
   // with the last writer winning, so the gaps and widths from dms/layout.kdl
@@ -240,5 +248,6 @@ in
   include "dms/outputs.kdl" optional=true
   include "dms/windowrules.kdl" optional=true
   include "dms/cursor.kdl" optional=true
+  include "dms/input.kdl" optional=true
   include "dms/wpblur.kdl" optional=true
 ''
