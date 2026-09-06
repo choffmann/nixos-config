@@ -105,4 +105,41 @@ in
       output = "DP-1";
     };
   };
+
+  # niri overrides
+  desktop.niri.extraConfig = ''
+    output "DP-1" {
+        mode "3440x1440@59.973"
+        scale 1.0
+        position x=0 y=0
+    }
+
+    output "DP-2" {
+        mode "1920x1080@60.000"
+        scale 1.0
+        position x=3440 y=180
+    }
+
+    workspace "1"
+    workspace "2"
+    workspace "3"
+    workspace "4"
+    workspace "5"
+
+    workspace "6" {
+        open-on-output "DP-2"
+    }
+
+    workspace "7" {
+        open-on-output "DP-2"
+    }
+
+    workspace "8" {
+        open-on-output "DP-2"
+    }
+
+    workspace "9" {
+        open-on-output "DP-2"
+    }
+  '';
 }
