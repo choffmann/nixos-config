@@ -74,6 +74,7 @@ in
       # debuggers
       delve
       lldb
+      vscode-extensions.vadimcn.vscode-lldb.adapter # codelldb for nvim-dap
 
       # formatters / linters
       markdown-toc
