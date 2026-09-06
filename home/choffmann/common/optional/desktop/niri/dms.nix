@@ -27,11 +27,14 @@ in
     # inside its ControlModifier branch, so a bare key would never fire.
     # loginctlLockIntegration is what makes the udev rule for a pulled yubikey
     # reach the lock screen at all, so it is pinned here too.
+    # The qt templates are off because DMS writes them with literal "\n" and
+    # aims them at a KDE scheme qt6ct cannot parse; qt.nix renders ours.
     if ${jq} -e . "$cfg/settings.json" >/dev/null 2>&1; then
       run ${jq} '.enableU2f = true | .u2fMode = "or" | .greeterEnableU2f = true
         | .lockScreenSecurityKeyShortcutEnabled = true
         | .lockScreenSecurityKeyShortcut = "Ctrl+Q"
-        | .loginctlLockIntegration = true' \
+        | .loginctlLockIntegration = true
+        | .matugenTemplateQt5ct = false | .matugenTemplateQt6ct = false' \
         "$cfg/settings.json" > "$cfg/settings.json.new"
       run mv "$cfg/settings.json.new" "$cfg/settings.json"
     fi

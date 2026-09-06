@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   programs.dms-shell = {
     enable = true;
@@ -25,11 +30,15 @@
     account required ${config.security.pam.package}/lib/security/pam_permit.so
   '';
 
-  # DMS keeps qt5ct.conf/qt6ct.conf pointed at its matugen palette, but only
-  # the qtct platform theme makes Qt applications read them. stylix set this
-  # before its targets were turned off.
+  # Only the qtct platform theme makes Qt applications read the matugen
+  # palette. stylix set this before its targets were turned off.
   qt = {
     enable = true;
-    platformTheme = "qt5ct"; # nixpkgs' name for qtct; covers qt6ct as well
+    platformTheme = "qt5ct"; # installs both qtct plugins; see the override below
   };
+
+  # libqt6ct registers under the key "qt6ct" alone, so "qt5ct" reaches no Qt6
+  # application - and every Qt GUI here is Qt6 except VLC. The option itself
+  # offers no "qt6ct" value, hence the override rather than a nicer setting.
+  environment.variables.QT_QPA_PLATFORMTHEME = lib.mkForce "qt6ct";
 }

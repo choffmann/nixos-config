@@ -14,6 +14,7 @@ in
     ./dms.nix
     ./dsearch.nix
     ./dcal.nix
+    ./qt.nix
   ];
 
   options.desktop.niri = {
