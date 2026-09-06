@@ -5,7 +5,7 @@ let
       vmName = "win11";
     in
     pkgs.writeShellApplication {
-      name = "virt-hyprland-handler";
+      name = "virt-looking-glass";
       text = ''
         if [ "$(virsh --connect qemu:///system domstate ${vmName})" != "running" ]; then
           virsh --connect qemu:///system start ${vmName}
@@ -92,7 +92,7 @@ in
       "7, monitor:DP-2"
       "8, monitor:DP-2"
       "9, monitor:DP-2"
-      "special:windows, on-created-empty:${virtLookingGlassHandler}/bin/virt-hyprland-handler"
+      "special:windows, on-created-empty:${virtLookingGlassHandler}/bin/virt-looking-glass"
     ];
 
     bind = [
@@ -141,5 +141,15 @@ in
     workspace "9" {
         open-on-output "DP-2"
     }
+
+    workspace "windows" {
+        open-on-output "DP-1"
+    }
+  '';
+
+  # niri only allows a single top-level `binds` node, so this merges into
+  # the shared one from config.kdl.nix rather than appending a second one.
+  desktop.niri.extraBinds = ''
+    Alt+Shift+W { spawn "${virtLookingGlassHandler}/bin/virt-looking-glass"; }
   '';
 }

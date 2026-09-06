@@ -25,6 +25,14 @@ in
       default = [ ];
       description = "Each inner list becomes one spawn-at-startup argv";
     };
+
+    extraBinds = lib.mkOption {
+      type = lib.types.lines;
+      default = "";
+      # niri only allows a single top-level `binds` node, so host-specific
+      # binds must be merged into the shared one instead of appended via extraConfig.
+      description = "Host-specific KDL bind lines merged into the shared binds block";
+    };
   };
 
   config = {
@@ -50,7 +58,7 @@ in
     xdg.configFile."niri/config.kdl".text = import ./config.kdl.nix {
       inherit lib;
       terminal = "ghostty";
-      inherit (cfg) startupCommands extraConfig;
+      inherit (cfg) startupCommands extraConfig extraBinds;
     };
   };
 }

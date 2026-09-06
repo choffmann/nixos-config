@@ -3,6 +3,7 @@
   terminal,
   startupCommands,
   extraConfig,
+  extraBinds,
 }:
 let
   spawnLine = argv: "spawn-at-startup ${lib.concatMapStringsSep " " (a: ''"${a}"'') argv}";
@@ -67,6 +68,10 @@ in
   spawn-at-startup "xwayland-satellite"
   ${startup}
 
+  workspace "magic"
+  workspace "teams"
+  workspace "terminal"
+
   window-rule {
       match app-id=r#"^(zen-beta|firefox|chromium-browser)$"#
       open-on-workspace "2"
@@ -80,6 +85,11 @@ in
   window-rule {
       match app-id=r#"^thunderbird$"#
       open-on-workspace "7"
+  }
+
+  window-rule {
+      match app-id=r#"^chrome-cifhbcnohmdccbgoicgdjpfamggdegmo"#
+      open-on-workspace "teams"
   }
 
   binds {
@@ -135,7 +145,24 @@ in
       XF86MonBrightnessUp   { spawn "brightnessctl" "set" "5%+"; }
       XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
 
+      Alt+R       { focus-workspace "magic"; }
+      Alt+Shift+R { move-column-to-workspace "magic"; }
+      Alt+T       { focus-workspace "teams"; }
+      Alt+Shift+T { move-column-to-workspace "teams"; }
+      Alt+G       { focus-workspace "terminal"; }
+      Alt+Shift+G { move-column-to-workspace "terminal"; }
+
+      Alt+B       { spawn "rofi-rbw"; }
+      Alt+Shift+B { spawn "ktt-rofi"; }
+      Alt+O       { spawn "rofi" "-show" "ssh"; }
+      Alt+Period  { spawn "rofi" "-show" "emoji"; }
+      Alt+Shift+Equal { spawn "rofi" "-show" "calc" "-no-show-match" "-no-sort"; }
+      Alt+A       { spawn "sh" "-c" "grim -g \"$(slurp)\" - | satty -f -"; }
+
+      Alt+Shift+D { spawn "dms" "ipc" "call" "notifications" "toggleDoNotDisturb"; }
+
   ${workspaceBinds}
+  ${extraBinds}
   }
 
   ${extraConfig}
