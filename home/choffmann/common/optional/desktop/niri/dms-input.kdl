@@ -1,0 +1,14 @@
+// Seed only. DMS' "Maus & Touchpad" page rewrites this file wholesale on the
+// first change, so edits here reach a machine exactly once.
+
+input {
+    mouse {
+        accel-speed 0.0
+    }
+    touchpad {
+        tap
+        accel-speed 0.0
+        natural-scroll
+        dwt
+    }
+}

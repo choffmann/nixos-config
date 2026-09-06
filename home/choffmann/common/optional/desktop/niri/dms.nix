@@ -37,6 +37,17 @@ in
     fi
   '';
 
+  # config.kdl includes dms/input.kdl, but DMS only writes it once its input
+  # page has been opened. Without a seed a fresh machine would boot with no
+  # tap-to-click and no natural scrolling at all.
+  home.activation.dmsNiriInput = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    dmsKdl="$HOME/.config/niri/dms"
+    run mkdir -p "$dmsKdl"
+    if [ ! -e "$dmsKdl/input.kdl" ]; then
+      run install -m 0644 ${./dms-input.kdl} "$dmsKdl/input.kdl"
+    fi
+  '';
+
   home.activation.dmsWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     state="$HOME/.local/state/DankMaterialShell"
     run mkdir -p "$state"
