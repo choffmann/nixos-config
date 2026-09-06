@@ -39,7 +39,6 @@
   };
 
   home.packages = with pkgs; [
-    copyq # clipboard manager
     coreutils # basic gnu utils
     curl
     eza # ls replacement
