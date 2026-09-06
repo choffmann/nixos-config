@@ -52,6 +52,10 @@
 
     ktt.url = "git+ssh://git@gitlab.progeek.de:2200/choffmann/kimai-time-tracker.git";
     ktt.inputs.nixpkgs.follows = "nixpkgs";
+
+    # dcal is not packaged in nixpkgs; the upstream flake ships the HM module.
+    dankcalendar.url = "github:AvengeMedia/dankcalendar";
+    dankcalendar.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =

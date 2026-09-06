@@ -13,6 +13,8 @@ in
     ../wayland-env.nix
     ../rofi
     ./dms.nix
+    ./dsearch.nix
+    ./dcal.nix
   ];
 
   options.desktop.niri = {
