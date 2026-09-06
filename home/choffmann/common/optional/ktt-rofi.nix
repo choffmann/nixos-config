@@ -6,40 +6,6 @@
 let
   ktt = inputs.ktt.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
-  kttWaybar = pkgs.writeShellApplication {
-    name = "ktt-waybar";
-    runtimeInputs = [
-      ktt
-      pkgs.jq
-    ];
-    text = ''
-      status=$(ktt --json status 2>/dev/null) || {
-        echo '{"text": "", "class": "stopped"}'
-        exit 0
-      }
-
-      is_running=$(echo "$status" | jq -r '.running')
-
-      if [ "$is_running" = "true" ]; then
-        target=$(echo "$status" | jq -r '[.customer, .project, .activity] | map(select(. != null and . != "")) | join("/")')
-        secs=$(echo "$status" | jq -r '.elapsed_seconds // 0')
-        elapsed=$(printf "%02d:%02d:%02d" $((secs / 3600)) $(( (secs % 3600) / 60 )) $((secs % 60)))
-        desc=$(echo "$status" | jq -r '.description // ""')
-
-        tooltip="$target ($elapsed)"
-        [ -n "$desc" ] && tooltip=$(printf "%s\n%s" "$tooltip" "$desc")
-
-        # Escape for JSON
-        tooltip=$(echo "$tooltip" | jq -Rs '.')
-
-        customer=$(echo "$status" | jq -r '.customer // "ktt"')
-        echo "{\"text\": \"[$customer $elapsed]\", \"tooltip\": $tooltip, \"class\": \"running\"}"
-      else
-        echo '{"text": "", "class": "stopped"}'
-      fi
-    '';
-  };
-
   kttRofi = pkgs.writeShellApplication {
     name = "ktt-rofi";
     runtimeInputs = [
@@ -196,18 +162,9 @@ let
   };
 in
 {
-  home.packages = [ ktt ];
-
-  wayland.windowManager.hyprland.settings.bind = [
-    "$mod SHIFT, p, exec, ${kttRofi}/bin/ktt-rofi"
-    "$mod SHIFT, o, exec, ${kttRofi}/bin/ktt-rofi stop"
+  # niri binds spawn "ktt-rofi" by name, so it has to be on PATH.
+  home.packages = [
+    ktt
+    kttRofi
   ];
-
-  programs.waybar.settings.mainBar."custom/ktt" = {
-    exec = "${kttWaybar}/bin/ktt-waybar";
-    return-type = "json";
-    interval = 10;
-    on-click = "${kttRofi}/bin/ktt-rofi";
-    tooltip = true;
-  };
 }

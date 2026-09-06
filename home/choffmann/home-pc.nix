@@ -61,7 +61,6 @@ in
     ./common/optional/sops.nix
     ./common/optional/discord.nix
     ./common/optional/browser
-    ./common/optional/desktop/hyprland
     ./common/optional/desktop/niri
     ./common/optional/mime-associations.nix
     ./common/optional/thunderbird.nix
@@ -74,37 +73,6 @@ in
 
   # services.yubikey-touch-detector.enable = true;
   # services.yubikey-touch-detector.notificationSound = true;
-
-  # hyprland overrides
-  wayland.windowManager.hyprland.settings = {
-    monitor = [
-      "DP-1,3440x1440@59.97,0x0,1.0"
-      "DP-2,1920x1080@60,3440x180,1.0"
-    ];
-
-    workspace = [
-      "1, monitor:DP-1, default:true"
-      "2, monitor:DP-1"
-      "3, monitor:DP-1"
-      "4, monitor:DP-1"
-      "5, monitor:DP-1"
-      "6, monitor:DP-2, default:true"
-      "7, monitor:DP-2"
-      "8, monitor:DP-2"
-      "9, monitor:DP-2"
-      "special:windows, on-created-empty:${virtLookingGlassHandler}/bin/virt-looking-glass"
-    ];
-
-    bind = [
-      "$mod + SHIFT, W, togglespecialworkspace, windows"
-      "$mod + SHIFT, A, exec, ${audioToggle}/bin/audio-toggle"
-    ];
-
-    device = {
-      name = "wacom-intuos-m-pen";
-      output = "DP-1";
-    };
-  };
 
   # niri overrides
   desktop.niri.extraConfig = ''
@@ -120,6 +88,8 @@ in
         position x=3440 y=180
     }
 
+    spawn-at-startup "${pkgs.synology-drive-client}/bin/synology-drive"
+
     window-rule {
         match app-id=r#"^looking-glass-client$"#
         open-on-output "DP-1"
@@ -131,5 +101,11 @@ in
   desktop.niri.extraBinds = ''
     Mod+Shift+W { spawn "${virtLookingGlassHandler}/bin/virt-looking-glass"; }
     Mod+Shift+A { spawn "${audioToggle}/bin/audio-toggle"; }
+  '';
+
+  desktop.niri.extraInput = ''
+    tablet {
+        map-to-output "DP-1"
+    }
   '';
 }

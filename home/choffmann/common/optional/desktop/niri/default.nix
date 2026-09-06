@@ -11,6 +11,7 @@ in
 {
   imports = [
     ../wayland-env.nix
+    ../rofi
     ./dms.nix
   ];
 
@@ -27,6 +28,13 @@ in
       # niri only allows a single top-level `binds` node, so host-specific
       # binds must be merged into the shared one instead of appended via extraConfig.
       description = "Host-specific KDL bind lines merged into the shared binds block";
+    };
+
+    extraInput = lib.mkOption {
+      type = lib.types.lines;
+      default = "";
+      # Same single-node restriction as `binds` applies to `input`.
+      description = "Host-specific KDL merged into the shared input block";
     };
   };
 
@@ -54,7 +62,9 @@ in
       terminal = "ghostty";
       borderActiveColor = colors.base0D;
       borderInactiveColor = colors.base02;
-      inherit (cfg) extraConfig extraBinds;
+      # niri's wayland-session enables security.polkit but ships no auth agent.
+      polkitAgent = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+      inherit (cfg) extraConfig extraBinds extraInput;
     };
   };
 }

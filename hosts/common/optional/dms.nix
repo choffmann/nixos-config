@@ -11,8 +11,8 @@ _: {
     # Pulls in matugen, which derives the shell palette from the wallpaper.
     enableDynamicTheming = true;
 
-    # Default graphical-session.target would also start DMS under Hyprland,
-    # where it fights hyprpanel for the notification bus name.
+    # Tie the shell's lifecycle to the compositor rather than the broader
+    # graphical-session.target, so a niri restart takes DMS with it.
     systemd.target = "niri.service";
   };
 }

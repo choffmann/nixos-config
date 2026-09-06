@@ -26,7 +26,6 @@
     ../../common/optional/office.nix
     ../../common/optional/android.nix
     ../../common/optional/audio.nix
-    ../../common/optional/hyprland.nix
     ../../common/optional/niri.nix
     ../../common/optional/dms.nix
     ../../common/optional/desktop-apps.nix

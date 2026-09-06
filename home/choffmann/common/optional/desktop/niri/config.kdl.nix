@@ -3,8 +3,10 @@
   terminal,
   extraConfig,
   extraBinds,
+  extraInput,
   borderActiveColor,
   borderInactiveColor,
+  polkitAgent,
 }:
 let
   # Workspaces are dynamic and per-output, so these are INDEXES, not names.
@@ -33,6 +35,8 @@ in
       // 0% restricts this to fully visible windows, so hovering never scrolls
       // the view to pull a half-visible column into focus.
       focus-follows-mouse max-scroll-amount="0%"
+
+  ${extraInput}
   }
 
   layout {
@@ -74,6 +78,7 @@ in
   }
 
   spawn-at-startup "xwayland-satellite" ":0"
+  spawn-at-startup "${polkitAgent}"
 
   binds {
       Mod+Shift+Slash { show-hotkey-overlay; }
