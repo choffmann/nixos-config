@@ -17,6 +17,7 @@
     ./nixos.nix
     ./sops.nix
     ./cachix.nix
+    ./claude-code.nix
     ../users/choffmann
 
     ../optional/services/bluetooth.nix
