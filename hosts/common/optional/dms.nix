@@ -22,6 +22,11 @@
     systemd.target = "niri.service";
   };
 
+  # DMS reads battery state through Quickshell.Services.UPower. The shell only
+  # pulls in power-profiles-daemon, which owns the PowerProfiles name alone -
+  # without upower the bar shows no battery and the power popout no charge.
+  services.upower.enable = true;
+
   # The lock screen looks the security-key stack up by this exact filename;
   # without it DMS falls back to one bundled in its own store path, which
   # never reaches the key. Auth only — the password stack stays separate.
