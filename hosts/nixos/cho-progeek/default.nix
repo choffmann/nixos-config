@@ -30,6 +30,7 @@
     ../../common/optional/niri.nix
     ../../common/optional/dms.nix
     ../../common/optional/desktop-apps.nix
+    ../../common/optional/ausweisapp.nix
     ../../common/optional/plymouth.nix
     ../../common/optional/wayland.nix
     ../../common/optional/yubikey.nix

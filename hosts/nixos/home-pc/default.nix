@@ -63,6 +63,7 @@ in
     ../../common/optional/niri.nix
     ../../common/optional/dms.nix
     ../../common/optional/desktop-apps.nix
+    ../../common/optional/ausweisapp.nix
     ../../common/optional/office.nix
     ../../common/optional/pi.nix
     ../../common/optional/plymouth.nix
