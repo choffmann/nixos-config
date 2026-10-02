@@ -46,6 +46,8 @@ in
 
       # language servers
       astro-language-server
+      bash-language-server
+      shellcheck # diagnostics for bash-language-server
       gopls
       kotlin-language-server
       lua-language-server
@@ -81,6 +83,7 @@ in
       markdownlint-cli2
       nixfmt
       prettierd
+      shfmt
       stylua
       typstyle
     ];
